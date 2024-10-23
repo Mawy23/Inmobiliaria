@@ -3,16 +3,16 @@ namespace App\Models;
 
 use Core\Model;
 
-class Cita extends Model {
+class Transaccion extends Model {
     public function getAll() {
-        $sql = "SELECT * FROM citas";
+        $sql = "SELECT * FROM transacciones";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
-    public function addCita($data) {
-        $sql = "INSERT INTO citas (fecha, hora, motivo, lugar, id_cliente, id_agente, estado) VALUES (:fecha, :hora, :motivo, :lugar, :id_cliente, :id_agente, :estado)";
+    public function addTransaccion($data) {
+        $sql = "INSERT INTO transacciones (fecha, monto, tipo, id_inmueble, id_cliente) VALUES (:fecha, :monto, :tipo, :id_inmueble, :id_cliente)";
         $query = $this->db->prepare($sql);
         return $query->execute($data);
     }

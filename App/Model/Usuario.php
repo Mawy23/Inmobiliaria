@@ -1,30 +1,20 @@
 <?php
-namespace App\Model;
+namespace App\Models;
 
-use Core\Model; // Asumiendo que tienes una clase base Model en Core\Model que interactúa con la base de datos
+use Core\Model;
 
 class Usuario extends Model {
-    protected $table = 'usuarios'; // Nombre de la tabla de usuarios
-
-    public static function autenticar($email, $password) {
-        $db = static::getDB(); // Método de la clase base para obtener la conexión a la base de datos
-        $stmt = $db->prepare('SELECT * FROM usuarios WHERE email = :email');
-        $stmt->bindValue(':email', $email);
-        $stmt->execute();
-        $usuario = $stmt->fetch();
-        
-        if ($usuario && password_verify($password, $usuario['password'])) {
-            return $usuario;
-        }
-        return false;
+    public function getAll() {
+        $sql = "SELECT * FROM usuarios";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
 
-    public static function getById($id) {
-        $db = static::getDB();
-        $stmt = $db->prepare('SELECT * FROM usuarios WHERE id = :id');
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
-        return $stmt->fetch();
+    public function addUsuario($data) {
+        $sql = "INSERT INTO usuarios (nombre_usuario, email, password, id_rol) VALUES (:nombre_usuario, :email, :password, :id_rol)";
+        $query = $this->db->prepare($sql);
+        return $query->execute($data);
     }
 }
 
