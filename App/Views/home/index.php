@@ -1,8 +1,11 @@
+<?php
+include 'database/bbdd_inmobiliaria.php';
+?>
 <div class="container">
     <h2>Nuestras Propiedades</h2>
-
+        
     <!-- Formulario de búsqueda -->
-    <form class="search-form">
+    <form class="search-form" method="GET" action="search_results.php">
         <input type="text" placeholder="Buscar por nombre..." aria-label="Buscar por nombre">
         
         <select aria-label="Tipo de propiedad">
@@ -25,6 +28,7 @@
             <p>Hermosa casa con vista al mar, ubicada en una zona tranquila.</p>
             <p>Precio: $500,000 USD</p>
         </div>
+
 
         <div class="property">
             <img src="https://via.placeholder.com/600x400" alt="Propiedad 2">

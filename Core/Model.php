@@ -30,24 +30,31 @@ class Model
     // Método privado para establecer la conexión con la base de datos
     private function openDatabaseConnection()
     {
-        // Usamos 'sprintf' para formar el DSN (Data Source Name) de la conexión, utilizando la configuración de la base de datos
-        $dsn = sprintf(
-            "mysql:host=%s:%s;dbname=%s;charset=%s", 
-            Config::DB_HOST,   // Host de la base de datos
-            Config::DB_PORT,   // Puerto de la base de datos
-            Config::DB_NAME,   // Nombre de la base de datos
-            Config::DB_CHARSET // Conjunto de caracteres
-        );
+        // Si el puerto está vacío, omitimos su paso en el DSN
+        if (Config::DB_PORT) {
+            $dsn = sprintf(
+                "mysql:host=%s;port=%s;dbname=%s;charset=%s",
+                Config::DB_HOST,
+                Config::DB_PORT,
+                Config::DB_NAME,
+                Config::DB_CHARSET
+            );
+        } else {
+            $dsn = sprintf(
+                "mysql:host=%s;dbname=%s;charset=%s",
+                Config::DB_HOST,
+                Config::DB_NAME,
+                Config::DB_CHARSET
+            );
+        }
 
-        // Opciones para la conexión con PDO:
-        // - El modo de obtención por defecto será 'FETCH_OBJ' para devolver resultados como objetos
-        // - Activamos el modo de error 'ERRMODE_WARNING' para mostrar advertencias en lugar de excepciones
+        // Opciones para la conexión con PDO
         $options  = [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, 
             PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
         ];
 
-        // Establecemos la conexión a la base de datos utilizando el DSN, el usuario, la contraseña y las opciones
+        // Establecemos la conexión a la base de datos
         $this->db = new PDO($dsn, Config::DB_USER, Config::DB_PASS, $options);
     }
 }
