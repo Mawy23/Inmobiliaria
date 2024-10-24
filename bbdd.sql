@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `inmuebles` (
     `descripcion` VARCHAR(1500) NOT NULL,
     `precio` DECIMAL(12,2) NOT NULL,
     `tipo` ENUM('Chalet', 'Piso', 'Local') DEFAULT NULL,
-    `id_cliente` BIGINT(20) UNSIGNED NOT NULL,
+    `id_cliente` BIGINT(20) UNSIGNED NOT NULL, 
     `imagen` VARCHAR(100) NOT NULL,
     `id_agente` BIGINT(20) UNSIGNED DEFAULT NULL,
     PRIMARY KEY (`id`),
