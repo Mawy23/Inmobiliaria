@@ -3,14 +3,14 @@
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `usuarios` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `nombre_usuario` VARCHAR(20) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(60) NOT NULL,
     `id_rol` BIGINT(20) UNSIGNED NOT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
+    UNIQUE KEY `id` (`id`),
     FOREIGN KEY (`id_rol`) REFERENCES `roles`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 -- Estructura de tabla para la tabla `roles`
 -- --------------------------------------------------------
@@ -52,13 +52,13 @@ CREATE TABLE IF NOT EXISTS `transacciones` (
 
 
 -- --------------------------------------------------------
--- Estructura de tabla para la tabla `documentos`
+-- Estructura de tabla para la tabla `imagenes propiedades`
 -- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `documentos` (
-    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    `nombre` varchar(50) NOT NULL,
-    `ruta` varchar(255) NOT NULL,
-    `id_inmueble` bigint(20) unsigned NOT NULL,
+
+CREATE TABLE IF NOT EXISTS `imagenes_propiedades` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `id_inmueble` BIGINT(20) UNSIGNED NOT NULL,
+    `url_imagen` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`id_inmueble`) REFERENCES `inmuebles`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -112,6 +112,19 @@ CREATE TABLE IF NOT EXISTS `inmuebles` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`),
     FOREIGN KEY (`id_agente`) REFERENCES `agentes`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Estructura de tabla para la tabla 'comnetarios'
+--
+CREATE TABLE IF NOT EXISTS `comentarios` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `comentario` VARCHAR(1500) NOT NULL,
+    `id_usuario` BIGINT(20) UNSIGNED NOT NULL,
+    `id_inmueble` BIGINT(20) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id`),
+    FOREIGN KEY (`id_inmueble`) REFERENCES `inmuebles`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

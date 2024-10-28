@@ -16,5 +16,23 @@ class Agente extends Model {
         $query = $this->db->prepare($sql);
         return $query->execute($data);
     }
+
+    public function deleteAgente($id){
+        $sql = "DELETE FROM agentes WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        return $query->execute(['id' => $id]);
+    }
+
+    public function getAgenteById($id){
+        $sql = "SELECT * FROM agentes WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id' => $id]);
+        return $query->fetch();
+    }
+
+    public function updateAgente($data){
+        $sql = "UPDATE agentes SET nombre = :nombre, apellidos = :apellidos, telefono = :telefono, email = :email, id_usuario = :id_usuario WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        return $query->execute($data);
+    }
 }
-?>

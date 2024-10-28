@@ -12,9 +12,8 @@ class Cliente extends Model {
     }
 
     public function addCliente($data) {
-        $sql = "INSERT INTO clientes (nombre, apellidos, direccion, telefono1, telefono2, nombre_usuario, pass) VALUES (:nombre, :apellidos, :direccion, :telefono1, :telefono2, :nombre_usuario, :pass)";
+        $sql = "INSERT INTO clientes (nombre, apellidos, direccion, telefono1, telefono2, id_usuario) VALUES (:nombre, :apellidos, :direccion, :telefono1, :telefono2, :id_usuario)";
         $query = $this->db->prepare($sql);
         return $query->execute($data);
     }
 }
-?>
