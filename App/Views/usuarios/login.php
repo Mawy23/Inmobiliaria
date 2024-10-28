@@ -8,7 +8,6 @@
     <title>Iniciar Sesión</title>
 </head>
 <body>
-<body>
 
 <button onclick="togglePopup('loginPopup')">Iniciar Sesión</button>
 
@@ -26,4 +25,17 @@
 
 <script>
     function togglePopup(popupId) {
-        var popup = document.g
+        var popup = document.getElementById(popupId);
+        var overlay = document.getElementById('overlay');
+        popup.style.display = (popup.style.display === "block") ? "none" : "block";
+        overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+    }
+
+    function closeAllPopups() {
+        document.getElementById('loginPopup').style.display = "none";
+        document.getElementById('overlay').style.display = "none";
+    }
+</script>
+
+</body>
+</html>
