@@ -1,4 +1,8 @@
+-- Crear la base de datos
 CREATE DATABASE inmobiliaria;
+
+-- Seleccionar la base de datos
+USE inmobiliaria;
 
 -- Tabla de usuarios
 CREATE TABLE usuarios (
@@ -53,7 +57,7 @@ CREATE TABLE reseñas (
     id_reseña INT AUTO_INCREMENT PRIMARY KEY,
     id_propiedad INT,
     id_cliente INT,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5) NOT NULL,
+    calificacion INT NOT NULL CHECK (calificacion BETWEEN 1 AND 5), -- Mantén el CHECK si usas MySQL 8.0+
     comentario TEXT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,
