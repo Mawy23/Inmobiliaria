@@ -1,6 +1,3 @@
-<?php
-include 'database/bbdd_inmobiliaria.php';
-?>
 <div class="container">
     <h2>Nuestras Propiedades</h2>
         

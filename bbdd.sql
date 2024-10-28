@@ -1,131 +1,84 @@
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `usuarios`
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `usuarios` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `email` VARCHAR(50) NOT NULL,
-    `password` VARCHAR(60) NOT NULL,
-    `id_rol` BIGINT(20) UNSIGNED NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `id` (`id`),
-    FOREIGN KEY (`id_rol`) REFERENCES `roles`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE DATABASE inmobiliaria;
 
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `roles`
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `roles` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `nombre` VARCHAR(20) NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Tabla de usuarios
+CREATE TABLE usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    correo_electronico VARCHAR(100) UNIQUE NOT NULL,
+    contraseña VARCHAR(255) NOT NULL,
+    rol ENUM('admin', 'agente', 'cliente') NOT NULL,
+    telefono VARCHAR(15),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `agentes`
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `agentes` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `nombre` VARCHAR(30) NOT NULL,
-    `apellidos` VARCHAR(50) NOT NULL,
-    `telefono` VARCHAR(15) NOT NULL,
-    `email` VARCHAR(50) NOT NULL,
-    `id_usuario` BIGINT(20) UNSIGNED NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Tabla de propiedades
+CREATE TABLE propiedades (
+    id_propiedad INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    descripcion TEXT NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    tipo ENUM('casa', 'departamento', 'terreno') NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    ciudad VARCHAR(50) NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    codigo_postal VARCHAR(10) NOT NULL,
+    fecha_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_agente INT,
+    FOREIGN KEY (id_agente) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
+);
 
+-- Tabla de imágenes
+CREATE TABLE imagenes (
+    id_imagen INT AUTO_INCREMENT PRIMARY KEY,
+    id_propiedad INT,
+    url_imagen VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE
+);
 
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `transacciones`
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `transacciones` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `fecha` DATE NOT NULL,
-    `monto` DECIMAL(12,2) NOT NULL,
-    `tipo` ENUM('Compra', 'Venta', 'Alquiler') NOT NULL,
-    `id_inmueble` BIGINT(20) UNSIGNED NOT NULL,
-    `id_cliente` BIGINT(20) UNSIGNED NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_inmueble`) REFERENCES `inmuebles`(`id`),
-    FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Tabla de citas
+CREATE TABLE citas (
+    id_cita INT AUTO_INCREMENT PRIMARY KEY,
+    id_propiedad INT,
+    id_cliente INT,
+    fecha_hora DATETIME NOT NULL,
+    estado ENUM('pendiente', 'confirmado', 'cancelado') NOT NULL,
+    FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,
+    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);
 
+-- Tabla de reseñas
+CREATE TABLE reseñas (
+    id_reseña INT AUTO_INCREMENT PRIMARY KEY,
+    id_propiedad INT,
+    id_cliente INT,
+    calificacion INT CHECK (calificacion BETWEEN 1 AND 5) NOT NULL,
+    comentario TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,
+    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);
 
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `imagenes propiedades`
--- --------------------------------------------------------
+-- Tabla de transacciones
+CREATE TABLE transacciones (
+    id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
+    id_propiedad INT,
+    id_cliente INT,
+    tipo ENUM('compra', 'alquiler') NOT NULL,
+    monto DECIMAL(10, 2) NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,
+    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);
 
-CREATE TABLE IF NOT EXISTS `imagenes_propiedades` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `id_inmueble` BIGINT(20) UNSIGNED NOT NULL,
-    `url_imagen` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_inmueble`) REFERENCES `inmuebles`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `citas`
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `citas` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `fecha` DATE NOT NULL,
-    `hora` TIME NOT NULL,
-    `motivo` VARCHAR(50) NOT NULL,
-    `lugar` VARCHAR(30) NOT NULL,
-    `id_cliente` BIGINT(20) UNSIGNED NOT NULL,
-    `id_agente` BIGINT(20) UNSIGNED DEFAULT NULL, -- Relación con agentes, se permite estar vacio 
-    `estado` ENUM('Pendiente', 'Confirmada', 'Cancelada') DEFAULT 'Pendiente',
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`),
-    FOREIGN KEY (`id_agente`) REFERENCES `agentes`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `clientes`
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clientes` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `nombre` VARCHAR(15) NOT NULL,
-    `apellidos` VARCHAR(30) NOT NULL,
-    `direccion` VARCHAR(50) NOT NULL,
-    `telefono1` VARCHAR(9) NOT NULL,
-    `telefono2` VARCHAR(9) DEFAULT NULL,
-    `id_usuario` BIGINT(20) UNSIGNED NOT NULL, -- Relación con usuarios
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
--- --------------------------------------------------------
--- Estructura de tabla para la tabla `inmuebles`
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `inmuebles` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `direccion` VARCHAR(50) NOT NULL,
-    `descripcion` VARCHAR(1500) NOT NULL,
-    `precio` DECIMAL(12,2) NOT NULL,
-    `tipo` ENUM('Chalet', 'Piso', 'Local') DEFAULT NULL,
-    `id_cliente` BIGINT(20) UNSIGNED NOT NULL, 
-    `imagen` VARCHAR(100) NOT NULL,
-    `id_agente` BIGINT(20) UNSIGNED DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`),
-    FOREIGN KEY (`id_agente`) REFERENCES `agentes`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Estructura de tabla para la tabla 'comnetarios'
---
-CREATE TABLE IF NOT EXISTS `comentarios` (
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `comentario` VARCHAR(1500) NOT NULL,
-    `id_usuario` BIGINT(20) UNSIGNED NOT NULL,
-    `id_inmueble` BIGINT(20) UNSIGNED NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id`),
-    FOREIGN KEY (`id_inmueble`) REFERENCES `inmuebles`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-
+-- Tabla de preferencias de búsqueda
+CREATE TABLE preferencias_busqueda (
+    id_preferencia INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT,
+    tipo_propiedad ENUM('casa', 'piso', 'terreno', 'local') NOT NULL,
+    rango_precio_min DECIMAL(10, 2),
+    rango_precio_max DECIMAL(10, 2),
+    localizacion VARCHAR(255),
+    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);

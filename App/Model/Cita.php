@@ -2,58 +2,56 @@
 namespace App\Models;
 
 use PDO;
+use PDOException;
+use Exception;
 
-class Cita {
-    protected $db;
+use Core\Model;
 
-    public function __construct() {
-        $this->db = new PDO("mysql:host=localhost;dbname=inmobiliaria", "root", "");
+class Cita extends Model {
+    public static function all() {
+        try {
+            $db = static::getDB();
+            $stmt = $db->query('SELECT * FROM citas');
+            return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Models\Cita');
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
-    // Obtener citas por inmueble
-    public function getCitasByInmueble($inmuebleId) {
-        $sql = "SELECT * FROM citas WHERE inmueble_id = :inmueble_id";
-        $query = $this->db->prepare($sql);
-        $query->execute(['inmueble_id' => $inmuebleId]);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+    public static function create($data) {
+        try {
+            $db = static::getDB();
+            $stmt = $db->prepare('INSERT INTO citas (id_propiedad, id_cliente, fecha_hora, estado) VALUES (:id_propiedad, :id_cliente, :fecha_hora, :estado)');
+            $stmt->bindParam(':id_propiedad', $data['id_propiedad'], PDO::PARAM_INT);
+            $stmt->bindParam(':id_cliente', $data['id_cliente'], PDO::PARAM_INT);
+            $stmt->bindParam(':fecha_hora', $data['fecha_hora'], PDO::PARAM_STR);
+            $stmt->bindParam(':estado', $data['estado'], PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
-    // Obtener citas por usuario
-    public function getCitasByUsuario($usuarioId) {
-        $sql = "SELECT * FROM citas WHERE usuario_id = :usuario_id";
-        $query = $this->db->prepare($sql);
-        $query->execute(['usuario_id' => $usuarioId]);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+    public static function update($data) {
+        try {
+            $db = static::getDB();
+            $stmt = $db->prepare('UPDATE citas SET estado = :estado WHERE id_cita = :id');
+            $stmt->bindParam(':estado', $data['estado'], PDO::PARAM_STR);
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
-    // Crear una nueva cita
-    public function crearCita($fecha, $hora, $inmuebleId, $usuarioId) {
-        $sql = "INSERT INTO citas (fecha, hora, inmueble_id, usuario_id) VALUES (:fecha, :hora, :inmueble_id, :usuario_id)";
-        $query = $this->db->prepare($sql);
-        $query->execute([
-            'fecha' => $fecha,
-            'hora' => $hora,
-            'inmueble_id' => $inmuebleId,
-            'usuario_id' => $usuarioId
-        ]);
-    }
-
-    // Modificar una cita
-    public function modificarCita($idCita, $fecha, $hora) {
-        $sql = "UPDATE citas SET fecha = :fecha, hora = :hora WHERE id = :id";
-        $query = $this->db->prepare($sql);
-        $query->execute([
-            'fecha' => $fecha,
-            'hora' => $hora,
-            'id' => $idCita
-        ]);
-    }
-
-    // Eliminar una cita
-    public function eliminarCita($idCita) {
-        $sql = "DELETE FROM citas WHERE id = :id";
-        $query = $this->db->prepare($sql);
-        $query->execute(['id' => $idCita]);
+    public static function delete($id) {
+        try {
+            $db = static::getDB();
+            $stmt = $db->prepare('DELETE FROM citas WHERE id_cita = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 }
-?>
