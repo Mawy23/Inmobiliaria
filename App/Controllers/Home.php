@@ -23,15 +23,14 @@ class Home
     }
 
     // Método que maneja una vista de ejemplo
-    public function example()
-    {
-        // Definimos la vista a cargar (en este caso, 'home/example')
-        $views = ['home/example'];
+    public function busquedaInmuebles(){
+        // Definimos las vistas a cargar (en este caso, 'home/busqueda_inmuebles')
+        $views = ['home/busqueda_inmuebles'];
 
-        // Definimos los argumentos a pasar a la vista, incluyendo un título más detallado
-        $args  = ['title' => 'Home | Example'];
+        // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
+        $args  = ['title' => 'Busqueda de Inmuebles'];
 
-        // Renderizamos la vista con los argumentos
+        // Renderizamos la vista con los argumentos especificados
         View::render($views, $args);
     }
 

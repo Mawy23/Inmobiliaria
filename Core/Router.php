@@ -20,11 +20,11 @@ class Router
         if (! $this->urlController) {
             $page = new \App\Controllers\Home();
             $page->index();
-        } 
+        }
         // Verificamos si el archivo del controlador solicitado existe
-        elseif (file_exists(APP.'Controllers/'.ucfirst($this->urlController).'.php')) {
+        elseif (file_exists(APP . 'Controllers/' . ucfirst($this->urlController) . '.php')) {
             // Creamos una instancia del controlador solicitado
-            $controller          = '\\App\\Controllers\\'.ucfirst($this->urlController);
+            $controller          = '\\App\\Controllers\\' . ucfirst($this->urlController);
             $this->urlController = new $controller();
 
             // Verificamos si la acción (método) existe y es invocable
@@ -32,24 +32,24 @@ class Router
                 // Si hay parámetros en la URL, llamamos al método con ellos
                 if (! empty($this->urlParams)) {
                     call_user_func_array([$this->urlController, $this->urlAction], $this->urlParams);
-                } 
+                }
                 // Si no hay parámetros, simplemente llamamos al método de la acción
                 else {
                     $this->urlController->{$this->urlAction}();
                 }
-            } 
+            }
             // Si no se especifica una acción, llamamos al método "index" por defecto
             else {
                 if (strlen($this->urlAction) == 0) {
                     $this->urlController->index();
-                } 
+                }
                 // Si no se encuentra la acción, llamamos al controlador de error para mostrar "404 Page Not Found"
                 else {
                     $page = new \App\Controllers\Error();
                     $page->pageNotFound($this->urlController, $this->urlAction);
                 }
             }
-        } 
+        }
         // Si el controlador no existe, mostramos el error 404
         else {
             $page = new \App\Controllers\Error();
@@ -77,6 +77,19 @@ class Router
 
             // Los parámetros restantes se guardan como un array
             $this->urlParams = array_values($url);
+        }
+    }
+
+    // Método para verificar las rutas que requieren autenticación
+    public function checkAuth()
+    {
+        // rutas que requieren autenticacion
+        $protectedRoutes = ['home', 'profile'];
+
+        // Si la ruta solicitada está protegida y el usuario no está autenticado, redirigimos al login
+        if (in_array($this->urlController, $protectedRoutes) && !Session::checkAuth()) {
+            header('Location: /login');
+            exit;
         }
     }
 }

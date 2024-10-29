@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Core\View;
+use Core\Session;
 use App\Models\Usuario;
 
 class AuthController
@@ -25,12 +26,15 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Validar los datos de entrada
             $nombre = $_POST['nombre'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
+            $apellido = $_POST['apellido'] ?? '';
+            $correo_electronico = $_POST['correo_electronico'] ?? '';
+            $contraseña = $_POST['contraseña'] ?? '';
+            $rol = $_POST['rol'] ?? 'cliente';
+
+
 
             // Asegurarse de que los campos no estén vacíos
-            if (empty($nombre) || empty($email) || empty($password)) {
-                // Redireccionar con un mensaje de error si hay campos vacíos
+            if (empty($nombre) || empty($apellido) || empty($correo_electronico) || empty($contraseña)) {
                 header('Location: /register?error=Todos los campos son obligatorios');
                 exit;
             }
@@ -38,8 +42,10 @@ class AuthController
             // Crear un nuevo usuario en la base de datos
             Usuario::create([
                 'nombre' => $nombre,
-                'correo_electronico' => $email, // Usar el nombre de campo correcto
-                'contraseña' => password_hash($password, PASSWORD_DEFAULT) // Almacenar la contraseña de forma segura
+                'apellido' => $apellido,
+                'correo_electronico' => $correo_electronico,
+                'contraseña' => password_hash($contraseña, PASSWORD_DEFAULT),
+                'rol' => $rol
             ]);
 
             // Redirigir al inicio de sesión después del registro exitoso
@@ -65,20 +71,19 @@ class AuthController
         // Verificar que la solicitud sea un POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Capturar el email y la contraseña del formulario
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
+            $correo_electronico = $_POST['correo_electronico'] ?? '';
+            $contraseña = $_POST['contraseña'] ?? '';
 
             // Buscar el usuario por su email
-            $usuario = Usuario::findByEmail($email);
+            $usuario = Usuario::findByEmail($correo_electronico);
 
             // Verificar si el usuario existe y la contraseña es correcta
-            if ($usuario && password_verify($password, $usuario['contraseña'])) {
-                // Iniciar sesión del usuario, puedes guardar el ID en la sesión
-                session_start();
-                $_SESSION['id_usuario'] = $usuario['id_usuario']; // Suponiendo que 'id_usuario' es el campo clave primaria
-                $_SESSION['nombre'] = $usuario['nombre']; // Guardar el nombre del usuario
+            if ($usuario && password_verify($contraseña, $usuario['contraseña'])) {
+                $session = Session::getInstance();
+                $session->set('id_usuario', $usuario['id_usuario']);
+                $session->set('nombre', $usuario['nombre']);
+                $session->set('rol', $usuario['rol']);
 
-                // Redirigir a la página principal después del inicio de sesión exitoso
                 header('Location: /home');
                 exit;
             } else {
@@ -92,12 +97,12 @@ class AuthController
     // Método que maneja el cierre de sesión
     public function logout()
     {
-        // Iniciar la sesión y destruirla para cerrar la sesión del usuario
-        session_start();
-        session_destroy();
+        // Cerrar la sesión
+        $session = Session::getInstance();
+        $session->destroy();
 
-        // Redirigir a la página de inicio después del cierre de sesión
-        header('Location: /login?success=Cierre de sesión exitoso');
+        // Redirigir al login
+        header('Location: /login');
         exit;
     }
 }

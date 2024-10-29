@@ -77,7 +77,7 @@
                         <a class="nav-link" href="<?= $baseUrl ?>Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= $baseUrl ?>Home/example">Example</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>Home/busquedaInmuebles">Busqueda Inmuebles</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $baseUrl ?>Home/examplewithargs">Example With Args</a>
