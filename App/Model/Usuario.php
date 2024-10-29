@@ -61,12 +61,12 @@ class Usuario extends Model {
             $db = static::getDB();
             
             // Preparamos la consulta SQL para insertar un nuevo usuario
-            $stmt = $db->prepare('INSERT INTO usuarios (nombre, email, password) VALUES (:nombre, :email, :password)');
+            $stmt = $db->prepare('INSERT INTO usuarios (nombre, correo_electronico, contraseña) VALUES (:nombre, :correo_electronico, :contraseña)');
             
-            // Sustituimos los marcadores de posición :nombre, :email y :password por los valores correspondientes
+            // Sustituimos los marcadores de posición :nombre, :correo_electronico y :contraseña por los valores correspondientes
             $stmt->bindParam(':nombre', $data['nombre'], PDO::PARAM_STR);
-            $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
-            $stmt->bindParam(':password', $data['password'], PDO::PARAM_STR);
+            $stmt->bindParam(':correo_electronico', $data['correo_electronico'], PDO::PARAM_STR);
+            $stmt->bindParam(':contraseña', $data['contraseña'], PDO::PARAM_STR);
 
 
         
@@ -85,12 +85,12 @@ class Usuario extends Model {
             $db = static::getDB();
             
             // Preparamos la consulta SQL para actualizar un usuario
-            $stmt = $db->prepare('UPDATE usuarios SET nombre = :nombre, email = :email, password = :password WHERE id = :id');
+            $stmt = $db->prepare('UPDATE usuarios SET nombre = :nombre, correo_electronico = :correo_electronico, contraseña = :contraseña WHERE id = :id');
             
-            // Sustituimos los marcadores de posición :nombre, :email, :password y :id por los valores correspondientes
+            // Sustituimos los marcadores de posición :nombre, :correo_electronico, :contraseña y :id por los valores correspondientes
             $stmt->bindParam(':nombre', $data['nombre'], PDO::PARAM_STR);
-            $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
-            $stmt->bindParam(':password', $data['password'], PDO::PARAM_STR);
+            $stmt->bindParam(':correo_electronico', $data['correo_electronico'], PDO::PARAM_STR);
+            $stmt->bindParam(':contraseña', $data['contraseña'], PDO::PARAM_STR);
             $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
             
             // Ejecutamos la consulta
@@ -121,17 +121,17 @@ class Usuario extends Model {
         }
     }
 
-    // Método que obtiene un usuario por su email
-    public static function findByEmail($email) {
+    // Método que obtiene un usuario por su correo_electronico
+    public static function findByEmail($correo_electronico) {
         try {
             // Nos conectamos a la base de datos utilizando PDO
             $db = static::getDB();
             
-            // Preparamos la consulta SQL para obtener un usuario por su email
-            $stmt = $db->prepare('SELECT * FROM usuarios WHERE email = :email');
+            // Preparamos la consulta SQL para obtener un usuario por su correo_electronico
+            $stmt = $db->prepare('SELECT * FROM usuarios WHERE correo_electronico = :correo_electronico');
             
-            // Sustituimos el marcador de posición :email por el valor de $email
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            // Sustituimos el marcador de posición :correo_electronico por el valor de $correo_electronico
+            $stmt->bindParam(':correo_electronico', $correo_electronico, PDO::PARAM_STR);
             
             // Ejecutamos la consulta
             $stmt->execute();

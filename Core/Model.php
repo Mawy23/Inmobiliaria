@@ -7,7 +7,7 @@ use PDO;
 
 class Model
 {
-    public $db = null;
+    public static $db = null;
 
     public function __construct()
     {

@@ -23,4 +23,12 @@ class Error
         // Usamos la clase 'View' para renderizar la vista 'error/404', que mostrará la página de error correspondiente
         View::render(['error/404']);
     }
+
+    // Método internalServerError: 500
+    public function internalServerError()
+    {
+        http_response_code(500);
+        View::render(['error/500']);
+    }
+
 }
