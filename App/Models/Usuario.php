@@ -62,29 +62,22 @@ class Usuario extends Model
     public static function create($data)
     {
         try {
-
-            var_dump($data);
-            var_dump($data);
-            var_dump($data);
-            
-            // Nos conectamos a la base de datos utilizando PDO
             $db = static::getDB();
-            
-            // Preparamos la consulta SQL para insertar un nuevo usuario
-            $stmt = $db->prepare('INSERT INTO usuarios (nombre, apellido, correo_electronico, contraseña, rol, telefono) VALUES (:nombre, :apellido, :correo_electronico, :contraseña, "cliente", :telefono)');
 
-            // Sustituimos los marcadores de posición por los valores correspondientes
-            $stmt->bindParam(':nombre', $data['nombre'], PDO::PARAM_STR);
-            $stmt->bindParam(':apellido', $data['apellido'], PDO::PARAM_STR);
-            $stmt->bindParam(':correo_electronico', $data['correo_electronico'], PDO::PARAM_STR);
-            $stmt->bindParam(':contraseña', $data['contraseña'], PDO::PARAM_STR);
-            // Aquí ya no necesitas pasar :rol, ya que está definido como "cliente" en la consulta
-            $stmt->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
+            // Preparar consulta sin marcadores de posición
+            $stmt = $db->prepare('INSERT INTO usuarios (nombre, apellido, correo_electronico, contraseña, rol, telefono) VALUES (?, ?, ?, ?, ?, ?)');
 
-            // Ejecutamos la consulta
-            $stmt->execute();
+            // Usar un array para ejecutar los valores
+            $stmt->execute([
+                $data['nombre'],
+                $data['apellido'],
+                $data['correo_electronico'],
+                $data['contraseña'],
+                'cliente',
+                $data['telefono']
+            ]);
         } catch (PDOException $e) {
-            // Si hay un error, lanzamos una excepción
+            // Imprimir mensaje de error detallado
             echo 'Error al crear el usuario: ' . $e->getMessage();
             exit;
         }

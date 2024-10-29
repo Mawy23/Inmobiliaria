@@ -61,7 +61,6 @@ class AuthController
 
             // Renderizar la vista con los argumentos
             View::render($views, $args);
-
         }
     }
 
@@ -79,24 +78,39 @@ class AuthController
     // Método que maneja el inicio de sesión de un usuario
     public function authenticate()
     {
-        // Verificar que la solicitud sea un POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Capturar el email y la contraseña del formulario
+            // Capturar el correo electrónico y la contraseña del formulario
             $correo_electronico = $_POST['correo_electronico'] ?? '';
             $contraseña = $_POST['contraseña'] ?? '';
 
-            // Buscar el usuario por su email
+            var_dump($correo_electronico);
+            var_dump($contraseña);
+            var_dump($correo_electronico);
+            var_dump($contraseña);
+
+            // Verificar que los campos no estén vacíos
+            if (empty($correo_electronico) || empty($contraseña)) {
+                header('Location: /login?error=Todos los campos son obligatorios');
+                exit;
+            }
+
+            // Buscar el usuario por su correo electrónico
             $usuario = Usuario::findByEmail($correo_electronico);
 
             // Verificar si el usuario existe y la contraseña es correcta
-            if ($usuario && password_verify($contraseña, $usuario['contraseña'])) {
+            if ($usuario && password_verify($contraseña, $usuario->contraseña)) {
                 $session = Session::getInstance();
-                $session->set('id_usuario', $usuario['id_usuario']);
-                $session->set('nombre', $usuario['nombre']);
-                $session->set('rol', $usuario['rol']);
+                $session->set('id_usuario', $usuario->id_usuario);
+                $session->set('nombre', $usuario->nombre);
+                $session->set('rol', $usuario->rol);
 
-                header('Location: /home');
-                exit;
+                // Redirigir al inicio de sesión después del registro exitoso 
+                // Definir la vista y los argumentos a pasar
+                $views = ['home/index'];
+                $args  = ['title' => 'home'];
+
+                // Renderizar la vista con los argumentos
+                View::render($views, $args);
             } else {
                 // Redireccionar con un mensaje de error si las credenciales son incorrectas
                 header('Location: /login?error=Credenciales incorrectas');
@@ -104,6 +118,7 @@ class AuthController
             }
         }
     }
+
 
     // Método que maneja el cierre de sesión
     public function logout()

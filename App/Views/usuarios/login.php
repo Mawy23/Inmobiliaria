@@ -1,6 +1,6 @@
 <div>
     <h2>Iniciar Sesión</h2>
-    <form action="<?= $baseUrl ?>user/login" method="POST">
+    <form action="authenticate" method="POST">
         <label for="email">Correo</label>
         <input type="text" id="correo_electronico" name="correo_electronico" required>
         <label for="contraseña">Contraseña</label>
