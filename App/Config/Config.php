@@ -13,8 +13,7 @@ class Config
     const DB_PORT    = '';
 
     // Nombre de la base de datos a la que se quiere conectar
-    //En phpmyadmin se crea la base de datos con el nombre inmobiliaria!!!! Habria que cambiar esto yo creo
-    const DB_NAME    = 'bbdd_inmobiliaria';
+    const DB_NAME    = 'inmobiliaria';
 
     // Usuario con permisos para acceder a la base de datos
     const DB_USER    = 'root';
