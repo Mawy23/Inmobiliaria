@@ -1,42 +1,34 @@
-<?php include 'header.php'; ?>
+<div>
+    <h2>Registrarse</h2>
+    <form action="store" method="POST">
+        <!-- Campo para Nombre -->
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" maxlength="50" required>
+        <br><br>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar</title>
-</head>
-<body>
-<body>
+        <!-- Campo para Apellido -->
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" maxlength="50" required>
+        <br><br>
 
-<button onclick="togglePopup('registerPopup')">Registrar</button>
+        <!-- Campo para Correo Electrónico -->
+        <label for="correo_electronico">Correo Electrónico:</label>
+        <input type="email" id="correo_electronico" name="correo_electronico" maxlength="100" required>
+        <br><br>
 
-<div id="registerPopup" class="popup">
-    <h2>Registrar</h2>
-    <form method="POST" action="register.php">
-        <input type="text" name="username" placeholder="Usuario" required><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br>
-        <input type="submit" name="register" value="Registrar">
+        <!-- Campo para Teléfono (Opcional) -->
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" maxlength="15">
+        <br><br>
+
+        <!-- Campo para Contraseña -->
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" maxlength="255" required>
+        <br><br>
+
+
+
+        <!-- añadr comprobacion de contaseñas -->
+        <button type="submit">Registrarse</button>
     </form>
-    <button onclick="togglePopup('registerPopup')">Cerrar</button>
 </div>
-
-<div id="overlay" class="overlay" onclick="closeAllPopups()"></div>
-
-<script>
-    function togglePopup(popupId) {
-        var popup = document.getElementById(popupId);
-        var overlay = document.getElementById('overlay');
-        popup.style.display = (popup.style.display === "block") ? "none" : "block";
-        overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
-    }
-
-    function closeAllPopups() {
-        document.getElementById('registerPopup').style.display = "none";
-        document.getElementById('overlay').style.display = "none";
-    }
-</script>
-
-</body>
-</html>

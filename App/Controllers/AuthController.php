@@ -12,7 +12,7 @@ class AuthController
     public function register()
     {
         // Definir la vista y los argumentos a pasar
-        $views = ['auth/register'];
+        $views = ['usuarios/register'];
         $args  = ['title' => 'Registro'];
 
         // Renderizar la vista con los argumentos
@@ -29,28 +29,39 @@ class AuthController
             $apellido = $_POST['apellido'] ?? '';
             $correo_electronico = $_POST['correo_electronico'] ?? '';
             $contraseña = $_POST['contraseña'] ?? '';
-            $rol = $_POST['rol'] ?? 'cliente';
-
-
+            $telefono = $_POST['telefono'] ?? '';
 
             // Asegurarse de que los campos no estén vacíos
-            if (empty($nombre) || empty($apellido) || empty($correo_electronico) || empty($contraseña)) {
+            if (empty($nombre) || empty($apellido) ||  empty($correo_electronico) || empty($contraseña)) {
                 header('Location: /register?error=Todos los campos son obligatorios');
                 exit;
             }
 
-            // Crear un nuevo usuario en la base de datos
-            Usuario::create([
+            // Verificar si el usuario ya existe
+            $usuario = Usuario::findByEmail($correo_electronico);
+            if ($usuario) {
+                header('Location: /register?error=El correo electrónico ya está registrado');
+                exit;
+            }
+            // Crear un nuevo usuario
+            $data = [
                 'nombre' => $nombre,
                 'apellido' => $apellido,
                 'correo_electronico' => $correo_electronico,
                 'contraseña' => password_hash($contraseña, PASSWORD_DEFAULT),
-                'rol' => $rol
-            ]);
+                'telefono' => $telefono
+            ];
+            $usuario = Usuario::create($data);
 
-            // Redirigir al inicio de sesión después del registro exitoso
-            header('Location: /login?success=Registro exitoso. Inicie sesión.');
-            exit;
+
+            // Redirigir al inicio de sesión después del registro exitoso 
+            // Definir la vista y los argumentos a pasar
+            $views = ['usuarios/login'];
+            $args  = ['title' => 'Login'];
+
+            // Renderizar la vista con los argumentos
+            View::render($views, $args);
+
         }
     }
 
@@ -58,7 +69,7 @@ class AuthController
     public function login()
     {
         // Definir la vista y los argumentos a pasar
-        $views = ['auth/login'];
+        $views = ['usuarios/login'];
         $args  = ['title' => 'Iniciar Sesión'];
 
         // Renderizar la vista con los argumentos
