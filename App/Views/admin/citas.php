@@ -1,3 +1,28 @@
+<!--
+ *
+ * Este archivo contiene la vista para gestionar citas en el panel de administración.
+ * Incluye formularios para crear, editar y eliminar citas, así como una tabla que
+ * muestra la lista de citas existentes.
+ *
+ * Secciones:
+ * - Encabezado: Muestra el título "Gestión de Citas".
+ * - Formulario para crear una nueva cita: Permite al administrador agregar una nueva cita proporcionando
+ *   ID de propiedad, ID de cliente, fecha y hora, y estado.
+ * - Lista de citas: Muestra una tabla con todas las citas existentes, incluyendo opciones
+ *   para editar o eliminar cada cita.
+ * - Formulario para editar una cita existente: Muestra un formulario para editar una cita si una cita
+ *   está cargada para edición.
+ *
+ * Variables:
+ * - $baseUrl: URL base para las acciones de los formularios.
+ * - $citas: Array de objetos de citas para mostrar en la tabla.
+ * - $citaToEdit: Objeto de cita para editar (si existe).
+-->
+<?php
+// Asegurarse de que $citas esté definido y sea un array
+$citas = isset($citas) && is_array($citas) ? $citas : [];
+?>
+
 <div>
     <h2>Gestión de Citas</h2>
     

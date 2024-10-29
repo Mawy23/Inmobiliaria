@@ -38,14 +38,11 @@ class Home
     public function exampleWithArgs($id = null)
     {
         // Definimos la vista a cargar (en este caso, 'home/example_with_args')
-        $views = ['home/example_with_args'];
+        $views = ['admin/usuarios'];
 
         // Definimos los argumentos a pasar a la vista, incluyendo el ID recibido como parámetro
         // Si no se pasa un ID, se asigna el valor 'No se envio ID' por defecto
-        $args  = [
-            'title' => 'Home | Example',
-            'id' => $id ?? 'No se envio ID' // Usamos el operador null coalesce (??) para gestionar un ID nulo
-        ];
+        $args  = ['title' => 'Citas'];
 
         // Renderizamos la vista con los argumentos
         View::render($views, $args);

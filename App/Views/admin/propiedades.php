@@ -1,3 +1,43 @@
+<!--
+ *
+ * Este archivo es responsable de gestionar las propiedades en el panel de administración.
+ * Incluye las siguientes funcionalidades:
+ *
+ * 1. Formulario para crear una nueva propiedad.
+ * 2. Mostrar una lista de propiedades con opciones para editar y eliminar cada propiedad.
+ * 3. Formulario para editar una propiedad existente (solo se muestra si una propiedad está cargada para edición).
+ *
+ * El formulario para crear una nueva propiedad incluye campos para:
+ * - Título
+ * - Descripción
+ * - Precio
+ * - Tipo (Casa, Apartamento, Terreno)
+ * - Dirección
+ * - Ciudad
+ * - Estado
+ * - Código Postal
+ * - ID del Agente
+ *
+ * La lista de propiedades muestra los siguientes detalles:
+ * - ID
+ * - Título
+ * - Descripción
+ * - Precio
+ * - Tipo
+ * - Dirección
+ * - Ciudad
+ * - Estado
+ * - Código Postal
+ * - Acciones (Editar, Eliminar)
+ *
+ * El formulario para editar una propiedad existente incluye los mismos campos que el formulario de creación,
+ * pre-rellenados con los detalles actuales de la propiedad.
+ -->
+ <?php
+// Asegurarse de que $propiedades esté definido y sea un array
+$propiedades = isset($propiedades) && is_array($propiedades) ? $propiedades : [];
+?>
+
 <div>
     <h2>Gestión de Propiedades</h2>
     

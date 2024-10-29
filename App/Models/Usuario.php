@@ -83,6 +83,30 @@ class Usuario extends Model
         }
     }
 
+        // Método que crea un nuevo agente en la base de datos
+        public static function createAgente($data)
+        {
+            try {
+                $db = static::getDB();
+    
+                // Preparar consulta sin marcadores de posición
+                $stmt = $db->prepare('INSERT INTO usuarios (nombre, apellido, correo_electronico, contraseña, rol, telefono) VALUES (?, ?, ?, ?, ?, ?)');
+    
+                // Usar un array para ejecutar los valores
+                $stmt->execute([
+                    $data['nombre'],
+                    $data['apellido'],
+                    $data['correo_electronico'],
+                    $data['contraseña'],
+                    'agente',
+                    $data['telefono']
+                ]);
+            } catch (PDOException $e) {
+                // Imprimir mensaje de error detallado
+                echo 'Error al crear el usuario: ' . $e->getMessage();
+                exit;
+            }
+        }
 
     // Método que actualiza un usuario en la base de datos
     public static function update($data)
