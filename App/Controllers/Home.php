@@ -43,7 +43,7 @@ class Home
     public function exampleWithArgs($id = null)
     {
         // Definimos la vista a cargar (en este caso, 'home/example_with_args')
-        $views = ['admin/propiedades'];
+        $views = ['admin/usuarios'];
 
         // Definimos los argumentos a pasar a la vista, incluyendo el ID recibido como parámetro
         // Si no se pasa un ID, se asigna el valor 'No se envio ID' por defecto

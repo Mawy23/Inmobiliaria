@@ -33,26 +33,26 @@
  * El formulario para editar una propiedad existente incluye los mismos campos que el formulario de creación,
  * pre-rellenados con los detalles actuales de la propiedad.
  -->
- <?php
+<?php
 // Asegurarse de que $propiedades esté definido y sea un array
 $propiedades = isset($propiedades) && is_array($propiedades) ? $propiedades : [];
 ?>
 
 <div>
     <h2>Gestión de Propiedades</h2>
-    
+
     <!-- Formulario para crear una nueva propiedad -->
     <h3>Agregar Nueva Propiedad</h3>
     <form action="<?= $baseUrl ?>PropiedadController/store" method="POST">
         <label for="titulo">Título</label>
         <input type="text" id="titulo" name="titulo" required>
-        
+
         <label for="descripcion">Descripción</label>
         <textarea id="descripcion" name="descripcion" required></textarea>
-        
+
         <label for="precio">Precio</label>
         <input type="number" id="precio" name="precio" step="0.01" required>
-        
+
         <label for="tipo">Tipo</label>
         <select id="tipo" name="tipo" required>
             <option value="casa">Casa</option>
@@ -93,72 +93,35 @@ $propiedades = isset($propiedades) && is_array($propiedades) ? $propiedades : []
             <th>Código Postal</th>
             <th>Acciones</th>
         </tr>
-        <?php foreach ($propiedades as $propiedad): ?>
+        <?php if (!empty($propiedades)): ?>
+            <?php foreach ($propiedades as $propiedad): ?>
+                <tr>
+                    <td><?= htmlspecialchars($propiedad->id_propiedad) ?></td>
+                    <td><?= htmlspecialchars($propiedad->titulo) ?></td>
+                    <td><?= htmlspecialchars($propiedad->descripcion) ?></td>
+                    <td><?= number_format($propiedad->precio, 2) ?> €</td>
+                    <td><?= ucfirst(htmlspecialchars($propiedad->tipo)) ?></td>
+                    <td><?= htmlspecialchars($propiedad->direccion) ?></td>
+                    <td><?= htmlspecialchars($propiedad->ciudad) ?></td>
+                    <td><?= htmlspecialchars($propiedad->estado) ?></td>
+                    <td><?= htmlspecialchars($propiedad->codigo_postal) ?></td>
+                    <td>
+                        <form action="<?= $baseUrl ?>propiedades/edit" method="GET" style="display:inline;">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($propiedad->id_propiedad) ?>">
+                            <button type="submit">Editar</button>
+                        </form>
+
+                        <form action="<?= $baseUrl ?>propiedades/delete" method="POST" style="display:inline;">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($propiedad->id_propiedad) ?>">
+                            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta propiedad?')">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
             <tr>
-                <td><?= $propiedad->id_propiedad ?></td>
-                <td><?= $propiedad->titulo ?></td>
-                <td><?= $propiedad->descripcion ?></td>
-                <td><?= number_format($propiedad->precio, 2) ?> €</td>
-                <td><?= ucfirst($propiedad->tipo) ?></td>
-                <td><?= $propiedad->direccion ?></td>
-                <td><?= $propiedad->ciudad ?></td>
-                <td><?= $propiedad->estado ?></td>
-                <td><?= $propiedad->codigo_postal ?></td>
-                <td>
-                    <!-- Botón para cargar datos de propiedad en el formulario de edición -->
-                    <form action="<?= $baseUrl ?>propiedades/edit" method="GET" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= $propiedad->id_propiedad ?>">
-                        <button type="submit">Editar</button>
-                    </form>
-
-                    <!-- Botón para eliminar propiedad -->
-                    <form action="<?= $baseUrl ?>propiedades/delete" method="POST" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= $propiedad->id_propiedad ?>">
-                        <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta propiedad?')">Eliminar</button>
-                    </form>
-                </td>
+                <td colspan="10">No hay propiedades disponibles en este momento.</td>
             </tr>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </table>
-
-    <!-- Formulario para editar una propiedad existente (solo se muestra si se cargó una propiedad para editar) -->
-    <?php if (isset($propiedadToEdit)): ?>
-        <h3>Editar Propiedad</h3>
-        <form action="<?= $baseUrl ?>propiedades/update" method="POST">
-            <input type="hidden" name="id" value="<?= $propiedadToEdit->id_propiedad ?>">
-
-            <label for="edit_titulo">Título</label>
-            <input type="text" id="edit_titulo" name="titulo" value="<?= $propiedadToEdit->titulo ?>" required>
-
-            <label for="edit_descripcion">Descripción</label>
-            <textarea id="edit_descripcion" name="descripcion" required><?= $propiedadToEdit->descripcion ?></textarea>
-
-            <label for="edit_precio">Precio</label>
-            <input type="number" id="edit_precio" name="precio" value="<?= $propiedadToEdit->precio ?>" step="0.01" required>
-
-            <label for="edit_tipo">Tipo</label>
-            <select id="edit_tipo" name="tipo" required>
-                <option value="casa" <?= $propiedadToEdit->tipo == 'casa' ? 'selected' : '' ?>>Casa</option>
-                <option value="departamento" <?= $propiedadToEdit->tipo == 'departamento' ? 'selected' : '' ?>>Departamento</option>
-                <option value="terreno" <?= $propiedadToEdit->tipo == 'terreno' ? 'selected' : '' ?>>Terreno</option>
-            </select>
-
-            <label for="edit_direccion">Dirección</label>
-            <input type="text" id="edit_direccion" name="direccion" value="<?= $propiedadToEdit->direccion ?>" required>
-
-            <label for="edit_ciudad">Ciudad</label>
-            <input type="text" id="edit_ciudad" name="ciudad" value="<?= $propiedadToEdit->ciudad ?>" required>
-
-            <label for="edit_estado">Estado</label>
-            <input type="text" id="edit_estado" name="estado" value="<?= $propiedadToEdit->estado ?>" required>
-
-            <label for="edit_codigo_postal">Código Postal</label>
-            <input type="text" id="edit_codigo_postal" name="codigo_postal" value="<?= $propiedadToEdit->codigo_postal ?>" required>
-
-            <label for="edit_id_agente">ID Agente</label>
-            <input type="number" id="edit_id_agente" name="id_agente" value="<?= $propiedadToEdit->id_agente ?>" required>
-
-            <button type="submit">Actualizar Propiedad</button>
-        </form>
-    <?php endif; ?>
 </div>
