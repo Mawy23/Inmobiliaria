@@ -39,9 +39,11 @@ class CitaController
             // Crear una nueva cita con los datos del formulario
             Cita::create($_POST);
             
-            // Redireccionar a la lista de citas
-            header('Location: /citas');
-            exit;
+            $views = ['admin/citas'];
+            $args  = ['title' => 'citas'];
+
+            // Renderizar la vista con los argumentos
+            View::render($views, $args);
         }
     }
 

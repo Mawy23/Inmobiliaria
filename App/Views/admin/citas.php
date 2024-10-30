@@ -28,7 +28,7 @@ $citas = isset($citas) && is_array($citas) ? $citas : [];
     
     <!-- Formulario para crear una nueva cita -->
     <h3>Agregar Nueva Cita</h3>
-    <form action="<?= $baseUrl ?>citas/store" method="POST">
+    <form action="<?= $baseUrl ?>CitaController/store" method="POST">
         <label for="id_propiedad">ID Propiedad</label>
         <input type="number" id="id_propiedad" name="id_propiedad" required>
         

@@ -43,7 +43,7 @@ $propiedades = isset($propiedades) && is_array($propiedades) ? $propiedades : []
     
     <!-- Formulario para crear una nueva propiedad -->
     <h3>Agregar Nueva Propiedad</h3>
-    <form action="<?= $baseUrl ?>propiedades/store" method="POST">
+    <form action="<?= $baseUrl ?>PropiedadController/store" method="POST">
         <label for="titulo">Título</label>
         <input type="text" id="titulo" name="titulo" required>
         
@@ -73,7 +73,7 @@ $propiedades = isset($propiedades) && is_array($propiedades) ? $propiedades : []
         <input type="text" id="codigo_postal" name="codigo_postal" required>
 
         <label for="id_agente">ID Agente</label>
-        <input type="number" id="id_agente" name="id_agente" required>
+        <input type="number" id="id_agente" name="id_agente">
 
         <button type="submit">Crear Propiedad</button>
     </form>

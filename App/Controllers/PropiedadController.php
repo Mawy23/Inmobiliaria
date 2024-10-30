@@ -53,9 +53,11 @@ class PropiedadController
             // Crear una nueva propiedad con los datos del formulario
             Propiedad::create($_POST);
             
-            // Redireccionar a la lista de propiedades
-            header('Location: /propiedades');
-            exit;
+            $views = ['admin/propiedades'];
+            $args  = ['title' => 'propiedades'];
+
+            // Renderizar la vista con los argumentos
+            View::render($views, $args);
         }
     }
 
