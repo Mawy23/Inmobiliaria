@@ -79,17 +79,5 @@ class Router
             $this->urlParams = array_values($url);
         }
     }
-
-    // Método para verificar las rutas que requieren autenticación
-    public function checkAuth()
-    {
-        // rutas que requieren autenticacion
-        $protectedRoutes = ['home', 'profile'];
-
-        // Si la ruta solicitada está protegida y el usuario no está autenticado, redirigimos al login
-        if (in_array($this->urlController, $protectedRoutes) && !Session::checkAuth()) {
-            header('Location: /login');
-            exit;
-        }
-    }
 }
+    

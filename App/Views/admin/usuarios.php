@@ -32,7 +32,7 @@ $usuarios = isset($usuarios) && is_array($usuarios) ? $usuarios : [];
     
     <!-- Formulario para crear un nuevo usuario -->
     <h3>Agregar Nuevo Usuario</h3>
-    <form action="<?= $baseUrl ?>usuarios/store" method="POST">
+    <form action="<?= $baseUrl ?>AuthController/store" method="POST">
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" required>
 

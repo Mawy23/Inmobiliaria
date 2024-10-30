@@ -64,9 +64,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav"> <!-- Botones a la derecha -->
-                    <?php if (isset($_SESSION['user'])) : ?>
+                    <?php if (isset($_SESSION['id_usuario'])) : ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= $baseUrl ?>user/profile"><?= $_SESSION['user'] ?></a>
+                            <a class="nav-link" href="<?= $baseUrl ?>user/profile"><?= $_SESSION['nombre'] ?></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= $baseUrl ?>user/logout">Cerrar Sesión</a>
