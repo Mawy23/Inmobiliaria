@@ -27,16 +27,16 @@ class Home
     public function busquedaInmuebles(){
 
         // Obtener todas las propiedades de la base de datos
-        $propiedades = Propiedad::all();
+        //$propiedades = Propiedad::all();
 
         // Definimos las vistas a cargar (en este caso, 'home/busqueda_inmuebles')
-        $views = ['propiedades/listado'];
+        //$views = ['propiedades/listado'];
 
         // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
-        $args  = ['title' => 'Busqueda de Inmuebles', 'propiedades' => $propiedades];
+        //$args  = ['title' => 'Busqueda de Inmuebles', 'propiedades' => $propiedades];
 
         // Renderizamos la vista con los argumentos especificados
-        View::render($views, $args);
+        //View::render($views, $args);
     }
 
     // Método que maneja una vista de ejemplo con parámetros adicionales

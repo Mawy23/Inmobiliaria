@@ -9,15 +9,24 @@ class PropiedadController
     // Método que maneja la vista de lista de propiedades
     public function index()
     {
-        // Obtener todas las propiedades de la base de datos
-        $propiedades = Propiedad::all();
-        
-        // Definir las vistas a cargar y los argumentos a pasar
-        $views = ['propiedad/index'];
-        $args  = ['title' => 'Lista de Propiedades', 'propiedades' => $propiedades];
-        
-        // Renderizar la vista con los argumentos especificados
+       
+        $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : null;
+        $precio_min = isset($_GET['precio_min']) ? $_GET['precio_min'] : null;
+        $precio_max = isset($_GET['precio_max']) ? $_GET['precio_max'] : null;
+        $ciudad = isset($_GET['ciudad']) ? $_GET['ciudad'] : null;
+
+        // Obtener propiedades filtradas
+        $propiedades = Propiedad::search($tipo, $precio_min, $precio_max, $ciudad);
+
+        // Definimos las vistas a cargar (en este caso, 'home/busqueda_inmuebles')
+        $views = ['propiedades/buscar','propiedades/listado'];
+
+        // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
+        $args  = ['title' => 'Busqueda de Inmuebles', 'propiedades' => $propiedades];
+
+        // Renderizamos la vista con los argumentos especificados
         View::render($views, $args);
+
     }
 
     // Método que maneja la vista de detalles de una propiedad específica
@@ -25,9 +34,14 @@ class PropiedadController
     {
         // Obtener la propiedad por su ID
         $propiedad = Propiedad::find($id);
+
+        if (!$propiedad) {
+            // Manejar el caso en que no se encuentre la propiedad
+            throw new \Exception("Propiedad no encontrada.");
+        }
         
         // Definir la vista y los argumentos a pasar
-        $views = ['propiedad/show'];
+        $views = ['propiedades/detalle'];
         $args  = ['title' => 'Detalles de la Propiedad', 'propiedad' => $propiedad];
         
         // Renderizar la vista con los argumentos

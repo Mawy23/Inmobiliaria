@@ -213,3 +213,65 @@ header h1 {
   background-color: #57a853; /* Más oscuro al pasar */
   transform: scale(1.05); /* Efecto de escalar al pasar */
 }
+
+
+/* Estilos de Propiedades */
+
+.propiedad-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.propiedad-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  background-color: #f9f9f9;
+}
+
+.propiedad-card:hover {
+  transform: scale(1.03);
+}
+
+.propiedad-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.propiedad-description {
+  font-size: 0.9em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.propiedad-price {
+  font-size: 1.2em;
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.propiedad-details {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.propiedad-button {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.propiedad-button:hover {
+  background-color: #0056b3;
+}

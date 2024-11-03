@@ -79,4 +79,42 @@ class Propiedad extends Model {
             throw new Exception($e->getMessage());
         }
     }
+
+    public static function search($tipo = null, $precio_min = null, $precio_max = null, $ciudad = null) {
+        try {
+            $db = static::getDB();
+            $query = 'SELECT * FROM propiedades WHERE 1=1';
+            $params = [];
+    
+            if ($tipo) {
+                $query .= ' AND tipo = :tipo';
+                $params[':tipo'] = $tipo;
+            }
+    
+            if ($precio_min) {
+                $query .= ' AND precio >= :precio_min';
+                $params[':precio_min'] = $precio_min;
+            }
+    
+            if ($precio_max) {
+                $query .= ' AND precio <= :precio_max';
+                $params[':precio_max'] = $precio_max;
+            }
+    
+            if ($ciudad) {
+                $query .= ' AND ciudad LIKE :ciudad';
+                $params[':ciudad'] = '%' . $ciudad . '%';
+            }
+    
+            $stmt = $db->prepare($query);
+            foreach ($params as $key => &$val) {
+                $stmt->bindParam($key, $val);
+            }
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Models\Propiedad');
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+    
 }
