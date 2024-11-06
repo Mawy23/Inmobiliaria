@@ -6,6 +6,7 @@ namespace App\Controllers;
 // Usamos la clase 'View' del namespace 'Core' para gestionar la visualización de las vistas
 use Core\View;
 use App\Models\Propiedad;
+use App\Models\Usuario;
 
 // Definimos la clase 'Home' que manejará la lógica de las páginas relacionadas con el "Home"
 class Home
@@ -42,12 +43,14 @@ class Home
     // Método que maneja una vista de ejemplo con parámetros adicionales
     public function exampleWithArgs($id = null)
     {
+        // Obtenemos todos los usuarios de la base de datos
+        $usuarios = Usuario::all();
         // Definimos la vista a cargar (en este caso, 'home/example_with_args')
         $views = ['admin/usuarios'];
 
         // Definimos los argumentos a pasar a la vista, incluyendo el ID recibido como parámetro
         // Si no se pasa un ID, se asigna el valor 'No se envio ID' por defecto
-        $args  = ['title' => 'Citas'];
+        $args  = ['title' => 'Citas', 'usuarios' => $usuarios];
 
         // Renderizamos la vista con los argumentos
         View::render($views, $args);
