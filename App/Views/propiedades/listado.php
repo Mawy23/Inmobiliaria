@@ -67,7 +67,6 @@
         <h3>No se encontraron propiedades</h3>
         <p>Lo sentimos, no hay propiedades que coincidan con tus criterios de búsqueda.</p>
         <p>Prueba ajustando tus filtros o ampliando tus criterios de búsqueda.</p>
-        <a href="/Inmobiliaria/Public/PropiedadController/index" class="btn-regresar">Volver a buscar</a>
     </div>
 <?php endif; ?>
 
@@ -89,20 +88,6 @@
     .no-propiedades p {
         color: #666; /* Color gris para el texto adicional */
         margin-bottom: 15px;
-    }
-
-    .btn-regresar {
-        display: inline-block;
-        padding: 10px 15px;
-        background-color: #007bff; /* Color azul */
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-
-    .btn-regresar:hover {
-        background-color: #0056b3; /* Color azul más oscuro en hover */
     }
 </style>
 

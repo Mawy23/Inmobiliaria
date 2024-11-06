@@ -1,4 +1,3 @@
-<?php if (!empty($propiedades)): ?>
     <style>
         h2 {
             color: #333;
@@ -64,6 +63,3 @@
             <button type="submit">Filtrar</button>
         </form>
     </div>
-<?php else: ?>
-    <!-- <p>No se encontraron propiedades.</p> -->
-<?php endif; ?>
