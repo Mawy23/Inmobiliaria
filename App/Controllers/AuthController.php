@@ -170,12 +170,19 @@ class AuthController
     // Método que maneja el cierre de sesión
     public function logout()
     {
-        // Cerrar la sesión
         $session = Session::getInstance();
-        $session->destroy();
+        $session->remove('id_usuario');
+        $session->remove('nombre');
+        $session->remove('rol');
+        session_unset(); // Libera todas las variables de sesión
+        $session->destroy(); // Destruye la sesión
 
-        // Redirigir al login
-        header('Location: /login');
-        exit;
+        // Redirigir al home después del cierre de sesión
+        // Definir la vista y los argumentos a pasar
+        $views = ['home/index'];
+        $args  = ['title' => 'home'];
+
+        // Renderizar la vista con los argumentos
+        View::render($views, $args);
     }
 }

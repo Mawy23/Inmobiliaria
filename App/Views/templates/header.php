@@ -1,5 +1,11 @@
-<!doctype html>
-<html lang="es" class="h-100">
+<?php
+use Core\Session;
+
+$session = Session::getInstance();
+$idUsuario = $session->get('id_usuario');
+$nombre = $session->get('nombre');
+$rol = $session->get('rol');
+?>
 
 <head>
     <meta charset="utf-8">
@@ -29,15 +35,17 @@
         }
 
         .navbar {
-            justify-content: space-between; /* Espacio entre los elementos del navbar */
+            justify-content: space-between;
+            /* Espacio entre los elementos del navbar */
 
         }
 
         .nav-item button {
-            font-size: 0.85rem; /* Tamaño más pequeño para los botones */
-            margin-left: 10px; /* Espacio entre botones */
+            font-size: 0.85rem;
+            /* Tamaño más pequeño para los botones */
+            margin-left: 10px;
+            /* Espacio entre botones */
         }
-        
     </style>
     <!-- Custom styles for this template -->
     <link href="<?= $baseUrl ?>css/style.css" rel="stylesheet">
@@ -66,10 +74,16 @@
                 <ul class="navbar-nav"> <!-- Botones a la derecha -->
                     <?php if (isset($_SESSION['id_usuario'])) : ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= $baseUrl ?>user/profile"><?= $_SESSION['nombre'] ?></a>
+                            <?php if ($_SESSION['rol'] == 'admin') : ?>
+                                <a class="nav-link" href="<?= $baseUrl ?>admin/profile"><?= $_SESSION['nombre'] ?></a>
+                            <?php elseif ($_SESSION['rol'] == 'agente') : ?>
+                                <a class="nav-link" href="<?= $baseUrl ?>user/profileAgente"><?= $_SESSION['nombre'] ?></a>
+                            <?php else : ?>
+                                <a class="nav-link" href="<?= $baseUrl ?>user/profileUsuario"><?= $_SESSION['nombre'] ?></a>
+                            <?php endif; ?>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= $baseUrl ?>user/logout">Cerrar Sesión</a>
+                            <a class="nav-link" href="<?= $baseUrl ?>AuthController/logout">Cerrar Sesión</a>
                         </li>
                     <?php else : ?>
                         <li class="nav-item">
@@ -83,4 +97,5 @@
             </div>
         </nav>
     </header>
+
 </html>
