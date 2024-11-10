@@ -39,7 +39,7 @@ class Usuario extends Model
             $db = static::getDB();
 
             // Preparamos la consulta SQL para obtener un usuario por su ID
-            $stmt = $db->prepare('SELECT * FROM usuarios WHERE id = :id');
+            $stmt = $db->prepare('SELECT * FROM usuarios WHERE id_usuario = :id');
 
             // Sustituimos el marcador de posición :id por el valor de $id
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -83,54 +83,69 @@ class Usuario extends Model
         }
     }
 
-        // Método que crea un nuevo agente en la base de datos
-        public static function createAgente($data)
-        {
-            try {
-                $db = static::getDB();
-    
-                // Preparar consulta sin marcadores de posición
-                $stmt = $db->prepare('INSERT INTO usuarios (nombre, apellido, correo_electronico, contraseña, rol, telefono) VALUES (?, ?, ?, ?, ?, ?)');
-    
-                // Usar un array para ejecutar los valores
-                $stmt->execute([
-                    $data['nombre'],
-                    $data['apellido'],
-                    $data['correo_electronico'],
-                    $data['contraseña'],
-                    'agente',
-                    $data['telefono']
-                ]);
-            } catch (PDOException $e) {
-                // Imprimir mensaje de error detallado
-                echo 'Error al crear el usuario: ' . $e->getMessage();
-                exit;
-            }
+    // Método que crea un nuevo agente en la base de datos
+    public static function createAgente($data)
+    {
+        try {
+            $db = static::getDB();
+
+            // Preparar consulta sin marcadores de posición
+            $stmt = $db->prepare('INSERT INTO usuarios (nombre, apellido, correo_electronico, contraseña, rol, telefono) VALUES (?, ?, ?, ?, ?, ?)');
+
+            // Usar un array para ejecutar los valores
+            $stmt->execute([
+                $data['nombre'],
+                $data['apellido'],
+                $data['correo_electronico'],
+                $data['contraseña'],
+                'agente',
+                $data['telefono']
+            ]);
+        } catch (PDOException $e) {
+            // Imprimir mensaje de error detallado
+            echo 'Error al crear el usuario: ' . $e->getMessage();
+            exit;
         }
+    }
 
     // Método que actualiza un usuario en la base de datos
     public static function update($data)
     {
         try {
-            // Nos conectamos a la base de datos utilizando PDO
+            // Conectarse a la base de datos usando PDO
             $db = static::getDB();
 
-            // Preparamos la consulta SQL para actualizar un usuario
-            $stmt = $db->prepare('UPDATE usuarios SET nombre = :nombre, correo_electronico = :correo_electronico, contraseña = :contraseña WHERE id = :id');
+            // Preparar la consulta SQL con signos de interrogación en lugar de nombres de parámetros
+            $stmt = $db->prepare('
+            UPDATE usuarios 
+            SET nombre = ?, 
+                apellido = ?, 
+                correo_electronico = ?, 
+                contraseña = ?, 
+                rol = ?, 
+                telefono = ? 
+            WHERE id_usuario = ?
+        ');
 
-            // Sustituimos los marcadores de posición :nombre, :correo_electronico, :contraseña y :id por los valores correspondientes
-            $stmt->bindParam(':nombre', $data['nombre'], PDO::PARAM_STR);
-            $stmt->bindParam(':correo_electronico', $data['correo_electronico'], PDO::PARAM_STR);
-            $stmt->bindParam(':contraseña', $data['contraseña'], PDO::PARAM_STR);
-            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
-
-            // Ejecutamos la consulta
-            $stmt->execute();
+            // Ejecutar la consulta pasando un array con los valores en el orden correcto
+            $stmt->execute([
+                $data['nombre'],
+                $data['apellido'],
+                $data['correo_electronico'],
+                $data['contraseña'],
+                $data['rol'],
+                $data['telefono'],
+                $data['id_usuario']  // Al final, el valor de `id_usuario` para la condición WHERE
+            ]);
         } catch (PDOException $e) {
-            // Si hay un error, lanzamos una excepción
-            throw new Exception($e->getMessage());
+            // Imprimir mensaje de error detallado
+            echo 'Error al actualizar el usuario: ' . $e->getMessage();
+            exit;
         }
     }
+
+
+
 
     // Método que elimina un usuario de la base de datos
     public static function delete($id)
@@ -140,7 +155,7 @@ class Usuario extends Model
             $db = static::getDB();
 
             // Preparamos la consulta SQL para eliminar un usuario
-            $stmt = $db->prepare('DELETE FROM usuarios WHERE id = :id');
+            $stmt = $db->prepare('DELETE FROM usuarios WHERE id_usuario = :id');
 
             // Sustituimos el marcador de posición :id por el valor de $id
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);

@@ -4,6 +4,8 @@
 namespace App\Controllers;
 
 // Usamos la clase 'View' del namespace 'Core' para gestionar la visualización de las vistas
+
+use App\Models\Cita;
 use Core\View;
 use App\Models\Propiedad;
 use App\Models\Usuario;
@@ -41,7 +43,7 @@ class Home
     }
 
     // Método que maneja una vista de ejemplo con parámetros adicionales
-    public function exampleWithArgs($id = null)
+    public function usuarios($id = null)
     {
         // Obtenemos todos los usuarios de la base de datos
         $usuarios = Usuario::all();
@@ -51,6 +53,36 @@ class Home
         // Definimos los argumentos a pasar a la vista, incluyendo el ID recibido como parámetro
         // Si no se pasa un ID, se asigna el valor 'No se envio ID' por defecto
         $args  = ['title' => 'Citas', 'usuarios' => $usuarios];
+
+        // Renderizamos la vista con los argumentos
+        View::render($views, $args);
+    }
+
+    public function propiedades($id = null)
+    {
+        // Obtenemos todos los usuarios de la base de datos
+        $usuarios = Propiedad::all();
+        // Definimos la vista a cargar (en este caso, 'home/example_with_args')
+        $views = ['admin/propiedades'];
+
+        // Definimos los argumentos a pasar a la vista, incluyendo el ID recibido como parámetro
+        // Si no se pasa un ID, se asigna el valor 'No se envio ID' por defecto
+        $args  = ['title' => 'Propiedades', 'propiedades' => $usuarios];
+
+        // Renderizamos la vista con los argumentos
+        View::render($views, $args);
+    }
+
+    public function citas($id = null)
+    {
+        // Obtenemos todos los usuarios de la base de datos
+        $usuarios = Cita::all();
+        // Definimos la vista a cargar (en este caso, 'home/example_with_args')
+        $views = ['admin/citas'];
+
+        // Definimos los argumentos a pasar a la vista, incluyendo el ID recibido como parámetro
+        // Si no se pasa un ID, se asigna el valor 'No se envio ID' por defecto
+        $args  = ['title' => 'Citas', 'citas' => $usuarios];
 
         // Renderizamos la vista con los argumentos
         View::render($views, $args);

@@ -1,27 +1,3 @@
-<!--
- *
- * Este archivo contiene el código HTML y PHP para la gestión de usuarios en el panel de administración.
- * Incluye las siguientes secciones:
- *
- * 1. Encabezado: Muestra el título "Gestión de Usuarios".
- *
- * 2. Formulario para Crear un Nuevo Usuario:
- *    - Acción: Envía al endpoint "usuarios/store".
- *    - Campos: Nombre, Apellido, Correo Electrónico, Contraseña, Teléfono.
- *    - Botón de Envío: "Crear Usuario".
- *
- * 3. Lista de Usuarios:
- *    - Muestra una tabla con las columnas: ID, Nombre, Apellido, Correo Electrónico, Teléfono, Rol, Acciones.
- *    - Cada fila de usuario incluye:
- *      - Botón de Editar: Envía al endpoint "usuarios/edit" con el ID del usuario.
- *      - Botón de Eliminar: Envía al endpoint "usuarios/delete" con el ID del usuario y una solicitud de confirmación.
- *
- * 4. Formulario para Editar un Usuario Existente (mostrado condicionalmente si se carga un usuario para editar):
- *    - Acción: Envía al endpoint "usuarios/update".
- *    - Campos: Nombre, Apellido, Correo Electrónico, Contraseña (opcional), Teléfono.
- *    - Botón de Envío: "Actualizar Usuario".
--->
-
 <?php
 // Asegúrate de que $usuarios está definida y es un array antes de usarla
 $usuarios = isset($usuarios) && is_array($usuarios) ? $usuarios : [];
@@ -29,10 +5,10 @@ $usuarios = isset($usuarios) && is_array($usuarios) ? $usuarios : [];
 
 <div>
     <h2>Gestión de Usuarios</h2>
-    
+
     <!-- Formulario para crear un nuevo usuario -->
     <h3>Agregar Nuevo Usuario</h3>
-    <form action="<?= $baseUrl ?>AuthController/adminStore" method="POST">
+    <form action="<?= $baseUrl ?>UsuariosController/store" method="POST">
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -73,13 +49,12 @@ $usuarios = isset($usuarios) && is_array($usuarios) ? $usuarios : [];
                 <td><?= ucfirst($usuario->rol) ?></td>
                 <td>
                     <!-- Botón para cargar datos de usuario en el formulario de edición -->
-                    <form action="<?= $baseUrl ?>usuarios/edit" method="GET" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= $usuario->id_usuario ?>">
+                    <form action="<?= $baseUrl ?>UsuariosController/edit/<?= $usuario->id_usuario ?>" method="POST" style="display:inline;">
                         <button type="submit">Editar</button>
                     </form>
 
                     <!-- Botón para eliminar usuario -->
-                    <form action="<?= $baseUrl ?>usuarios/delete" method="POST" style="display:inline;">
+                    <form action="<?= $baseUrl ?>UsuariosController/delete" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<?= $usuario->id_usuario ?>">
                         <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">Eliminar</button>
                     </form>
@@ -91,7 +66,7 @@ $usuarios = isset($usuarios) && is_array($usuarios) ? $usuarios : [];
     <!-- Formulario para editar un usuario existente (solo se muestra si se cargó un usuario para editar) -->
     <?php if (isset($usuarioToEdit)): ?>
         <h3>Editar Usuario</h3>
-        <form action="<?= $baseUrl ?>usuarios/update" method="POST">
+        <form action="<?= $baseUrl ?>UsuariosController/update" method="POST">
             <input type="hidden" name="id" value="<?= $usuarioToEdit->id_usuario ?>">
 
             <label for="edit_nombre">Nombre</label>
@@ -108,6 +83,13 @@ $usuarios = isset($usuarios) && is_array($usuarios) ? $usuarios : [];
 
             <label for="edit_telefono">Teléfono</label>
             <input type="text" id="edit_telefono" name="telefono" value="<?= $usuarioToEdit->telefono ?>">
+
+            <label for="edit_rol">Rol</label>
+            <select id="edit_rol" name="rol">
+                <option value="usuario" <?= $usuarioToEdit->rol === 'usuario' ? 'selected' : '' ?>>Usuario</option>
+                <option value="editor" <?= $usuarioToEdit->rol === 'agente' ? 'selected' : '' ?>>Agente</option>
+                <option value="admin" <?= $usuarioToEdit->rol === 'admin' ? 'selected' : '' ?>>Administrador</option>
+            </select>
 
             <button type="submit">Actualizar Usuario</button>
         </form>
