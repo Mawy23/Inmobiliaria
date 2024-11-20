@@ -26,7 +26,10 @@
         <input type="password" id="contraseña" name="contraseña" maxlength="255" required>
         <br><br>
 
-
+        <!-- Campo para Confirmar Contraseña -->
+        <label for="confirmar_contraseña">Confirmar Contraseña:</label>
+        <input type="password" id="confirmar_contraseña" name="confirmar_contraseña" maxlength="255" required>
+        <br><br>
 
         <!-- añadr comprobacion de contaseñas -->
         <button type="submit">Registrarse</button>

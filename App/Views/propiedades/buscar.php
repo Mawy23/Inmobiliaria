@@ -1,4 +1,4 @@
-    <style>
+<style>
         h2 {
             color: #333;
             margin-bottom: 20px;
@@ -46,9 +46,10 @@
             <label for="tipo">Tipo de Propiedad:</label>
             <select name="tipo" id="tipo">
                 <option value="">Todos</option>
-                <option value="apartamento" <?php echo isset($_GET['tipo']) && $_GET['tipo'] === 'apartamento' ? 'selected' : ''; ?>>Apartamento</option>
+                <option value="departamento" <?php echo isset($_GET['tipo']) && $_GET['tipo'] === 'departamento' ? 'selected' : ''; ?>>Departamento</option>
                 <option value="casa" <?php echo isset($_GET['tipo']) && $_GET['tipo'] === 'casa' ? 'selected' : ''; ?>>Casa</option>
-                <option value="bajo" <?php echo isset($_GET['tipo']) && $_GET['tipo'] === 'bajo' ? 'selected' : ''; ?>>Bajo</option>
+                <option value="terreno" <?php echo isset($_GET['tipo']) && $_GET['tipo'] === 'terreno' ? 'selected' : ''; ?>>Terreno</option>
+                <option value="local" <?php echo isset($_GET['tipo']) && $_GET['tipo'] === 'local' ? 'selected' : ''; ?>>Local</option>
             </select>
 
             <label for="precio_min">Precio Mínimo:</label>

@@ -67,9 +67,9 @@ class Session
         return isset($_SESSION['rol']) && $_SESSION['rol'] === 'agente';
     }
 
-    // Método para verificar si un usuario es usuario
-    public static function isUser()
+    // Método para verificar si un usuario es cliente
+    public static function isClient()
     {
-        return isset($_SESSION['rol']) && $_SESSION['rol'] === 'usuario';
+        return isset($_SESSION['rol']) && $_SESSION['rol'] === 'cliente';
     }
 }

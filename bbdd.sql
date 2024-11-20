@@ -22,7 +22,7 @@ CREATE TABLE propiedades (
     titulo VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
-    tipo ENUM('casa', 'departamento', 'terreno') NOT NULL,
+    tipo ENUM('casa', 'departamento', 'terreno', 'local') NOT NULL,
     direccion VARCHAR(255) NOT NULL,
     ciudad VARCHAR(50) NOT NULL,
     estado VARCHAR(50) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE transacciones (
 CREATE TABLE preferencias_busqueda (
     id_preferencia INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT,
-    tipo_propiedad ENUM('casa', 'piso', 'terreno', 'local') NOT NULL,
+    tipo_propiedad ENUM('casa', 'departamento', 'terreno', 'local') NOT NULL,
     rango_precio_min DECIMAL(10, 2),
     rango_precio_max DECIMAL(10, 2),
     localizacion VARCHAR(255),

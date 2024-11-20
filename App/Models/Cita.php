@@ -54,4 +54,12 @@ class Cita extends Model {
             throw new Exception($e->getMessage());
         }
     }
+
+    public static function where($column, $value) {
+        $sql = "SELECT * FROM citas WHERE $column = :value";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindValue(':value', $value);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

@@ -25,6 +25,11 @@ class AuthController
     {
         // Verificar que la solicitud sea un POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Verificar que las contraseñas coincidan
+            if ($_POST['contraseña'] !== $_POST['confirmar_contraseña']) {
+                header('Location: /register?error=Las contraseñas no coinciden');
+                exit;
+            }
             // Validar los datos de entrada
             $nombre = $_POST['nombre'] ?? '';
             $apellido = $_POST['apellido'] ?? '';
@@ -52,7 +57,7 @@ class AuthController
                 'contraseña' => password_hash($contraseña, PASSWORD_DEFAULT),
                 'telefono' => $telefono
             ];
-            $usuario = Usuario::create($data);
+            $usuario = Usuario::createCliente($data);
 
 
             // Redirigir al inicio de sesión después del registro exitoso 
@@ -97,7 +102,7 @@ class AuthController
                 'contraseña' => password_hash($contraseña, PASSWORD_DEFAULT),
                 'telefono' => $telefono
             ];
-            $usuario = Usuario::create($data);
+            $usuario = Usuario::createCliente($data);
 
 
             // Redirigir al inicio de sesión después del registro exitoso 
@@ -129,11 +134,6 @@ class AuthController
             // Capturar el correo electrónico y la contraseña del formulario
             $correo_electronico = $_POST['correo_electronico'] ?? '';
             $contraseña = $_POST['contraseña'] ?? '';
-
-            var_dump($correo_electronico);
-            var_dump($contraseña);
-            var_dump($correo_electronico);
-            var_dump($contraseña);
 
             // Verificar que los campos no estén vacíos
             if (empty($correo_electronico) || empty($contraseña)) {

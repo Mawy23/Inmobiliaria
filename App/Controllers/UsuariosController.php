@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use Core\View;
 use App\Models\Usuario;
+use App\Models\Propiedad;
+use App\Models\Cita;
+use Core\Session;
 
 class UsuariosController
 {
@@ -37,22 +40,35 @@ class UsuariosController
     {
         // Verificar que la solicitud sea un POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Verificar que las contraseñas coincidan
+            if ($_POST['contraseña'] !== $_POST['confirmar_contraseña']) {
+                header('Location: /register?error=Las contraseñas no coinciden');
+                exit;
+            }
             // Crear un nuevo usuario con los datos del formulario
             $data = [
                 'nombre' => $_POST['nombre'],
                 'apellido' => $_POST['apellido'],
                 'correo_electronico' => $_POST['correo_electronico'],
                 'contraseña' => password_hash($_POST['contraseña'], PASSWORD_DEFAULT),
-                'telefono' => $_POST['telefono']
+                'telefono' => $_POST['telefono'],
+                'rol' => $_POST['rol']
             ];
 
-            Usuario::create($data);
+            // Llamar a la función correspondiente según el rol
+            switch ($data['rol']) {
+                case 'cliente':
+                    Usuario::createCliente($data);
+                    break;
+                case 'agente':
+                    Usuario::createAgente($data);
+                    break;
+                case 'admin':
+                    Usuario::createAdmin($data);
+                    break;
+            }
 
-            $views = ['admin/usuarios'];
-            $args  = ['title' => 'Lista de Usuarios', 'usuarios' => Usuario::all()];
-
-            // Renderizar la vista con los argumentos
-            View::render($views, $args);
+            $this->redirectToProfile();
         }
     }
 
@@ -61,54 +77,64 @@ class UsuariosController
         // Buscar el usuario por su ID
         $usuarioToEdit = Usuario::find($id);
 
-        $views = ['admin/usuarios'];
-        $args  = [
-            'title' => 'Lista de Usuarios',
-            'usuarios' => Usuario::all(),
-            'usuarioToEdit' => $usuarioToEdit
-        ];
-
-        // Renderizar la vista con los argumentos
-        View::render($views, $args);
+        $this->redirectToProfile($usuarioToEdit, null, 'usuarios');
     }
 
     // Método que maneja la actualización de un usuario
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Buscar el usuario por su ID
+            $usuarioToEdit = Usuario::find($_POST['id']);
+            
             $data = [
                 'id_usuario' => $_POST['id'], // Debe coincidir con el parámetro :id_usuario
                 'nombre' => $_POST['nombre'],
                 'apellido' => $_POST['apellido'],
                 'correo_electronico' => $_POST['correo_electronico'],
                 'telefono' => $_POST['telefono'],
-                'contraseña' => empty($_POST['contraseña']) ? $_POST['contraseña'] : password_hash($_POST['contraseña'], PASSWORD_DEFAULT),
+                'contraseña' => empty($_POST['contraseña']) ? $usuarioToEdit->contraseña : password_hash($_POST['contraseña'], PASSWORD_DEFAULT),
                 'rol' => $_POST['rol']
             ];
 
             Usuario::update($data);
 
-            // Redirigir a la lista de usuarios después de la actualización
-            $views = ['admin/usuarios'];
-            $args  = ['title' => 'Lista de Usuarios', 'usuarios' => Usuario::all()];
-
-            View::render($views, $args);
+            $this->redirectToProfile(null, null, 'usuarios');
         }
     }
 
     // Método que maneja la eliminación de un usuario
     public function delete()
     {
+        // Verificar que la solicitud sea un POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Obtener el ID del usuario desde el formulario
+            $id = $_POST['id'];
+            // Eliminar el usuario por su ID
+            Usuario::delete($id);
 
-        // Obtener el ID del usuario desde el formulario
-        $id = $_POST['id'];
-        // Eliminar el usuario por su ID
-        Usuario::delete($id);
+            $this->redirectToProfile(null, null, 'usuarios');
+        }
+    }
 
-        $views = ['admin/usuarios'];
-        $args  = ['title' => 'Lista de Usuarios', 'usuarios' => Usuario::all()];
+    private function redirectToProfile($usuarioToEdit = null, $propiedadToEdit = null, $activeTab = 'usuarios')
+    {
+        $usuarios = Usuario::all();
+        $propiedades = Propiedad::all();
+        $citas = Cita::all();
 
-        // Renderizar la vista con los argumentos
+        $views = ['usuarios/profile/admin/profile'];
+        $args = [
+            'title' => 'Panel de Administrador',
+            'nombre' => Session::getInstance()->get('nombre'),
+            'usuarios' => $usuarios,
+            'propiedades' => $propiedades,
+            'citas' => $citas,
+            'usuarioToEdit' => $usuarioToEdit,
+            'propiedadToEdit' => $propiedadToEdit,
+            'activeTab' => $activeTab
+        ];
+
         View::render($views, $args);
     }
 }

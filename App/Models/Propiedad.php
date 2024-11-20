@@ -107,14 +107,23 @@ class Propiedad extends Model {
             }
     
             $stmt = $db->prepare($query);
-            foreach ($params as $key => &$val) {
-                $stmt->bindParam($key, $val);
+            foreach ($params as $key => $val) {
+                $stmt->bindValue($key, $val);
             }
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Models\Propiedad');
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+    public static function where($column, $value)
+    {
+        $sql = "SELECT * FROM propiedades WHERE $column = :value";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindValue(':value', $value);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
     
 }

@@ -59,7 +59,7 @@ class Usuario extends Model
     }
 
     // Método que crea un nuevo usuario en la base de datos
-    public static function create($data)
+    public static function createCliente($data)
     {
         try {
             $db = static::getDB();
@@ -99,6 +99,31 @@ class Usuario extends Model
                 $data['correo_electronico'],
                 $data['contraseña'],
                 'agente',
+                $data['telefono']
+            ]);
+        } catch (PDOException $e) {
+            // Imprimir mensaje de error detallado
+            echo 'Error al crear el usuario: ' . $e->getMessage();
+            exit;
+        }
+    }
+
+    // Método que crea un nuevo administrador en la base de datos
+    public static function createAdmin($data)
+    {
+        try {
+            $db = static::getDB();
+
+            // Preparar consulta sin marcadores de posición
+            $stmt = $db->prepare('INSERT INTO usuarios (nombre, apellido, correo_electronico, contraseña, rol, telefono) VALUES (?, ?, ?, ?, ?, ?)');
+
+            // Usar un array para ejecutar los valores
+            $stmt->execute([
+                $data['nombre'],
+                $data['apellido'],
+                $data['correo_electronico'],
+                $data['contraseña'],
+                'admin',
                 $data['telefono']
             ]);
         } catch (PDOException $e) {
@@ -193,5 +218,16 @@ class Usuario extends Model
             // Si hay un error, lanzamos una excepción
             throw new Exception($e->getMessage());
         }
+    }
+
+    public static function where($column, $value)
+    {
+        // Implementar la lógica para obtener usuarios basados en una columna y un valor
+        // Ejemplo:
+        $sql = "SELECT * FROM usuarios WHERE $column = :value";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindValue(':value', $value);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

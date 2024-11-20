@@ -94,9 +94,9 @@ class Home
         // Obtener la sesión del administrador
         $session = Session::getInstance();
         $nombre = $session->get('nombre');
-        $usuarios = []; // Obtener todos los usuarios
-        $propiedades = []; // Obtener todas las propiedades
-        $citas = []; // Obtener todas las citas
+        $usuarios = Usuario::all(); // Obtener todos los usuarios
+        $propiedades = Propiedad::all(); // Obtener todas las propiedades
+        $citas = Cita::all(); // Obtener todas las citas
 
         // Definimos las vistas a cargar (en este caso, 'usuarios/profile/admin/profile')
         $views = ['usuarios/profile/admin/profile'];
