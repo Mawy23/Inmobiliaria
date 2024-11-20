@@ -1,3 +1,4 @@
+
 -- Crear la base de datos
 CREATE DATABASE inmobiliaria;
 
