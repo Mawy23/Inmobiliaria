@@ -34,14 +34,32 @@ class Cita extends Model {
 
     public static function update($data) {
         try {
+            // Conectarse a la base de datos usando PDO
             $db = static::getDB();
-            $stmt = $db->prepare('UPDATE citas SET estado = :estado WHERE id_cita = :id');
-            $stmt->bindParam(':estado', $data['estado'], PDO::PARAM_STR);
-            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
-            $stmt->execute();
+
+            // Preparar la consulta SQL con signos de interrogación en lugar de nombres de parámetros
+            $stmt = $db->prepare('
+            UPDATE citas 
+            SET id_propiedad = ?, 
+                id_cliente = ?, 
+                fecha_hora = ?, 
+                estado = ?
+            WHERE id_cita = ?');
+
+            // Ejecutar la consulta pasando un array con los valores en el orden correcto
+            $stmt->execute([
+                $data['id_propiedad'],
+                $data['id_cliente'],
+                $data['fecha_hora'],
+                $data['estado'],
+                $data['id']
+            ]);
         } catch (PDOException $e) {
-            throw new Exception($e->getMessage());
+            // Imprimir mensaje de error detallado
+            echo 'Error al actualizar el usuario: ' . $e->getMessage();
+            exit;
         }
+
     }
 
     public static function delete($id) {
@@ -50,6 +68,18 @@ class Cita extends Model {
             $stmt = $db->prepare('DELETE FROM citas WHERE id_cita = :id');
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public static function find($id) {
+        try {
+            $db = static::getDB();
+            $stmt = $db->prepare('SELECT * FROM citas WHERE id_cita = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchObject('App\Models\Cita');
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
         }

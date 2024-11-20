@@ -66,13 +66,15 @@ class PropiedadController
             
             // Crear una nueva propiedad con los datos del formulario
             $data = [
+                'titulo' => $_POST['titulo'],
+                'descripcion' => $_POST['descripcion'],
+                'precio' => $_POST['precio'],
                 'tipo' => $_POST['tipo'],
                 'direccion' => $_POST['direccion'],
                 'ciudad' => $_POST['ciudad'],
+                'estado' => $_POST['estado'],
                 'codigo_postal' => $_POST['codigo_postal'],
-                'precio' => $_POST['precio'],
-                'descripcion' => $_POST['descripcion'],
-                'imagen' => $_POST['imagen']
+                'id_agente' => $_POST['id_agente']
             ];
             
             Propiedad::create($data);

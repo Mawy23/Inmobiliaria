@@ -68,13 +68,13 @@ $citas = isset($citas) && is_array($citas) ? $citas : [];
                 <td><?= $cita->estado ?></td>
                 <td>
                     <!-- Botón para cargar datos de cita en el formulario de edición -->
-                    <form action="<?= $baseUrl ?>citas/edit" method="GET" style="display:inline;">
+                    <form action="<?= $baseUrl ?>CitaController/edit" method="GET" style="display:inline;">
                         <input type="hidden" name="id" value="<?= $cita->id_cita ?>">
                         <button type="submit">Editar</button>
                     </form>
 
                     <!-- Botón para eliminar cita -->
-                    <form action="<?= $baseUrl ?>citas/delete" method="POST" style="display:inline;">
+                    <form action="<?= $baseUrl ?>CitaController/delete" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<?= $cita->id_cita ?>">
                         <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?')">Eliminar</button>
                     </form>
@@ -86,7 +86,7 @@ $citas = isset($citas) && is_array($citas) ? $citas : [];
     <!-- Formulario para editar una cita existente (solo se muestra si se cargó una cita para editar) -->
     <?php if (isset($citaToEdit)): ?>
         <h3>Editar Cita</h3>
-        <form action="<?= $baseUrl ?>citas/update" method="POST">
+        <form action="<?= $baseUrl ?>CitaController/update" method="POST">
             <input type="hidden" name="id" value="<?= $citaToEdit->id_cita ?>">
 
             <label for="edit_id_propiedad">ID Propiedad</label>

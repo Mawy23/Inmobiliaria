@@ -32,6 +32,14 @@ class Propiedad extends Model {
 
     public static function create($data) {
         try {
+            // Validar que todos los campos requeridos están presentes
+            $requiredFields = ['titulo', 'descripcion', 'precio', 'tipo', 'direccion', 'ciudad', 'estado', 'codigo_postal', 'id_agente'];
+            foreach ($requiredFields as $field) {
+                if (empty($data[$field])) {
+                    throw new Exception("El campo $field es requerido y no puede estar vacío.");
+                }
+            }
+
             $db = static::getDB();
             $stmt = $db->prepare('INSERT INTO propiedades (titulo, descripcion, precio, tipo, direccion, ciudad, estado, codigo_postal, id_agente) VALUES (:titulo, :descripcion, :precio, :tipo, :direccion, :ciudad, :estado, :codigo_postal, :id_agente)');
             $stmt->bindParam(':titulo', $data['titulo'], PDO::PARAM_STR);
