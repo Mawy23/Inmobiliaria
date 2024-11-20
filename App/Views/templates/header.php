@@ -62,7 +62,7 @@ $rol = $session->get('rol');
                         <a class="nav-link" href="<?= $baseUrl ?>Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= $baseUrl ?>PropiedadController">Busqueda Inmuebles</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>PropiedadController">Comprar casa</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $baseUrl ?>Home/citas">Usuarios</a>
@@ -72,14 +72,14 @@ $rol = $session->get('rol');
                     </li>
                 </ul>
                 <ul class="navbar-nav"> <!-- Botones a la derecha -->
-                    <?php if (isset($_SESSION['id_usuario'])) : ?>
+                    <?php if ($idUsuario) : ?>
                         <li class="nav-item">
-                            <?php if ($_SESSION['rol'] == 'admin') : ?>
-                                <a class="nav-link" href="<?= $baseUrl ?>admin/profile"><?= $_SESSION['nombre'] ?></a>
-                            <?php elseif ($_SESSION['rol'] == 'agente') : ?>
-                                <a class="nav-link" href="<?= $baseUrl ?>user/profileAgente"><?= $_SESSION['nombre'] ?></a>
+                            <?php if ($rol == 'admin') : ?>
+                                <a class="nav-link" href="<?= $baseUrl ?>Home/profile"><?= $nombre ?></a>
+                            <?php elseif ($rol == 'agente') : ?>
+                                <a class="nav-link" href="<?= $baseUrl ?>Home/profileAgent"><?= $nombre ?></a>
                             <?php else : ?>
-                                <a class="nav-link" href="<?= $baseUrl ?>user/profileUsuario"><?= $_SESSION['nombre'] ?></a>
+                                <a class="nav-link" href="<?= $baseUrl ?>Home/profileUser"><?= $nombre ?></a>
                             <?php endif; ?>
                         </li>
                         <li class="nav-item">

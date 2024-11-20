@@ -55,5 +55,21 @@ class Session
         return isset($_SESSION['id_usuario']);
     }
 
-    
+    // Método para verificar si un usuario es administrador
+    public static function isAdmin()
+    {
+        return isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
+    }
+
+    // Método para verificar si un usuario es agente
+    public static function isAgent()
+    {
+        return isset($_SESSION['rol']) && $_SESSION['rol'] === 'agente';
+    }
+
+    // Método para verificar si un usuario es usuario
+    public static function isUser()
+    {
+        return isset($_SESSION['rol']) && $_SESSION['rol'] === 'usuario';
+    }
 }

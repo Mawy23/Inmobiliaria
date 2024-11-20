@@ -9,6 +9,7 @@ use App\Models\Cita;
 use Core\View;
 use App\Models\Propiedad;
 use App\Models\Usuario;
+use Core\Session;
 
 // Definimos la clase 'Home' que manejará la lógica de las páginas relacionadas con el "Home"
 class Home
@@ -87,4 +88,54 @@ class Home
         // Renderizamos la vista con los argumentos
         View::render($views, $args);
     }
+
+    public function profile()
+    {
+        // Obtener la sesión del administrador
+        $session = Session::getInstance();
+        $nombre = $session->get('nombre');
+        $usuarios = []; // Obtener todos los usuarios
+        $propiedades = []; // Obtener todas las propiedades
+        $citas = []; // Obtener todas las citas
+
+        // Definimos las vistas a cargar (en este caso, 'usuarios/profile/admin/profile')
+        $views = ['usuarios/profile/admin/profile'];
+
+        // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
+        $args  = [
+            'title' => 'Panel de Administración',
+            'nombre' => $nombre,
+            'usuarios' => $usuarios,
+            'propiedades' => $propiedades,
+            'citas' => $citas
+        ];
+
+        // Renderizamos la vista con los argumentos especificados
+        View::render($views, $args);
+    }
+
+    public function profileUser()
+    {
+        // Definimos las vistas a cargar (en este caso, 'usuarios/profileUser')
+        $views = ['usuarios/profile/user/profile'];
+
+        // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
+        $args  = ['title' => 'Perfil de Usuario'];
+
+        // Renderizamos la vista con los argumentos especificados
+        View::render($views, $args);
+    }
+
+    public function profileAgent()
+    {
+        // Definimos las vistas a cargar (en este caso, 'usuarios/profileAgent')
+        $views = ['usuarios/profile/agent/profile'];
+
+        // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
+        $args  = ['title' => 'Perfil de Agente'];
+
+        // Renderizamos la vista con los argumentos especificados
+        View::render($views, $args);
+    }
+
 }
