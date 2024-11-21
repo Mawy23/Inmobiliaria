@@ -47,6 +47,7 @@ $rol = $session->get('rol');
             /* Espacio entre botones */
         }
     </style>
+    
     <!-- Custom styles for this template -->
     <link href="<?= $baseUrl ?>css/style.css" rel="stylesheet">
 </head>

@@ -18,17 +18,32 @@ class Imagen extends Model {
         }
     }
 
-    public static function find($id) {
+    public static function search($id_propiedad) {
         try {
             $db = static::getDB();
-            $stmt = $db->prepare('SELECT * FROM imagenes WHERE id_imagen = :id');
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt = $db->prepare('SELECT * FROM imagenes WHERE id_propiedad = :id_propiedad');
+            $stmt->bindParam(':id_propiedad', $id_propiedad, PDO::PARAM_INT);
             $stmt->execute();
-            return $stmt->fetchObject('App\Models\Imagen');
+            return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Models\Imagen');
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
         }
     }
+
+    public static function find($id_imagen) {
+        try {
+            $db = static::getDB();
+            $stmt = $db->prepare('SELECT url_imagen FROM imagenes WHERE id_imagen = :id_imagen');
+            $stmt->bindParam(':id_imagen', $id_imagen, PDO::PARAM_INT);
+            $stmt->execute();
+            $imagen = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $imagen['url_imagen']; // Retorna la URL completa de la imagen
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+    
 
     public static function create($data) {
         try {

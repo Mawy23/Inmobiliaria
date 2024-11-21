@@ -5,6 +5,7 @@ use Core\View;
 use App\Models\Propiedad;
 use App\Models\Usuario;
 use App\Models\Cita;
+use App\Models\Imagen;
 use Core\Session;
 
 class PropiedadController
@@ -20,6 +21,11 @@ class PropiedadController
         // Obtener propiedades filtradas
         $propiedades = Propiedad::search($tipo, $precio_min, $precio_max, $ciudad);
 
+        // Para cada propiedad, obtener la imagen asociada
+        foreach ($propiedades as $propiedad) {
+            $propiedad->imagenes = Imagen::search($propiedad->id_propiedad);
+        }
+
         // Definir las vistas y los argumentos a pasar
         $views = ['propiedades/buscar','propiedades/listado'];
         $args  = ['title' => 'Busqueda de Inmuebles', 'propiedades' => $propiedades];
@@ -33,19 +39,29 @@ class PropiedadController
     {
         // Obtener la propiedad por su ID
         $propiedad = Propiedad::find($id);
-
+    
         if (!$propiedad) {
             // Manejar el caso en que no se encuentre la propiedad
             throw new \Exception("Propiedad no encontrada.");
         }
-        
+    
+        // Obtener las imágenes asociadas a la propiedad
+        $imagenes = Imagen::search($id);
+    
+        // Asociar las imágenes a la propiedad (si es necesario)
+        $propiedad->imagenes = $imagenes;
+    
         // Definir la vista y los argumentos a pasar
         $views = ['propiedades/detalle'];
-        $args  = ['title' => 'Detalles de la Propiedad', 'propiedad' => $propiedad];
-        
+        $args  = [
+            'title' => 'Detalles de la Propiedad',
+            'propiedad' => $propiedad
+        ];
+    
         // Renderizar la vista con los argumentos
         View::render($views, $args);
     }
+    
 
     // Método que muestra el formulario para agregar una nueva propiedad
     public function create()

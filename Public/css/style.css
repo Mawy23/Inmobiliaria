@@ -79,6 +79,9 @@ code {
 .property img {
   border-bottom: 5px solid #6dc066; /* Bordes inspirados en Sims */
   border-radius: 15px 15px 0 0;
+  width: 100%;
+  height: 200px; /* Ajusta la altura según sea necesario */
+  object-fit: cover; /* Puedes cambiarlo a 'contain' si prefieres que la imagen no se recorte */
 }
 
 .property h2 {
@@ -155,6 +158,12 @@ header h1 {
   transform: translateY(-10px); /* Efecto de elevarse */
 }
 
+a:hover{
+  text-decoration: none; /* Asegura que no haya subrayado */
+}
+
+
+
 .search-form {
   display: flex;
   justify-content: space-between;
@@ -214,64 +223,111 @@ header h1 {
   transform: scale(1.05); /* Efecto de escalar al pasar */
 }
 
-
-/* Estilos de Propiedades */
-
-.propiedad-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-around;
-}
-
-.propiedad-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 15px;
-  width: 300px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+/* Estilos para la página de error */
+.no-propiedades {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   background-color: #f9f9f9;
+  margin: 20px 0;
 }
 
-.propiedad-card:hover {
-  transform: scale(1.03);
-}
-
-.propiedad-title {
-  font-size: 1.5em;
+.no-propiedades h3 {
+  color: #dc3545; /* Color rojo para el mensaje de error */
   margin-bottom: 10px;
 }
 
-.propiedad-description {
-  font-size: 0.9em;
-  color: #333;
-  margin-bottom: 10px;
+.no-propiedades p {
+  color: #666; /* Color gris para el texto adicional */
+  margin-bottom: 15px;
 }
 
-.propiedad-price {
-  font-size: 1.2em;
-  color: #28a745;
-  margin-bottom: 10px;
-}
-
-.propiedad-details {
-  font-size: 0.9em;
-  color: #555;
-  margin-bottom: 5px;
-}
-
-.propiedad-button {
+.btn-regresar {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #007bff; /* Color azul */
+  color: white;
   text-decoration: none;
   border-radius: 5px;
-  text-align: center;
-  margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
-.propiedad-button:hover {
-  background-color: #0056b3;
+.btn-regresar:hover {
+  background-color: #0056b3; /* Color azul más oscuro en hover */
+}
+
+
+
+/* Estilos para la página de detalles */
+
+/* Contenedor principal de los detalles de la propiedad */
+.property-details {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título de la propiedad */
+.property-details h1 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Contenedor de la imagen de la propiedad */
+.property-images {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Estilo para la imagen */
+.property-images img {
+  max-width: 50%; /* Reduje el tamaño a la mitad */
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+
+/* Información de la propiedad */
+.property-info {
+  margin-bottom: 20px;
+}
+
+/* Estilo de los párrafos de la información */
+.property-info p {
+  font-size: 1em;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* Resaltar las etiquetas en la información */
+.property-info strong {
+  color: #333;
+  font-weight: bold;
+}
+
+/* Estilo del botón "Volver a la lista" */
+.volver-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #6dc066;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 1em;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.volver-button:hover {
+  background-color: #55944f;
+  color: #fff;
 }

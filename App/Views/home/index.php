@@ -20,7 +20,7 @@
 
     <div class="property-container">
         <div class="property">
-            <img src="https://via.placehold er.com/600x400" alt="Propiedad 1">
+            <img src="https://via.placeholder.com/600x400" alt="Propiedad 1">
             <h2>Casa en la Playa</h2>
             <p>Hermosa casa con vista al mar, ubicada en una zona tranquila.</p>
             <p>Precio: $500,000 USD</p>
