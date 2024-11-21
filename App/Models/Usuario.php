@@ -169,9 +169,6 @@ class Usuario extends Model
         }
     }
 
-
-
-
     // Método que elimina un usuario de la base de datos
     public static function delete($id)
     {
@@ -222,12 +219,10 @@ class Usuario extends Model
 
     public static function where($column, $value)
     {
-        // Implementar la lógica para obtener usuarios basados en una columna y un valor
-        // Ejemplo:
-        $sql = "SELECT * FROM usuarios WHERE $column = :value";
-        $stmt = self::getDB()->prepare($sql);
-        $stmt->bindValue(':value', $value);
+        $db = static::getDB();
+        $stmt = $db->prepare("SELECT * FROM usuarios WHERE $column = :value");
+        $stmt->bindParam(':value', $value);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 }

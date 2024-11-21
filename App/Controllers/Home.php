@@ -97,6 +97,7 @@ class Home
         $usuarios = Usuario::all(); // Obtener todos los usuarios
         $propiedades = Propiedad::all(); // Obtener todas las propiedades
         $citas = Cita::all(); // Obtener todas las citas
+        $agentes = Usuario::where('rol', 'agente'); // Obtener todos los agentes
 
         // Definimos las vistas a cargar (en este caso, 'usuarios/profile/admin/profile')
         $views = ['usuarios/profile/admin/profile'];
@@ -107,7 +108,8 @@ class Home
             'nombre' => $nombre,
             'usuarios' => $usuarios,
             'propiedades' => $propiedades,
-            'citas' => $citas
+            'citas' => $citas,
+            'agentes' => $agentes
         ];
 
         // Renderizamos la vista con los argumentos especificados

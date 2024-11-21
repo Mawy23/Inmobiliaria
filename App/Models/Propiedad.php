@@ -33,7 +33,7 @@ class Propiedad extends Model {
     public static function create($data) {
         try {
             // Validar que todos los campos requeridos están presentes
-            $requiredFields = ['titulo', 'descripcion', 'precio', 'tipo', 'direccion', 'ciudad', 'estado', 'codigo_postal', 'id_agente'];
+            $requiredFields = ['titulo', 'descripcion', 'precio', 'tipo', 'direccion', 'ciudad', 'estado', 'codigo_postal'];
             foreach ($requiredFields as $field) {
                 if (empty($data[$field])) {
                     throw new Exception("El campo $field es requerido y no puede estar vacío.");
@@ -50,7 +50,7 @@ class Propiedad extends Model {
             $stmt->bindParam(':ciudad', $data['ciudad'], PDO::PARAM_STR);
             $stmt->bindParam(':estado', $data['estado'], PDO::PARAM_STR);
             $stmt->bindParam(':codigo_postal', $data['codigo_postal'], PDO::PARAM_STR);
-            $stmt->bindParam(':id_agente', $data['id_agente'], PDO::PARAM_INT);
+            $stmt->bindValue(':id_agente', $data['id_agente'], PDO::PARAM_INT);
             $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());

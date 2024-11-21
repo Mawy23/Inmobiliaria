@@ -66,11 +66,9 @@ class PropiedadController
     // Método que muestra el formulario para agregar una nueva propiedad
     public function create()
     {
-        // Definir la vista y los argumentos a pasar
-        $views = ['propiedades/create'];
-        $args  = ['title' => 'Agregar Propiedad'];
-        
-        // Renderizar la vista con los argumentos
+        $agentes = Usuario::where('rol', 'agente');
+        $views = ['usuarios/profile/admin/profile'];
+        $args  = ['title' => 'Agregar Propiedad', 'agentes' => $agentes];
         View::render($views, $args);
     }
 
@@ -90,7 +88,7 @@ class PropiedadController
                 'ciudad' => $_POST['ciudad'],
                 'estado' => $_POST['estado'],
                 'codigo_postal' => $_POST['codigo_postal'],
-                'id_agente' => $_POST['id_agente']
+                'id_agente' => !empty($_POST['id_agente']) ? $_POST['id_agente'] : null
             ];
             
             Propiedad::create($data);
@@ -139,6 +137,7 @@ class PropiedadController
         $usuarios = Usuario::all();
         $propiedades = Propiedad::all();
         $citas = Cita::all();
+        $agentes = Usuario::where('rol', 'agente');
 
         $views = ['usuarios/profile/admin/profile'];
         $args = [
@@ -149,7 +148,8 @@ class PropiedadController
             'citas' => $citas,
             'usuarioToEdit' => $usuarioToEdit,
             'propiedadToEdit' => $propiedadToEdit,
-            'activeTab' => $activeTab
+            'activeTab' => $activeTab,
+            'agentes' => $agentes
         ];
 
         View::render($views, $args);

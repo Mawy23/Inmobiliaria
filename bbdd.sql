@@ -1,4 +1,3 @@
-
 -- Crear la base de datos
 CREATE DATABASE inmobiliaria;
 
@@ -14,7 +13,8 @@ CREATE TABLE usuarios (
     contraseña VARCHAR(255) NOT NULL,
     rol ENUM('admin', 'agente', 'cliente') NOT NULL,
     telefono VARCHAR(15),
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX (rol)
 );
 
 -- Tabla de propiedades
@@ -30,7 +30,8 @@ CREATE TABLE propiedades (
     codigo_postal VARCHAR(10) NOT NULL,
     fecha_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_agente INT,
-    FOREIGN KEY (id_agente) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
+    FOREIGN KEY (id_agente) REFERENCES usuarios(id_usuario) ON DELETE SET NULL,
+    INDEX (id_agente)
 );
 
 -- Tabla de imágenes
@@ -46,11 +47,14 @@ CREATE TABLE imagenes (
 CREATE TABLE citas (
     id_cita INT AUTO_INCREMENT PRIMARY KEY,
     id_propiedad INT,
-    id_cliente INT,
+    id_cliente INT DEFAULT NULL,
+    id_agente INT,
     fecha_hora DATETIME NOT NULL,
     estado ENUM('pendiente', 'confirmado', 'cancelado') NOT NULL,
     FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,
-    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_agente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+    INDEX (id_agente)
 );
 
 -- Tabla de reseñas
@@ -58,7 +62,7 @@ CREATE TABLE reseñas (
     id_reseña INT AUTO_INCREMENT PRIMARY KEY,
     id_propiedad INT,
     id_cliente INT,
-    calificacion INT NOT NULL CHECK (calificacion BETWEEN 1 AND 5), -- Mantén el CHECK si usas MySQL 8.0+
+    calificacion INT NOT NULL CHECK (calificacion BETWEEN 1 AND 5),
     comentario TEXT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,

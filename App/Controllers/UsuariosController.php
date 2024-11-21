@@ -122,6 +122,7 @@ class UsuariosController
         $usuarios = Usuario::all();
         $propiedades = Propiedad::all();
         $citas = Cita::all();
+        $agentes = Usuario::where('rol', 'agente');
 
         $views = ['usuarios/profile/admin/profile'];
         $args = [
@@ -132,7 +133,8 @@ class UsuariosController
             'citas' => $citas,
             'usuarioToEdit' => $usuarioToEdit,
             'propiedadToEdit' => $propiedadToEdit,
-            'activeTab' => $activeTab
+            'activeTab' => $activeTab,
+            'agentes' => $agentes
         ];
 
         View::render($views, $args);

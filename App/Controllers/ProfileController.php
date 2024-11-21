@@ -33,6 +33,7 @@ class ProfileController
         $usuarios = Usuario::all(); // Obtener todos los usuarios
         $propiedades = Propiedad::all(); // Obtener todas las propiedades
         $citas = Cita::all(); // Obtener todas las citas
+        $agentes = Usuario::where('rol', 'agente'); // Obtener todos los agentes
         $activeTab = $_POST['active_tab'] ?? 'usuarios';
 
         // Cargar vista del panel del administrador
@@ -43,6 +44,7 @@ class ProfileController
             'usuarios' => $usuarios,
             'propiedades' => $propiedades,
             'citas' => $citas,
+            'agentes' => $agentes,
             'active_tab' => $activeTab
         ];
         View::render($views, $args);

@@ -21,11 +21,12 @@ class Cita extends Model {
     public static function create($data) {
         try {
             $db = static::getDB();
-            $stmt = $db->prepare('INSERT INTO citas (id_propiedad, id_cliente, fecha_hora, estado) VALUES (:id_propiedad, :id_cliente, :fecha_hora, :estado)');
+            $stmt = $db->prepare('INSERT INTO citas (id_propiedad, id_cliente, fecha_hora, estado, id_agente) VALUES (:id_propiedad, :id_cliente, :fecha_hora, :estado, :id_agente)');
             $stmt->bindParam(':id_propiedad', $data['id_propiedad'], PDO::PARAM_INT);
             $stmt->bindParam(':id_cliente', $data['id_cliente'], PDO::PARAM_INT);
             $stmt->bindParam(':fecha_hora', $data['fecha_hora'], PDO::PARAM_STR);
             $stmt->bindParam(':estado', $data['estado'], PDO::PARAM_STR);
+            $stmt->bindParam(':id_agente', $data['id_agente'], PDO::PARAM_INT);
             $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());

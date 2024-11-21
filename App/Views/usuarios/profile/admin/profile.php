@@ -123,8 +123,13 @@
                 <input type="text" id="estado" name="estado" required>
                 <label for="codigo_postal">Código Postal</label>
                 <input type="text" id="codigo_postal" name="codigo_postal" required>
-                <label for="id_agente">ID Agente</label>
-                <input type="number" id="id_agente" name="id_agente">
+                <label for="id_agente">Agente</label>
+                <select id="id_agente" name="id_agente">
+                    <option value="">Seleccionar Agente</option>
+                    <?php foreach ($agentes as $agente): ?>
+                        <option value="<?= $agente->id_usuario ?>"><?= $agente->nombre . ' ' . $agente->apellido ?></option>
+                    <?php endforeach; ?>
+                </select>
                 <button type="submit">Crear Propiedad</button>
             </form>
             <!-- Mostrar la lista de propiedades con opciones de edición y eliminación -->
@@ -209,10 +214,13 @@
             <!-- Formulario para crear una nueva cita -->
             <h3>Agregar Nueva Cita</h3>
             <form action="<?= $baseUrl ?>CitaController/store" method="POST">
-                <label for="id_propiedad">ID Propiedad</label>
-                <input type="number" id="id_propiedad" name="id_propiedad" required>
-                <label for="id_cliente">ID Cliente</label>
-                <input type="number" id="id_cliente" name="id_cliente" required>
+                <label for="id_propiedad">Propiedad</label>
+                <select id="id_propiedad" name="id_propiedad" required>
+                    <option value="">Seleccionar Propiedad</option>
+                    <?php foreach ($propiedades as $propiedad): ?>
+                        <option value="<?= $propiedad->id_propiedad ?>"><?= $propiedad->titulo ?></option>
+                    <?php endforeach; ?>
+                </select>
                 <label for="fecha_hora">Fecha y Hora</label>
                 <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
                 <label for="estado">Estado</label>
@@ -221,8 +229,18 @@
                     <option value="confirmado">Confirmado</option>
                     <option value="cancelado">Cancelado</option>
                 </select>
+                <label for="id_agente">Agente</label>
+                <select id="id_agente" name="id_agente">
+                    <option value="">Seleccionar Agente</option>
+                    <?php foreach ($agentes as $agente): ?>
+                        <option value="<?= $agente->id_usuario ?>"><?= $agente->nombre . ' ' . $agente->apellido ?></option>
+                    <?php endforeach; ?>
+                </select>
                 <button type="submit">Crear Cita</button>
             </form>
+            <!-- Calendario interactivo -->
+            <h3>Calendario de Citas</h3>
+            <div id="calendar"></div>
             <!-- Mostrar la lista de citas con opciones de edición y eliminación -->
             <h3>Lista de Citas</h3>
             <table border="1">
@@ -262,8 +280,6 @@
                     <input type="hidden" name="id" value="<?= $citaToEdit->id_cita ?>">
                     <label for="edit_id_propiedad">ID Propiedad</label>
                     <input type="number" id="edit_id_propiedad" name="id_propiedad" value="<?= $citaToEdit->id_propiedad ?>" readonly>
-                    <label for="edit_id_cliente">ID Cliente</label>
-                    <input type="number" id="edit_id_cliente" name="id_cliente" value="<?= $citaToEdit->id_cliente ?>" readonly>
                     <label for="edit_fecha_hora">Fecha y Hora</label>
                     <input type="datetime-local" id="edit_fecha_hora" name="fecha_hora" value="<?= $citaToEdit->fecha_hora ?>" required>
                     <label for="edit_estado">Estado</label>
@@ -295,5 +311,147 @@
             tabElement.classList.add('active');
             tabContentElement.classList.add('show', 'active');
         }
+
+        // Inicializar el calendario
+        var calendar = document.getElementById('calendar');
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth();
+        var currentYear = currentDate.getFullYear();
+
+        function renderCalendar(month, year) {
+            calendar.innerHTML = '';
+            var firstDay = new Date(year, month).getDay();
+            var daysInMonth = 32 - new Date(year, month, 32).getDate();
+            var tbl = document.createElement('table');
+            tbl.classList.add('table', 'table-bordered');
+            var header = tbl.createTHead();
+            var headerRow = header.insertRow();
+            var days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+            days.forEach(function (day) {
+                var cell = document.createElement('th');
+                cell.innerText = day;
+                headerRow.appendChild(cell);
+            });
+            var body = tbl.createTBody();
+            var date = 1;
+            for (var i = 0; i < 6; i++) {
+                var row = body.insertRow();
+                for (var j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        var cell = row.insertCell();
+                        cell.innerText = '';
+                    } else if (date > daysInMonth) {
+                        break;
+                    } else {
+                        var cell = row.insertCell();
+                        cell.innerText = date;
+                        cell.dataset.date = new Date(year, month, date).toISOString();
+                        if (new Date().toDateString() === new Date(year, month, date).toDateString()) {
+                            cell.style.backgroundColor = '#ffeb3b'; // Resaltar el día actual
+                        }
+                        // Resaltar días con citas
+                        var citasDelDia = [];
+                        <?php foreach ($citas as $cita): ?>
+                            if (new Date('<?= $cita->fecha_hora ?>').toDateString() === new Date(year, month, date).toDateString()) {
+                                citasDelDia.push({
+                                    hora: new Date('<?= $cita->fecha_hora ?>').toLocaleTimeString(),
+                                    propiedad: '<?= $cita->id_propiedad ?>',
+                                    estado: '<?= $cita->estado ?>'
+                                });
+                            }
+                        <?php endforeach; ?>
+                        if (citasDelDia.length > 0) {
+                            cell.style.backgroundColor = '#4caf50';
+                            cell.title = citasDelDia.map(cita => `Cita: ${cita.propiedad} - ${cita.hora} - ${cita.estado}`).join('\n');
+                            var citasList = document.createElement('ul');
+                            citasDelDia.sort((a, b) => a.hora.localeCompare(b.hora)).forEach(cita => {
+                                var citaItem = document.createElement('li');
+                                citaItem.innerText = `${cita.hora} - Propiedad: ${cita.propiedad} - ${cita.estado}`;
+                                citasList.appendChild(citaItem);
+                            });
+                            cell.appendChild(citasList);
+                        }
+                        cell.addEventListener('click', function () {
+                            var selectedDate = this.dataset.date;
+                            var modal = document.createElement('div');
+                            modal.classList.add('modal', 'fade');
+                            modal.innerHTML = `
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Crear Cita</h5>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="<?= $baseUrl ?>CitaController/store" method="POST">
+                                                <label for="modal_id_propiedad">Propiedad</label>
+                                                <select id="modal_id_propiedad" name="id_propiedad" required>
+                                                    <option value="">Seleccionar Propiedad</option>
+                                                    <?php foreach ($propiedades as $propiedad): ?>
+                                                        <option value="<?= $propiedad->id_propiedad ?>"><?= $propiedad->titulo ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <label for="modal_id_cliente">ID Cliente</label>
+                                                <input type="number" id="modal_id_cliente" name="id_cliente">
+                                                <label for="modal_fecha_hora">Fecha y Hora</label>
+                                                <input type="datetime-local" id="modal_fecha_hora" name="fecha_hora" value="${selectedDate}" required>
+                                                <label for="modal_estado">Estado</label>
+                                                <select id="modal_estado" name="estado">
+                                                    <option value="pendiente">Pendiente</option>
+                                                    <option value="confirmado">Confirmado</option>
+                                                    <option value="cancelado">Cancelado</option>
+                                                </select>
+                                                <label for="modal_id_agente">Agente</label>
+                                                <select id="modal_id_agente" name="id_agente">
+                                                    <option value="">Seleccionar Agente</option>
+                                                    <?php foreach ($agentes as $agente): ?>
+                                                        <option value="<?= $agente->id_usuario ?>"><?= $agente->nombre . ' ' . $agente->apellido ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <button type="submit">Crear Cita</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            document.body.appendChild(modal);
+                            $(modal).modal('show');
+                            $(modal).on('hidden.bs.modal', function () {
+                                modal.remove();
+                            });
+                        });
+                        date++;
+                    }
+                }
+            }
+            calendar.appendChild(tbl);
+        }
+
+        renderCalendar(currentMonth, currentYear);
+
+        // Navegación del calendario
+        var prevButton = document.createElement('button');
+        prevButton.innerText = 'Anterior';
+        prevButton.addEventListener('click', function () {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+        });
+        calendar.appendChild(prevButton);
+
+        var nextButton = document.createElement('button');
+        nextButton.innerText = 'Siguiente';
+        nextButton.addEventListener('click', function () {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        });
+        calendar.appendChild(nextButton);
     });
 </script>

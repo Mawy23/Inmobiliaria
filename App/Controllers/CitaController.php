@@ -26,9 +26,10 @@ class CitaController
     // Método que muestra el formulario para agregar una nueva cita
     public function create()
     {
+        $agentes = Usuario::where('rol', 'agente');
         // Definir la vista y los argumentos a pasar
         $views = ['citas/create'];
-        $args  = ['title' => 'Agregar Cita'];
+        $args  = ['title' => 'Agregar Cita', 'agentes' => $agentes];
         
         // Renderizar la vista con los argumentos
         View::render($views, $args);
@@ -39,8 +40,24 @@ class CitaController
     {
         // Verificar que la solicitud sea un POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Crear una nueva cita con los datos del formulario
-            Cita::create($_POST);
+            $data = [
+                'id_propiedad' => $_POST['id_propiedad'],
+                'id_cliente' => !empty($_POST['id_cliente']) ? $_POST['id_cliente'] : null,
+                'fecha_hora' => $_POST['fecha_hora'],
+                'estado' => $_POST['estado'],
+                'id_agente' => !empty($_POST['id_agente']) ? $_POST['id_agente'] : null
+            ];
+
+            // Validar solapamientos de citas
+            $citasExistentes = Cita::where('id_propiedad', $data['id_propiedad']);
+            foreach ($citasExistentes as $cita) {
+                if ($cita->fecha_hora == $data['fecha_hora']) {
+                    header('Location: /profile?error=Ya existe una cita programada para esta propiedad en el mismo horario');
+                    exit;
+                }
+            }
+
+            Cita::create($data);
             
             $this->redirectToProfile(null, null, 'citas');
         }
@@ -95,6 +112,7 @@ class CitaController
         $usuarios = Usuario::all();
         $propiedades = Propiedad::all();
         $citas = Cita::all();
+        $agentes = Usuario::where('rol', 'agente');
 
         $views = ['usuarios/profile/admin/profile'];
         $args = [
@@ -104,7 +122,8 @@ class CitaController
             'propiedades' => $propiedades,
             'citas' => $citas,
             'citaToEdit' => $citaToEdit,
-            'activeTab' => $activeTab
+            'activeTab' => $activeTab,
+            'agentes' => $agentes
         ];
 
         View::render($views, $args);
