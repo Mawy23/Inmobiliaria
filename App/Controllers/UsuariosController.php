@@ -68,7 +68,7 @@ class UsuariosController
                     break;
             }
 
-            $this->redirectToProfile();
+            $this->redirectToProfile(null, null, 'usuarios');
         }
     }
 

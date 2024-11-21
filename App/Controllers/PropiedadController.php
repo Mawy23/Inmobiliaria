@@ -79,7 +79,7 @@ class PropiedadController
             
             Propiedad::create($data);
             
-            $this->redirectToProfile();
+            $this->redirectToProfile(null, null, 'propiedades');
         }
     }
 
