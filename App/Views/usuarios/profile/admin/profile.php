@@ -258,7 +258,7 @@
             <!-- Formulario para editar una cita existente -->
             <?php if (isset($citaToEdit)): ?>
                 <h3>Editar Cita</h3>
-                <form action="<?= $baseUrl ?>citas/update" method="POST">
+                <form action="<?= $baseUrl ?>CitaController/update" method="POST">
                     <input type="hidden" name="id" value="<?= $citaToEdit->id_cita ?>">
                     <label for="edit_id_propiedad">ID Propiedad</label>
                     <input type="number" id="edit_id_propiedad" name="id_propiedad" value="<?= $citaToEdit->id_propiedad ?>" readonly>
@@ -280,7 +280,7 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var activeTab = '<?= isset($_POST['active_tab']) ? $_POST['active_tab'] : 'usuarios' ?>';
+        var activeTab = '<?= $activeTab ?? 'usuarios' ?>';
         var tabElement = document.querySelector('#' + activeTab + '-tab');
         var tabContentElement = document.querySelector('#' + activeTab);
         if (tabElement && tabContentElement) {

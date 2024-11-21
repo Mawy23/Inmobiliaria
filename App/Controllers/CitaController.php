@@ -42,7 +42,7 @@ class CitaController
             // Crear una nueva cita con los datos del formulario
             Cita::create($_POST);
             
-            $this->redirectToProfile();
+            $this->redirectToProfile(null, null, 'citas');
         }
     }
 
@@ -90,7 +90,7 @@ class CitaController
         }
     }
 
-    private function redirectToProfile($citaToEdit = null, $activeTab = 'citas')
+    private function redirectToProfile($citaToEdit = null, $propiedadToEdit = null, $activeTab = 'citas')
     {
         $usuarios = Usuario::all();
         $propiedades = Propiedad::all();
