@@ -26,7 +26,7 @@ CREATE TABLE propiedades (
     tipo ENUM('casa', 'departamento', 'terreno', 'local') NOT NULL,
     direccion VARCHAR(255) NOT NULL,
     ciudad VARCHAR(50) NOT NULL,
-    estado VARCHAR(50) NOT NULL,
+    estado ENUM('disponible', 'vendido', 'alquilado') NOT NULL DEFAULT 'disponible',
     codigo_postal VARCHAR(10) NOT NULL,
     fecha_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_agente INT,
@@ -91,3 +91,15 @@ CREATE TABLE preferencias_busqueda (
     localizacion VARCHAR(255),
     FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
+
+
+-- Insertar datos en la tabla de propiedades
+INSERT INTO propiedades (titulo, descripcion, precio, tipo, direccion, ciudad, estado, codigo_postal, id_agente)
+VALUES
+('Casa Familiar en el Centro', 'Hermosa casa con 3 habitaciones y jardín.', 250000.00, 'casa', 'Calle Mayor 10', 'Madrid', 'disponible', '28001', NULL),
+('Departamento Moderno', 'Departamento con vista al mar y piscina.', 150000.00, 'departamento', 'Av. Marítima 5', 'Barcelona', 'disponible', '08002', NULL),
+('Terreno en las Afueras', 'Terreno amplio para construcción.', 100000.00, 'terreno', 'Ctra. Nacional 25', 'Valencia', 'disponible', '46001', NULL),
+('Local Comercial', 'Local comercial en zona céntrica.', 50000.00, 'local', 'Calle Comercio 3', 'Sevilla', 'vendido', '41001', NULL);
+
+
+

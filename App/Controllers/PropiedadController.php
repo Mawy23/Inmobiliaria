@@ -112,7 +112,19 @@ class PropiedadController
         // Verificar que la solicitud sea un POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Actualizar la propiedad con los nuevos datos
-            Propiedad::update($_POST);
+            $data = [
+                'titulo' => $_POST['titulo'],
+                'descripcion' => $_POST['descripcion'],
+                'precio' => $_POST['precio'],
+                'tipo' => $_POST['tipo'],
+                'direccion' => $_POST['direccion'],
+                'ciudad' => $_POST['ciudad'],
+                'estado' => $_POST['estado'],
+                'codigo_postal' => $_POST['codigo_postal'],
+                'id_agente' => !empty($_POST['id_agente']) ? $_POST['id_agente'] : null
+            ];
+
+            Propiedad::update($data);
 
             $this->redirectToProfile(null, null, 'propiedades');
         }
