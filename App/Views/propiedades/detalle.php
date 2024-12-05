@@ -33,7 +33,7 @@
                     </button>
                 </form>
             <?php else: ?>
-                <button class="btn btn-heart" onclick="alert('Por favor, inicia sesión o regístrate para agregar a favoritos.');">
+                <button class="btn btn-heart" onclick="document.getElementById('loginModal').style.display='block'">
                     🤍
                 </button>
             <?php endif; ?>
@@ -50,3 +50,66 @@
         <a href="<?= $baseUrl ?>PropiedadController/index" class="btn-regresar">Volver a buscar</a>
     </div>
 <?php endif; ?>
+
+<!-- Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
+        <h2>Inicia sesión o regístrate</h2>
+        <p>Por favor, inicia sesión o regístrate para agregar a favoritos.</p>
+        <a href="<?= $baseUrl ?>AuthController/login" class="btn">Iniciar sesión</a>
+        <a href="<?= $baseUrl ?>AuthController/register" class="btn">Registrarse</a>
+    </div>
+</div>
+
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+</style>
