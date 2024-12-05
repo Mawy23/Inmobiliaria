@@ -16,15 +16,30 @@
             <p><strong>Descripción:</strong> <?php echo htmlspecialchars($propiedad->descripcion); ?></p>
             <p><strong>Precio:</strong> $<?php echo htmlspecialchars($propiedad->precio); ?></p>
             <p><strong>Ciudad:</strong> <?php echo htmlspecialchars($propiedad->ciudad); ?></p>
-            <p><strong>esatdo:</strong> <?php echo htmlspecialchars($propiedad->estado); ?></p>
+            <p><strong>Estado:</strong> <?php echo htmlspecialchars($propiedad->estado); ?></p>
             <p><strong>Dirección:</strong> <?php echo htmlspecialchars($propiedad->direccion); ?></p>
-            <p><strong>Codigo postal:</strong> <?php echo htmlspecialchars($propiedad->codigo_postal); ?></p>
+            <p><strong>Código postal:</strong> <?php echo htmlspecialchars($propiedad->codigo_postal); ?></p>
             <p><strong>Tipo:</strong> <?php echo htmlspecialchars($propiedad->tipo); ?></p>
 
-            <!-- <p><strong>Agente responsable:</strong></p>-->
+            <?php if ($session->get('id_usuario')): ?>
+                <form action="<?= $baseUrl ?>FavoritosController/toggle" method="POST" style="display:inline;">
+                    <input type="hidden" name="id_propiedad" value="<?= $propiedad->id_propiedad ?>">
+                    <button type="submit" class="btn btn-heart" style="color: <?= $propiedad->isFavorito($session->get('id_usuario')) ? 'red' : 'grey' ?>;">
+                        <?php if ($propiedad->isFavorito($session->get('id_usuario'))): ?>
+                            ❤️
+                        <?php else: ?>
+                            🤍
+                        <?php endif; ?>
+                    </button>
+                </form>
+            <?php else: ?>
+                <button class="btn btn-heart" onclick="alert('Por favor, inicia sesión o regístrate para agregar a favoritos.');">
+                    🤍
+                </button>
+            <?php endif; ?>
         </div>
 
-        <a class="volver-button" href="/Inmobiliaria/Public/PropiedadController">Volver a la lista</a>
+        <a class="volver-button" href="<?= $baseUrl ?>PropiedadController">Volver a la lista</a>
     </div>
 
 <?php else: ?>
@@ -32,6 +47,6 @@
         <h3>No se encontraron propiedades</h3>
         <p>Lo sentimos, no hay propiedades que coincidan con tus criterios de búsqueda.</p>
         <p>Prueba ajustando tus filtros o ampliando tus criterios de búsqueda.</p>
-        <a href="/Inmobiliaria/Public/PropiedadController/index" class="btn-regresar">Volver a buscar</a>
+        <a href="<?= $baseUrl ?>PropiedadController/index" class="btn-regresar">Volver a buscar</a>
     </div>
 <?php endif; ?>

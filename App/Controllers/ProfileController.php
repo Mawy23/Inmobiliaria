@@ -26,13 +26,17 @@ class ProfileController
         $session = Session::getInstance();
         $nombre = $session->get('nombre');
         $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios solo si es admin o agente
-        $propiedades = $rol !== 'cliente' ? Propiedad::all() : Propiedad::where('id_usuario', $session->get('id')); // Obtener todas las propiedades o las del cliente
+        $propiedades = Propiedad::all();
         $citas = $rol === 'admin' ? Cita::all() : Cita::where('id_agente', $session->get('id_usuario')); // Obtener todas las citas o las del usuario
         $agentes = $rol !== 'cliente' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin o agente
-        $favoritos = $rol === 'cliente' ? Favorito::where('id_cliente', $session->get('id_usuario')) : [];
+        $favoritos = $rol === 'cliente' ? Favorito::where('id_cliente', $session->get('id_usuario'))->pluck('id_propiedad')->toArray() : [];
         $historialCitas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : [];
         $misPropiedades = $rol === 'cliente' ? Propiedad::where('id_cliente', $session->get('id_usuario')) : [];
         $activeTab = 'usuarios'; // Siempre establecer la pestaña activa en 'usuarios'
+
+        foreach ($propiedades as $propiedad) {
+            $propiedad->isFavorito = in_array($propiedad->id_propiedad, $favoritos);
+        }
 
         // Cargar vista del panel
         $views = ['usuarios/profile/profile'];

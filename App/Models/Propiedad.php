@@ -8,6 +8,13 @@ use Exception;
 use Core\Model;
 
 class Propiedad extends Model {
+
+    // Asegúrate de que la propiedad id_propiedad esté definida
+    public $id_propiedad;
+
+    // Definir la propiedad isFavorito
+    public $isFavorito = false;
+
     public static function all() {
         try {
             $db = static::getDB();
@@ -134,6 +141,15 @@ class Propiedad extends Model {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
     
+    public function isFavorito($id_cliente)
+    {
+        $sql = "SELECT COUNT(*) FROM favoritos WHERE id_cliente = :id_cliente AND id_propiedad = :id_propiedad";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindValue(':id_cliente', $id_cliente, PDO::PARAM_INT);
+        $stmt->bindValue(':id_propiedad', $this->id_propiedad, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
 }
 
 $propiedades = Propiedad::all(); // Obtener todas las propiedades o las del cliente

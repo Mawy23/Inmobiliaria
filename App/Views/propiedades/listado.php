@@ -8,7 +8,7 @@
     <div class="property-container">
     <?php foreach ($propiedades as $propiedad): ?>
         <div class="property">
-            <a href="/Inmobiliaria/Public/PropiedadController/show/<?php echo $propiedad->id_propiedad; ?>">
+            <a href="<?= $baseUrl ?>PropiedadController/show/<?php echo $propiedad->id_propiedad; ?>">
                 
                 <?php if (!empty($propiedad->imagenes)): ?>
                     <!-- Mostrar la URL de la imagen -->
@@ -21,6 +21,22 @@
                 <p><?php echo htmlspecialchars($propiedad->descripcion); ?></p>
                 <p class="price">Precio: <?php echo htmlspecialchars($propiedad->precio); ?> &#36;</p>
             </a>
+            <?php if ($session->get('id_usuario')): ?>
+                <form action="<?= $baseUrl ?>FavoritosController/toggle" method="POST" style="display:inline;">
+                    <input type="hidden" name="id_propiedad" value="<?= $propiedad->id_propiedad ?>">
+                    <button type="submit" class="btn btn-heart" style="color: <?= $propiedad->isFavorito($session->get('id_usuario')) ? 'red' : 'grey' ?>;">
+                        <?php if ($propiedad->isFavorito($session->get('id_usuario'))): ?>
+                            ❤️
+                        <?php else: ?>
+                            🤍
+                        <?php endif; ?>
+                    </button>
+                </form>
+            <?php else: ?>
+                <button class="btn btn-heart" onclick="alert('Por favor, inicia sesión o regístrate para agregar a favoritos.');">
+                    🤍
+                </button>
+            <?php endif; ?>
         </div>
     <?php endforeach; ?>
     </div>
