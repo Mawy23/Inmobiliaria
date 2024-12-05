@@ -6,6 +6,7 @@ use Core\Session;
 use App\Models\Usuario;
 use App\Models\Propiedad;
 use App\Models\Cita;
+use App\Models\Favorito;
 
 class ProfileController
 {
@@ -16,84 +17,37 @@ class ProfileController
         $rol = $session->get('rol');
 
         // Redirigir según el rol del usuario
-        if ($rol === 'admin') {
-            $this->adminPanel();
-        } elseif ($rol === 'agente') {
-            $this->agentPanel();
-        } else {
-            $this->userPanel();
-        }
+        $this->panel($rol);
     }
 
-    public function adminPanel()
+    public function panel($rol)
     {
-        // Obtener la sesión del administrador
+        // Obtener la sesión del usuario
         $session = Session::getInstance();
         $nombre = $session->get('nombre');
-        $usuarios = Usuario::all(); // Obtener todos los usuarios
-        $propiedades = Propiedad::all(); // Obtener todas las propiedades
-        $citas = Cita::all(); // Obtener todas las citas
-        $agentes = Usuario::where('rol', 'agente'); // Obtener todos los agentes
-        $activeTab = $_POST['active_tab'] ?? 'usuarios';
+        $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios solo si es admin o agente
+        $propiedades = $rol !== 'cliente' ? Propiedad::all() : Propiedad::where('id_usuario', $session->get('id')); // Obtener todas las propiedades o las del cliente
+        $citas = $rol === 'admin' ? Cita::all() : Cita::where('id_agente', $session->get('id_usuario')); // Obtener todas las citas o las del usuario
+        $agentes = $rol !== 'cliente' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin o agente
+        $favoritos = $rol === 'cliente' ? Favorito::where('id_cliente', $session->get('id_usuario')) : [];
+        $historialCitas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : [];
+        $misPropiedades = $rol === 'cliente' ? Propiedad::where('id_cliente', $session->get('id_usuario')) : [];
+        $activeTab = 'usuarios'; // Siempre establecer la pestaña activa en 'usuarios'
 
-        // Cargar vista del panel del administrador
-        $views = ['usuarios/profile/admin/profile'];
+        // Cargar vista del panel
+        $views = ['usuarios/profile/profile'];
         $args = [
-            'title' => 'Panel de Administrador',
+            'title' => 'Panel de ' . ucfirst($rol),
             'nombre' => $nombre,
             'usuarios' => $usuarios,
             'propiedades' => $propiedades,
             'citas' => $citas,
             'agentes' => $agentes,
-            'active_tab' => $activeTab
-        ];
-        View::render($views, $args);
-    }
-
-    public function agentPanel()
-    {
-        // Obtener la sesión del agente
-        $session = Session::getInstance();
-        $nombre = $session->get('nombre');
-        $citas = Cita::where('id_agente', $session->get('id')); // Obtener citas del agente
-        $propiedades = Propiedad::where('id_agente', $session->get('id')); // Obtener propiedades del agente
-        $peticiones = []; // Obtener peticiones de venta (deberías implementar la lógica para obtener las peticiones)
-        $clientes = Usuario::where('id_agente', $session->get('id')); // Obtener clientes del agente
-        $activeTab = $_POST['active_tab'] ?? 'usuarios';
-
-        // Cargar vista del panel del agente
-        $views = ['usuarios/profile/agent/profile'];
-        $args = [
-            'title' => 'Panel de Agente',
-            'nombre' => $nombre,
-            'citas' => $citas,
-            'propiedades' => $propiedades,
-            'peticiones' => $peticiones,
-            'clientes' => $clientes,
-            'active_tab' => $activeTab
-        ];
-        View::render($views, $args);
-    }
-
-    public function userPanel()
-    {
-        // Obtener la sesión del usuario
-        $session = Session::getInstance();
-        $nombre = $session->get('nombre');
-        $citas = Cita::where('id_usuario', $session->get('id')); // Obtener citas del usuario
-        $propiedades = Propiedad::where('id_usuario', $session->get('id')); // Obtener propiedades del usuario
-        $wishlist = []; // Obtener wishlist del usuario (deberías implementar la lógica para obtener la wishlist)
-        $activeTab = $_POST['active_tab'] ?? 'usuarios';
-
-        // Cargar vista del usuario
-        $views = ['usuarios/profile/user/profile'];
-        $args = [
-            'title' => 'Panel de Usuario',
-            'nombre' => $nombre,
-            'citas' => $citas,
-            'propiedades' => $propiedades,
-            'wishlist' => $wishlist,
-            'active_tab' => $activeTab
+            'favoritos' => $favoritos,
+            'historialCitas' => $historialCitas,
+            'misPropiedades' => $misPropiedades,
+            'active_tab' => $activeTab,
+            'rol' => $rol
         ];
         View::render($views, $args);
     }

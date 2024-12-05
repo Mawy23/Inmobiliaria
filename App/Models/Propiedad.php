@@ -135,3 +135,6 @@ class Propiedad extends Model {
     }
     
 }
+
+$propiedades = Propiedad::all(); // Obtener todas las propiedades o las del cliente
+

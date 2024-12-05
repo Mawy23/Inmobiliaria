@@ -124,7 +124,7 @@ class UsuariosController
         $citas = Cita::all();
         $agentes = Usuario::where('rol', 'agente');
 
-        $views = ['usuarios/profile/admin/profile'];
+        $views = ['usuarios/profile/profile'];
         $args = [
             'title' => 'Panel de Administrador',
             'nombre' => Session::getInstance()->get('nombre'),

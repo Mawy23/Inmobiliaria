@@ -92,6 +92,14 @@ CREATE TABLE preferencias_busqueda (
     FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
+-- Tabla de favoritos
+CREATE TABLE favoritos (
+    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_propiedad INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE
+);
 
 -- Insertar datos en la tabla de propiedades
 INSERT INTO propiedades (titulo, descripcion, precio, tipo, direccion, ciudad, estado, codigo_postal, id_agente)
@@ -100,6 +108,3 @@ VALUES
 ('Departamento Moderno', 'Departamento con vista al mar y piscina.', 150000.00, 'departamento', 'Av. Marítima 5', 'Barcelona', 'disponible', '08002', NULL),
 ('Terreno en las Afueras', 'Terreno amplio para construcción.', 100000.00, 'terreno', 'Ctra. Nacional 25', 'Valencia', 'disponible', '46001', NULL),
 ('Local Comercial', 'Local comercial en zona céntrica.', 50000.00, 'local', 'Calle Comercio 3', 'Sevilla', 'vendido', '41001', NULL);
-
-
-

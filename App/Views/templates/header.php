@@ -66,7 +66,7 @@ $rol = $session->get('rol');
                         <a class="nav-link" href="<?= $baseUrl ?>PropiedadController">Comprar casa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= $baseUrl ?>Home/citas">Usuarios</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>UsuariosController">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $baseUrl ?>test">Page Not Found</a>
@@ -75,13 +75,7 @@ $rol = $session->get('rol');
                 <ul class="navbar-nav"> <!-- Botones a la derecha -->
                     <?php if ($idUsuario) : ?>
                         <li class="nav-item">
-                            <?php if ($rol == 'admin') : ?>
-                                <a class="nav-link" href="<?= $baseUrl ?>Home/profile"><?= $nombre ?></a>
-                            <?php elseif ($rol == 'agente') : ?>
-                                <a class="nav-link" href="<?= $baseUrl ?>Home/profileAgent"><?= $nombre ?></a>
-                            <?php else : ?>
-                                <a class="nav-link" href="<?= $baseUrl ?>Home/profileUser"><?= $nombre ?></a>
-                            <?php endif; ?>
+                            <a class="nav-link" href="<?= $baseUrl ?>Home/profile"><?= $nombre ?></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= $baseUrl ?>AuthController/logout">Cerrar Sesión</a>
