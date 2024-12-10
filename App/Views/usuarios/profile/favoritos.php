@@ -10,10 +10,12 @@
                             <p class="card-text"><?= htmlspecialchars($favorito->descripcion) ?></p>
                             <p class="card-text">Precio: <?= htmlspecialchars($favorito->precio) ?></p>
                             <p class="card-text">Ubicación: <?= htmlspecialchars($favorito->direccion) ?>, <?= htmlspecialchars($favorito->ciudad) ?></p>
-                            <a href="<?= $baseUrl ?>PropiedadesController/view/<?= $favorito->id_propiedad ?>" class="btn btn-primary">Ver</a>
-                            <form action="<?= $baseUrl ?>FavoritosController/remove" method="POST" style="display:inline;">
-                                <input type="hidden" name="id" value="<?= $favorito->id_propiedad ?>">
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <a href="<?= $baseUrl ?>PropiedadController/show/<?= $favorito->id_propiedad ?>" class="btn btn-primary">Ver</a>
+                            <form action="<?= $baseUrl ?>FavoritosController/toggle" method="POST" style="display:inline;">
+                                <input type="hidden" name="id_propiedad" value="<?= $favorito->id_propiedad ?>">
+                                <button type="submit" class="btn btn-heart" style="color: red;">
+                                    ❤️
+                                </button>
                             </form>
                         </div>
                     </div>

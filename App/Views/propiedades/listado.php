@@ -41,8 +41,6 @@
     <?php endforeach; ?>
     </div>
 
-
-
 <?php else: ?>
     <div class="no-propiedades">
         <h3>No se encontraron propiedades</h3>
