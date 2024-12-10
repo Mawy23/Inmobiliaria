@@ -35,7 +35,7 @@
             <p><strong>Código postal:</strong> <?php echo htmlspecialchars($propiedad->codigo_postal); ?></p>
             <p><strong>Tipo:</strong> <?php echo htmlspecialchars($propiedad->tipo); ?></p>
 
-            <?php if ($session->get('id_usuario')): ?>
+            <?php if ($session->get('id_usuario') && $session->get('rol') === 'cliente'): ?>
                 <form action="<?= $baseUrl ?>FavoritosController/toggle" method="POST" style="display:inline;">
                     <input type="hidden" name="id_propiedad" value="<?= $propiedad->id_propiedad ?>">
                     <button type="submit" class="btn btn-heart" style="color: <?= $propiedad->isFavorito($session->get('id_usuario')) ? 'red' : 'grey' ?>;">
@@ -46,7 +46,7 @@
                         <?php endif; ?>
                     </button>
                 </form>
-            <?php else: ?>
+            <?php elseif (!$session->get('id_usuario')): ?>
                 <button class="btn btn-heart" onclick="document.getElementById('loginModal').style.display='block'">
                     🤍
                 </button>
