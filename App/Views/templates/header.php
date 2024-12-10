@@ -50,6 +50,7 @@ $rol = $session->get('rol');
     
     <!-- Custom styles for this template -->
     <link href="<?= $baseUrl ?>css/style.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>css/btn-heart.css" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column h-100">

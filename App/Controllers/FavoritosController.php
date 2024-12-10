@@ -11,10 +11,11 @@ class FavoritosController
     {
         $session = Session::getInstance();
         $id_cliente = $session->get('id_usuario');
+        $rol = $session->get('rol');
         $id_propiedad = $_POST['id_propiedad'];
 
         // Verificar si el cliente y la propiedad están definidos
-        if (!$id_cliente || !$id_propiedad) {
+        if (!$id_cliente || !$id_propiedad || $rol !== 'cliente') {
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
@@ -38,8 +39,9 @@ class FavoritosController
     {
         $session = Session::getInstance();
         $id_cliente = $session->get('id_usuario');
+        $rol = $session->get('rol');
 
-        if (!$id_cliente) {
+        if (!$id_cliente || $rol !== 'cliente') {
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }

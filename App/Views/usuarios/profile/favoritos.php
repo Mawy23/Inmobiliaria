@@ -11,12 +11,14 @@
                             <p class="card-text">Precio: <?= htmlspecialchars($favorito->precio) ?></p>
                             <p class="card-text">Ubicación: <?= htmlspecialchars($favorito->direccion) ?>, <?= htmlspecialchars($favorito->ciudad) ?></p>
                             <a href="<?= $baseUrl ?>PropiedadController/show/<?= $favorito->id_propiedad ?>" class="btn btn-primary">Ver</a>
-                            <form action="<?= $baseUrl ?>FavoritosController/toggle" method="POST" style="display:inline;">
-                                <input type="hidden" name="id_propiedad" value="<?= $favorito->id_propiedad ?>">
-                                <button type="submit" class="btn btn-heart" style="color: red;">
-                                    ❤️
-                                </button>
-                            </form>
+                            <?php if ($session->get('rol') === 'cliente'): ?>
+                                <form action="<?= $baseUrl ?>FavoritosController/toggle" method="POST">
+                                    <input type="hidden" name="id_propiedad" value="<?= $favorito->id_propiedad ?>">
+                                    <button type="submit" class="btn btn-heart" style="color: red;">
+                                        ❤️
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
