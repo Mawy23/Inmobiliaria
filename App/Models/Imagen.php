@@ -33,12 +33,12 @@ class Imagen extends Model {
     public static function find($id_imagen) {
         try {
             $db = static::getDB();
-            $stmt = $db->prepare('SELECT url_imagen FROM imagenes WHERE id_imagen = :id_imagen');
+            $stmt = $db->prepare('SELECT imagen FROM imagenes WHERE id_imagen = :id_imagen');
             $stmt->bindParam(':id_imagen', $id_imagen, PDO::PARAM_INT);
             $stmt->execute();
             $imagen = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            return $imagen['url_imagen']; // Retorna la URL completa de la imagen
+            return $imagen['imagen']; // Retorna la URL completa de la imagen
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
         }
@@ -48,11 +48,22 @@ class Imagen extends Model {
     public static function create($data) {
         try {
             $db = static::getDB();
-            $stmt = $db->prepare('INSERT INTO imagenes (id_propiedad, url_imagen, descripcion) VALUES (:id_propiedad, :url_imagen, :descripcion)');
+            $stmt = $db->prepare('INSERT INTO imagenes (id_propiedad, imagen, descripcion) VALUES (:id_propiedad, :imagen, :descripcion)'); //! REVISA ESTO, NO QUEREMOS DESCRIPCION 
             $stmt->bindParam(':id_propiedad', $data['id_propiedad'], PDO::PARAM_INT);
-            $stmt->bindParam(':url_imagen', $data['url_imagen'], PDO::PARAM_STR);
+            $stmt->bindParam(':imagen', $data['imagen'], PDO::PARAM_LOB);
             $stmt->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
-            $stmt->execute();
+            
+            // Dividir la imagen en partes más pequeñas si es necesario
+            $chunkSize = 1024 * 1024; // 1MB
+            $imagenData = $data['imagen'];
+            $offset = 0;
+            while ($offset < strlen($imagenData)) {
+                $chunk = substr($imagenData, $offset, $chunkSize);
+                $stmt->bindParam(':imagen', $chunk, PDO::PARAM_LOB);
+                $stmt->execute();
+                $offset += $chunkSize;
+            }
+            
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
         }

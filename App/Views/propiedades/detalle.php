@@ -4,13 +4,27 @@
 
         <div class="property-images">
             <?php if (!empty($propiedad->imagenes)): ?>
-                <!-- Mostrar la URL de la imagen -->
-                <img src="<?php echo htmlspecialchars($propiedad->imagenes[0]->url_imagen); ?>" alt="Imagen de la propiedad">
+                <div id="carouselImages" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php foreach ($propiedad->imagenes as $index => $imagen): ?>
+                            <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imagen->imagen); ?>" alt="Imagen de la propiedad">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselImages" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselImages" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Siguiente</span>
+                    </a>
+                </div>
             <?php else: ?>
                 <img src="https://via.placeholder.com/600x400" alt="Imagen de la propiedad">
             <?php endif; ?>
         </div>
-
 
         <div class="property-info">
             <p><strong>Descripción:</strong> <?php echo htmlspecialchars($propiedad->descripcion); ?></p>

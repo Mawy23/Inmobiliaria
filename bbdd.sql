@@ -38,7 +38,7 @@ CREATE TABLE propiedades (
 CREATE TABLE imagenes (
     id_imagen INT AUTO_INCREMENT PRIMARY KEY,
     id_propiedad INT,
-    url_imagen VARCHAR(255) NOT NULL,
+    imagen LONGBLOB NOT NULL, -- Cambiar url_imagen a imagen y usar tipo LONGBLOB
     descripcion TEXT,
     FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE
 );

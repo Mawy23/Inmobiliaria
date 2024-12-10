@@ -2,7 +2,7 @@
     <h2>Añadir y Modificar Propiedades</h2>
     <!-- Formulario para crear una nueva propiedad -->
     <h3>Agregar Nueva Propiedad</h3>
-    <form action="<?= $baseUrl ?>PropiedadController/store" method="POST">
+    <form action="<?= $baseUrl ?>PropiedadController/store" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="active_tab" value="propiedades">
         <label for="titulo">Título</label>
         <input type="text" id="titulo" name="titulo" required>
@@ -31,6 +31,8 @@
                 <option value="<?= $agente->id_usuario ?>"><?= $agente->nombre . ' ' . $agente->apellido ?></option>
             <?php endforeach; ?>
         </select>
+        <label for="imagenes">Imágenes</label>
+        <input type="file" id="imagenes" name="imagenes[]" accept="image/*" multiple required>
         <button type="submit">Crear Propiedad</button>
     </form>
     <!-- Mostrar la lista de propiedades con opciones de edición y eliminación -->

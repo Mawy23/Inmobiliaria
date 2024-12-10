@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use Core\View;
@@ -39,35 +40,36 @@ class PropiedadController
     {
         // Obtener la propiedad por su ID
         $propiedad = Propiedad::find($id);
-    
+
         if (!$propiedad) {
             // Manejar el caso en que no se encuentre la propiedad
             throw new \Exception("Propiedad no encontrada.");
         }
-    
+
         // Obtener las imágenes asociadas a la propiedad
         $imagenes = Imagen::search($id);
-    
+
         // Asociar las imágenes a la propiedad (si es necesario)
         $propiedad->imagenes = $imagenes;
-    
+
         // Definir la vista y los argumentos a pasar
         $views = ['propiedades/detalle'];
         $args  = [
             'title' => 'Detalles de la Propiedad',
-            'propiedad' => $propiedad
+            'propiedad' => $propiedad,
+            'imagenes' => $imagenes
         ];
-    
+
         // Renderizar la vista con los argumentos
         View::render($views, $args);
     }
-    
+
 
     // Método que muestra el formulario para agregar una nueva propiedad
     public function create()
     {
         $agentes = Usuario::where('rol', 'agente');
-        $views = ['usuarios/profile/admin/profile'];
+        $views = ['usuarios/profile/admin/profile'];  //! Revisar ruta, creo que no debería ser esa
         $args  = ['title' => 'Agregar Propiedad', 'agentes' => $agentes];
         View::render($views, $args);
     }
@@ -91,7 +93,33 @@ class PropiedadController
                 'id_agente' => !empty($_POST['id_agente']) ? $_POST['id_agente'] : null
             ];
             
-            Propiedad::create($data);
+            $propiedadId = Propiedad::create($data);
+
+            // Obtener el ID de la propiedad recién creada
+            $db = Propiedad::getDB();
+            $propiedadId = $db->lastInsertId();
+
+            // Manejar la subida de múltiples imágenes
+            if (isset($_FILES['imagenes'])) {
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
+                    if ($_FILES['imagenes']['error'][$key] == UPLOAD_ERR_OK) {
+                        $fileType = mime_content_type($tmp_name);
+                        if (in_array($fileType, $allowedTypes)) {
+                            $imagenData = file_get_contents($tmp_name);
+                            $imagenDescripcion = $_POST['descripcion_imagen'][$key] ?? '';
+
+                            Imagen::create([
+                                'id_propiedad' => $propiedadId,
+                                'imagen' => $imagenData,
+                                'descripcion' => $imagenDescripcion
+                            ]);
+                        } else {
+                            throw new \Exception("Formato de imagen no permitido. Solo se permiten JPG, JPEG y PNG.");
+                        }
+                    }
+                }
+            }
             
             $this->redirectToProfile(null, null, 'propiedades');
         }
@@ -151,7 +179,7 @@ class PropiedadController
         $citas = Cita::all();
         $agentes = Usuario::where('rol', 'agente');
 
-        $views = ['usuarios/profile/admin/profile'];
+        $views = ['usuarios/profile/profile'];
         $args = [
             'title' => 'Panel de Administrador',
             'nombre' => Session::getInstance()->get('nombre'),
