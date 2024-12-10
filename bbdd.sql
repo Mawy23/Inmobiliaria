@@ -108,3 +108,9 @@ VALUES
 ('Departamento Moderno', 'Departamento con vista al mar y piscina.', 150000.00, 'departamento', 'Av. Marítima 5', 'Barcelona', 'disponible', '08002', NULL),
 ('Terreno en las Afueras', 'Terreno amplio para construcción.', 100000.00, 'terreno', 'Ctra. Nacional 25', 'Valencia', 'disponible', '46001', NULL),
 ('Local Comercial', 'Local comercial en zona céntrica.', 50000.00, 'local', 'Calle Comercio 3', 'Sevilla', 'vendido', '41001', NULL);
+
+-- Vista para obtener propiedades favoritas con detalles
+CREATE VIEW vista_favoritos AS
+SELECT p.*, f.id_cliente
+FROM propiedades p
+JOIN favoritos f ON p.id_propiedad = f.id_propiedad;

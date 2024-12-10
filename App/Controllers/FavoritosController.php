@@ -33,4 +33,19 @@ class FavoritosController
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }
+
+    public function getFavoritos()
+    {
+        $session = Session::getInstance();
+        $id_cliente = $session->get('id_usuario');
+
+        if (!$id_cliente) {
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+
+        $favoritos = Favorito::getFavoritosConDetalles($id_cliente);
+
+        return $favoritos;
+    }
 }

@@ -10,6 +10,7 @@ use Core\View;
 use App\Models\Propiedad;
 use App\Models\Usuario;
 use Core\Session;
+use App\Controllers\FavoritosController;
 
 // Definimos la clase 'Home' que manejará la lógica de las páginas relacionadas con el "Home"
 class Home
@@ -101,6 +102,8 @@ class Home
         $propiedades = $rol !== 'cliente' ? Propiedad::all() : Propiedad::where('id_agente', $session->get('id')); // Obtener todas las propiedades o las del cliente
         $citas = $rol === 'admin' ? Cita::all() : Cita::where('id_agente', $session->get('id')); // Obtener todas las citas o las del usuario
         $agentes = $rol === 'admin' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin
+        $favoritosController = new FavoritosController();
+        $favoritos = $rol === 'cliente' ? $favoritosController->getFavoritos() : [];
 
         // Definimos las vistas a cargar (en este caso, 'usuarios/profile/profile')
         $views = ['usuarios/profile/profile'];
@@ -113,7 +116,8 @@ class Home
             'propiedades' => $propiedades,
             'citas' => $citas,
             'agentes' => $agentes,
-            'rol' => $rol
+            'rol' => $rol,
+            'favoritos' => $favoritos
         ];
 
         // Renderizamos la vista con los argumentos especificados

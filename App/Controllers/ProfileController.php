@@ -29,14 +29,13 @@ class ProfileController
         $propiedades = Propiedad::all();
         $citas = $rol === 'admin' ? Cita::all() : Cita::where('id_agente', $session->get('id_usuario')); // Obtener todas las citas o las del usuario
         $agentes = $rol !== 'cliente' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin o agente
-        $favoritos = $rol === 'cliente' ? Favorito::where('id_cliente', $session->get('id_usuario'))->pluck('id_propiedad')->toArray() : [];
+        $favoritos = $rol === 'cliente' ? Favorito::getFavoritosConDetalles($session->get('id_usuario')) : []; // Obtener los favoritos con detalles
         $historialCitas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : [];
         $misPropiedades = $rol === 'cliente' ? Propiedad::where('id_cliente', $session->get('id_usuario')) : [];
-        $activeTab = 'usuarios'; // Siempre establecer la pestaña activa en 'usuarios'
+        $activeTab = $rol === 'cliente' ? 'favoritos' : 'usuarios'; // Establecer la pestaña activa según el rol
 
-        foreach ($propiedades as $propiedad) {
-            $propiedad->isFavorito = in_array($propiedad->id_propiedad, $favoritos);
-        }
+        // Depuración
+        error_log('Favoritos: ' . print_r($favoritos, true));
 
         // Cargar vista del panel
         $views = ['usuarios/profile/profile'];

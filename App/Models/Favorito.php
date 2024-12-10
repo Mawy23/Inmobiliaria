@@ -75,4 +75,13 @@ class Favorito extends Model
         $stmt->bindValue(':id_propiedad', $this->id_propiedad);
         $stmt->execute();
     }
+
+    public static function getFavoritosConDetalles($id_cliente)
+    {
+        $sql = "SELECT * FROM vista_favoritos WHERE id_cliente = :id_cliente";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindValue(':id_cliente', $id_cliente);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Models\Propiedad');
+    }
 }
