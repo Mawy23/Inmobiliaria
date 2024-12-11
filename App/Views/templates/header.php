@@ -66,9 +66,11 @@ $rol = $session->get('rol');
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $baseUrl ?>PropiedadController">Comprar casa</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= $baseUrl ?>PropiedadController/comparar">Comparar Propiedades</a>
-                    </li>
+                    <?php if ($rol === 'cliente'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $baseUrl ?>PropiedadController/comparar">Comparar Propiedades</a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $baseUrl ?>UsuariosController">Usuarios</a>
                     </li>
