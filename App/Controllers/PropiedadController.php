@@ -172,6 +172,37 @@ class PropiedadController
         }
     }
 
+    public function comparar()
+    {
+        $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : null;
+        $precio_min = isset($_GET['precio_min']) ? $_GET['precio_min'] : null;
+        $precio_max = isset($_GET['precio_max']) ? $_GET['precio_max'] : null;
+        $ciudad = isset($_GET['ciudad']) ? $_GET['ciudad'] : null;
+
+        // Obtener propiedades filtradas
+        $propiedades = Propiedad::search($tipo, $precio_min, $precio_max, $ciudad);
+        $propiedadesComparar = [];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['propiedades'])) {
+            $ids = $_POST['propiedades'];
+            $propiedadesComparar = Propiedad::findMultiple($ids);
+        }
+
+        // Obtener tipos y ciudades disponibles
+        $tipos = Propiedad::distinct('tipo');
+        $ciudades = Propiedad::distinct('ciudad');
+
+        $views = ['propiedades/comparar'];
+        $args  = [
+            'title' => 'Comparar Propiedades',
+            'propiedades' => $propiedades,
+            'propiedadesComparar' => $propiedadesComparar,
+            'tipos' => $tipos,
+            'ciudades' => $ciudades
+        ];
+        View::render($views, $args);
+    }
+
     private function redirectToProfile($usuarioToEdit = null, $propiedadToEdit = null, $activeTab = 'propiedades')
     {
         $usuarios = Usuario::all();

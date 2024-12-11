@@ -67,6 +67,9 @@ $rol = $session->get('rol');
                         <a class="nav-link" href="<?= $baseUrl ?>PropiedadController">Comprar casa</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<?= $baseUrl ?>PropiedadController/comparar">Comparar Propiedades</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<?= $baseUrl ?>UsuariosController">Usuarios</a>
                     </li>
                     <li class="nav-item">

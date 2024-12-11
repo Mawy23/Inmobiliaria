@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use PDO;
@@ -7,7 +8,8 @@ use Exception;
 
 use Core\Model;
 
-class Propiedad extends Model {
+class Propiedad extends Model
+{
 
     // Asegúrate de que la propiedad id_propiedad esté definida
     public $id_propiedad;
@@ -15,7 +17,8 @@ class Propiedad extends Model {
     // Definir la propiedad isFavorito
     public $isFavorito = false;
 
-    public static function all() {
+    public static function all()
+    {
         try {
             $db = static::getDB();
             $stmt = $db->query('SELECT * FROM propiedades');
@@ -25,7 +28,8 @@ class Propiedad extends Model {
         }
     }
 
-    public static function find($id) {
+    public static function find($id)
+    {
         try {
             $db = static::getDB();
             $stmt = $db->prepare('SELECT * FROM propiedades WHERE id_propiedad = :id');
@@ -37,7 +41,8 @@ class Propiedad extends Model {
         }
     }
 
-    public static function create($data) {
+    public static function create($data)
+    {
         try {
             // Validar que todos los campos requeridos están presentes
             $requiredFields = ['titulo', 'descripcion', 'precio', 'tipo', 'direccion', 'ciudad', 'estado', 'codigo_postal'];
@@ -64,7 +69,8 @@ class Propiedad extends Model {
         }
     }
 
-    public static function update($data) {
+    public static function update($data)
+    {
         try {
             $db = static::getDB();
             $stmt = $db->prepare('UPDATE propiedades SET titulo = :titulo, descripcion = :descripcion, precio = :precio, tipo = :tipo, direccion = :direccion, ciudad = :ciudad, estado = :estado, codigo_postal = :codigo_postal, id_agente = :id_agente WHERE id_propiedad = :id');
@@ -84,7 +90,8 @@ class Propiedad extends Model {
         }
     }
 
-    public static function delete($id) {
+    public static function delete($id)
+    {
         try {
             $db = static::getDB();
             $stmt = $db->prepare('DELETE FROM propiedades WHERE id_propiedad = :id');
@@ -95,32 +102,43 @@ class Propiedad extends Model {
         }
     }
 
-    public static function search($tipo = null, $precio_min = null, $precio_max = null, $ciudad = null) {
+    public static function distinct($column)
+    {
+
+        $db = self::getDB();
+        $stmt = $db->prepare("SELECT DISTINCT $column FROM propiedades");
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
+    public static function search($tipo = null, $precio_min = null, $precio_max = null, $ciudad = null)
+    {
         try {
             $db = static::getDB();
             $query = 'SELECT * FROM propiedades WHERE 1=1';
             $params = [];
-    
+
             if ($tipo) {
                 $query .= ' AND tipo = :tipo';
                 $params[':tipo'] = $tipo;
             }
-    
+
             if ($precio_min) {
                 $query .= ' AND precio >= :precio_min';
                 $params[':precio_min'] = $precio_min;
             }
-    
+
             if ($precio_max) {
                 $query .= ' AND precio <= :precio_max';
                 $params[':precio_max'] = $precio_max;
             }
-    
+
             if ($ciudad) {
                 $query .= ' AND ciudad LIKE :ciudad';
                 $params[':ciudad'] = '%' . $ciudad . '%';
             }
-    
+
             $stmt = $db->prepare($query);
             foreach ($params as $key => $val) {
                 $stmt->bindValue($key, $val);
@@ -140,7 +158,7 @@ class Propiedad extends Model {
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
+
     public function isFavorito($id_cliente)
     {
         $sql = "SELECT COUNT(*) FROM favoritos WHERE id_cliente = :id_cliente AND id_propiedad = :id_propiedad";
@@ -150,7 +168,22 @@ class Propiedad extends Model {
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
+
+    public static function findMultiple($ids)
+    {
+        try {
+            $db = static::getDB();
+            $inQuery = implode(',', array_fill(0, count($ids), '?'));
+            $stmt = $db->prepare("SELECT * FROM propiedades WHERE id_propiedad IN ($inQuery)");
+            foreach ($ids as $k => $id) {
+                $stmt->bindValue(($k + 1), $id, PDO::PARAM_INT);
+            }
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Models\Propiedad');
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }
 
 $propiedades = Propiedad::all(); // Obtener todas las propiedades o las del cliente
-
