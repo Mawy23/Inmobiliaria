@@ -27,9 +27,25 @@ class PropiedadController
             $propiedad->imagenes = Imagen::search($propiedad->id_propiedad);
         }
 
+        // Obtener estadísticas históricas de búsqueda
+        $searchStats = Propiedad::getSearchHistoryStats();
+        $searchStatsLabels = array_keys($searchStats['tipo']);
+        $searchStatsData = [
+            'tipo' => array_values($searchStats['tipo'])
+        ];
+
+        // Obtener el rol del usuario
+        $userRole = Session::getInstance()->get('rol');
+
         // Definir las vistas y los argumentos a pasar
-        $views = ['propiedades/buscar','propiedades/listado'];
-        $args  = ['title' => 'Busqueda de Inmuebles', 'propiedades' => $propiedades];
+        $views = ['propiedades/buscar', 'propiedades/listado'];
+        $args  = [
+            'title' => 'Busqueda de Inmuebles',
+            'propiedades' => $propiedades,
+            'searchStatsLabels' => $searchStatsLabels,
+            'searchStatsData' => $searchStatsData,
+            'userRole' => $userRole
+        ];
 
         // Renderizar la vista con los argumentos
         View::render($views, $args);
@@ -189,6 +205,9 @@ class PropiedadController
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['propiedades'])) {
             $ids = $_POST['propiedades'];
             $propiedadesComparar = Propiedad::findMultiple($ids);
+        } else {
+            // Guardar los datos de búsqueda en la tabla search_history solo si no es una comparación
+            Propiedad::saveSearchHistory($tipo, $precio_min, $precio_max, $ciudad);
         }
 
         // Obtener tipos y ciudades disponibles

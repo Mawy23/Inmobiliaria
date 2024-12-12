@@ -16,7 +16,7 @@ class CitaController
         $citas = Cita::all();
         
         // Definir las vistas y los argumentos a pasar
-        $views = ['cita/index'];
+        $views = ['citas/index'];
         $args  = ['title' => 'Lista de Citas', 'citas' => $citas];
         
         // Renderizar la vista con los argumentos
@@ -114,7 +114,7 @@ class CitaController
         $citas = Cita::all();
         $agentes = Usuario::where('rol', 'agente');
 
-        $views = ['usuarios/profile/admin/profile'];
+        $views = ['usuarios/profile/profile'];
         $args = [
             'title' => 'Panel de Administrador',
             'nombre' => Session::getInstance()->get('nombre'),
@@ -123,7 +123,8 @@ class CitaController
             'citas' => $citas,
             'citaToEdit' => $citaToEdit,
             'activeTab' => $activeTab,
-            'agentes' => $agentes
+            'agentes' => $agentes,
+            'rol' => Session::getInstance()->get('rol')
         ];
 
         View::render($views, $args);

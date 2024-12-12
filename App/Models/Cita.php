@@ -8,6 +8,11 @@ use Exception;
 use Core\Model;
 
 class Cita extends Model {
+    public $id_cita;
+    public $id_cliente;
+    public $id_propiedad;
+    public $estado;
+    
     public static function all() {
         try {
             $db = static::getDB();

@@ -27,11 +27,11 @@ class ProfileController
         $nombre = $session->get('nombre');
         $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios solo si es admin o agente
         $propiedades = Propiedad::all();
-        $citas = $rol === 'admin' ? Cita::all() : Cita::where('id_agente', $session->get('id_usuario')); // Obtener todas las citas o las del usuario
+        $citas = Cita::all();
         $agentes = $rol !== 'cliente' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin o agente
         $favoritos = $rol === 'cliente' ? Favorito::getFavoritosConDetalles($session->get('id_usuario')) : []; // Obtener los favoritos con detalles
         $historialCitas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : [];
-        $misPropiedades = $rol === 'cliente' ? Propiedad::where('id_cliente', $session->get('id_usuario')) : [];
+        $misPropiedades = $rol === 'cliente' ? Propiedad::where('id_cliente', $session->get('id_usuario')) : []; // Corrección de la obtención de propiedades para clientes.
         $activeTab = $rol === 'cliente' ? 'favoritos' : 'usuarios'; // Establecer la pestaña activa según el rol
 
         // Depuración

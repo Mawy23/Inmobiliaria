@@ -98,9 +98,9 @@ class Home
         $session = Session::getInstance();
         $rol = $session->get('rol');
         $nombre = $session->get('nombre');
-        $usuarios = $rol === 'admin' ? Usuario::all() : []; // Obtener todos los usuarios solo si es admin
+        $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios solo si es admin
         $propiedades = $rol !== 'cliente' ? Propiedad::all() : Propiedad::where('id_agente', $session->get('id')); // Obtener todas las propiedades o las del cliente
-        $citas = $rol === 'admin' ? Cita::all() : Cita::where('id_agente', $session->get('id')); // Obtener todas las citas o las del usuario
+        $citas = Cita::all();
         $agentes = $rol === 'admin' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin
         $favoritosController = new FavoritosController();
         $favoritos = $rol === 'cliente' ? $favoritosController->getFavoritos() : [];
@@ -117,7 +117,8 @@ class Home
             'citas' => $citas,
             'agentes' => $agentes,
             'rol' => $rol,
-            'favoritos' => $favoritos
+            'favoritos' => $favoritos,
+            'active_tab' => 'citas'
         ];
 
         // Renderizamos la vista con los argumentos especificados

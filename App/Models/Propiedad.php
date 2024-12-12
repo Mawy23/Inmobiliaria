@@ -184,6 +184,79 @@ class Propiedad extends Model
             throw new Exception($e->getMessage());
         }
     }
+
+    public static function getSearchStats()
+    {
+        try {
+            $db = static::getDB();
+            $stats = [
+                'tipo' => [],
+                'precio' => []
+            ];
+
+            // Obtener estadísticas por tipo
+            $stmt = $db->query('SELECT tipo, COUNT(*) as count FROM propiedades GROUP BY tipo');
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $stats['tipo'][$row['tipo']] = $row['count'];
+            }
+
+            // Obtener estadísticas por rango de precio
+            $stmt = $db->query('SELECT 
+                CASE 
+                    WHEN precio < 100000 THEN "Menos de 100,000"
+                    WHEN precio BETWEEN 100000 AND 200000 THEN "100,000 - 200,000"
+                    WHEN precio BETWEEN 200000 AND 300000 THEN "200,000 - 300,000"
+                    ELSE "Más de 300,000"
+                END as rango_precio, COUNT(*) as count 
+                FROM propiedades 
+                GROUP BY rango_precio');
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $stats['precio'][$row['rango_precio']] = $row['count'];
+            }
+
+            return $stats;
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public static function saveSearchHistory($tipo, $precio_min, $precio_max, $ciudad)
+    {
+        // Verificar si al menos uno de los filtros está presente
+        if ($tipo || $precio_min || $precio_max || $ciudad) {
+            try {
+                $db = static::getDB();
+                $stmt = $db->prepare('INSERT INTO search_history (tipo, precio_min, precio_max, ciudad) VALUES (:tipo, :precio_min, :precio_max, :ciudad)');
+                $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+                $stmt->bindParam(':precio_min', $precio_min, PDO::PARAM_STR);
+                $stmt->bindParam(':precio_max', $precio_max, PDO::PARAM_STR);
+                $stmt->bindParam(':ciudad', $ciudad, PDO::PARAM_STR);
+                $stmt->execute();
+            } catch (PDOException $e) {
+                throw new Exception($e->getMessage());
+            }
+        }
+    }
+
+    public static function getSearchHistoryStats()
+    {
+        try {
+            $db = static::getDB();
+            $stats = [
+                'tipo' => []
+            ];
+
+            // Obtener estadísticas por tipo
+            $stmt = $db->query('SELECT tipo, COUNT(*) as count FROM search_history GROUP BY tipo');
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $stats['tipo'][$row['tipo']] = $row['count'];
+            }
+
+            return $stats;
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }
 
 $propiedades = Propiedad::all(); // Obtener todas las propiedades o las del cliente

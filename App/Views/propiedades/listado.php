@@ -48,6 +48,35 @@
         </div>
     <?php endif; ?>
 
+    <?php if ($userRole == 'admin' || $userRole == 'agente'): ?>
+        <h3>Estadísticas de Búsqueda</h3>
+        <canvas id="searchStatsChart" width="400" height="200"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('searchStatsChart').getContext('2d');
+            const searchStatsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: <?= json_encode($searchStatsLabels) ?>,
+                    datasets: [{
+                        label: 'Búsquedas por Tipo',
+                        data: <?= json_encode($searchStatsData['tipo']) ?>,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    <?php endif; ?>
+
 </div>
 
 <!-- Modal -->

@@ -9,9 +9,11 @@
                 <a class="nav-link <?= $active_tab === 'propiedades' ? 'active' : '' ?>" id="propiedades-tab" data-toggle="tab" href="#propiedades" role="tab" aria-controls="propiedades" aria-selected="<?= $active_tab === 'propiedades' ? 'true' : 'false' ?>">Propiedades</a>
             </li>
         <?php endif; ?>
-        <li class="nav-item">
-            <a class="nav-link <?= $active_tab === 'citas' ? 'active' : '' ?>" id="citas-tab" data-toggle="tab" href="#citas" role="tab" aria-controls="citas" aria-selected="<?= $active_tab === 'citas' ? 'true' : 'false' ?>">Citas</a>
-        </li>
+        <?php if ($rol === 'agente' || $rol === 'admin' || $rol === 'cliente'): ?>
+            <li class="nav-item">
+                <a class="nav-link <?= $active_tab === 'citas' ? 'active' : '' ?>" id="citas-tab" data-toggle="tab" href="#citas" role="tab" aria-controls="citas" aria-selected="<?= $active_tab === 'citas' ? 'true' : 'false' ?>">Citas</a>
+            </li>
+        <?php endif; ?>
         <?php if ($rol === 'cliente'): ?>
             <li class="nav-item">
                 <a class="nav-link <?= $active_tab === 'favoritos' ? 'active' : '' ?>" id="favoritos-tab" data-toggle="tab" href="#favoritos" role="tab" aria-controls="favoritos" aria-selected="<?= $active_tab === 'favoritos' ? 'true' : 'false' ?>">Favoritos</a>
@@ -34,9 +36,11 @@
                 <?php include 'propiedades.php'; ?>
             </div>
         <?php endif; ?>
-        <div class="tab-pane fade <?= $active_tab === 'citas' ? 'show active' : '' ?>" id="citas" role="tabpanel" aria-labelledby="citas-tab">
-            <?php include 'citas.php'; ?>
-        </div>
+        <?php if ($rol === 'admin' || $rol === 'agente' || $rol === 'cliente'): ?>
+            <div class="tab-pane fade <?= $active_tab === 'citas' ? 'show active' : '' ?>" id="citas" role="tabpanel" aria-labelledby="citas-tab">
+                <?php include 'citas.php'; ?>
+            </div>
+        <?php endif; ?>
         <?php if ($rol === 'cliente'): ?>
             <div class="tab-pane fade <?= $active_tab === 'favoritos' ? 'show active' : '' ?>" id="favoritos" role="tabpanel" aria-labelledby="favoritos-tab">
                 <?php include 'favoritos.php'; ?>
