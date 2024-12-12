@@ -128,5 +128,23 @@ class CitaController
 
         View::render($views, $args);
     }
+
+    public function agendar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = [
+                'id_cliente' => Session::getInstance()->get('id_usuario'),
+                'id_agente' => $_POST['id_agente'],
+                'id_propiedad' => $_POST['id_propiedad'],
+                'fecha' => $_POST['fecha'],
+                'hora' => $_POST['hora']
+            ];
+
+            Cita::create($data);
+
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit();
+        }
+    }
 }
 

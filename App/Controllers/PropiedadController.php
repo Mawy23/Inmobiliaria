@@ -52,12 +52,15 @@ class PropiedadController
         // Asociar las imágenes a la propiedad (si es necesario)
         $propiedad->imagenes = $imagenes;
 
+        $agentes = Usuario::where('rol', 'agente');
+
         // Definir la vista y los argumentos a pasar
         $views = ['propiedades/detalle'];
         $args  = [
             'title' => 'Detalles de la Propiedad',
             'propiedad' => $propiedad,
-            'imagenes' => $imagenes
+            'imagenes' => $imagenes,
+            'agentes' => $agentes
         ];
 
         // Renderizar la vista con los argumentos

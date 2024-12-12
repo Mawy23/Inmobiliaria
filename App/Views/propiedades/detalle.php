@@ -46,9 +46,15 @@
                         <?php endif; ?>
                     </button>
                 </form>
+                <button class="btn btn-agendar" onclick="document.getElementById('agendarModal').style.display='block'">
+                    Agendar Cita
+                </button>
             <?php elseif (!$session->get('id_usuario')): ?>
                 <button class="btn btn-heart" onclick="document.getElementById('loginModal').style.display='block'">
                     🤍
+                </button>
+                <button class="btn btn-agendar" onclick="document.getElementById('loginModal').style.display='block'">
+                    Agendar Cita
                 </button>
             <?php endif; ?>
         </div>
@@ -73,6 +79,28 @@
         <p>Por favor, inicia sesión o regístrate para agregar a favoritos.</p>
         <a href="<?= $baseUrl ?>AuthController/login" class="btn">Iniciar sesión</a>
         <a href="<?= $baseUrl ?>AuthController/register" class="btn">Registrarse</a>
+    </div>
+</div>
+
+<!-- Modal para agendar cita -->
+<div id="agendarModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('agendarModal').style.display='none'">&times;</span>
+        <h2>Agendar Cita</h2>
+        <form action="<?= $baseUrl ?>CitaController/agendar" method="POST">
+            <input type="hidden" name="id_propiedad" value="<?= $propiedad->id_propiedad ?>">
+            <label for="agente">Seleccionar Agente:</label>
+            <select name="id_agente" id="agente" required>
+                <?php foreach ($agentes as $agente): ?>
+                    <option value="<?= $agente->id_usuario ?>"><?= htmlspecialchars($agente->nombre) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label for="fecha">Seleccionar Fecha:</label>
+            <input type="date" name="fecha" id="fecha" required>
+            <label for="hora">Seleccionar Hora:</label>
+            <input type="time" name="hora" id="hora" required>
+            <button type="submit" class="btn">Agendar</button>
+        </form>
     </div>
 </div>
 
@@ -125,5 +153,20 @@
 
 .btn:hover {
     background-color: #45a049;
+}
+
+.btn-agendar {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-agendar:hover {
+    background-color: #0056b3;
 }
 </style>
