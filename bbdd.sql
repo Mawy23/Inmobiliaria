@@ -17,6 +17,16 @@ CREATE TABLE usuarios (
     INDEX (rol)
 );
 
+-- Historial de búsquedas
+CREATE TABLE `search_history` (
+  `id` int(11) NOT NULL,
+  `tipo` varchar(255) DEFAULT NULL,
+  `precio_min` decimal(10,2) DEFAULT NULL,
+  `precio_max` decimal(10,2) DEFAULT NULL,
+  `ciudad` varchar(255) DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
+);
+
 -- Tabla de propiedades
 CREATE TABLE propiedades (
     id_propiedad INT AUTO_INCREMENT PRIMARY KEY,
