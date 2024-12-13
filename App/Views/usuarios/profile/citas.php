@@ -1,4 +1,4 @@
-<div class="tab-pane fade  <?= $active_tab === 'citas' ? 'show active' : '' ?>" id="citas" role="tabpanel" aria-labelledby="citas-tab">
+<div class="tab-pane fade show active" id="citas" role="tabpanel" aria-labelledby="citas-tab">
     <h2>Ver Todas las Citas</h2>
     <h3>Agregar Nueva Cita</h3>
     <form action="<?= $baseUrl ?>CitaController/store" method="POST">

@@ -98,15 +98,23 @@ class Home
         $session = Session::getInstance();
         $rol = $session->get('rol');
         $nombre = $session->get('nombre');
-        $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios solo si es admin
+        $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios si no es cliente
         $propiedades = $rol !== 'cliente' ? Propiedad::all() : Propiedad::where('id_agente', $session->get('id')); // Obtener todas las propiedades o las del cliente
-        $citas = Cita::all();
+        $citas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : []; // Obtener todas las citas del cliente
         $agentes = $rol === 'admin' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin
         $favoritosController = new FavoritosController();
-        $favoritos = $rol === 'cliente' ? $favoritosController->getFavoritos() : [];
+        $favoritos = $rol === 'cliente' ? $favoritosController->getFavoritos() : []; // Obtener los favoritos del cliente
 
         // Definimos las vistas a cargar (en este caso, 'usuarios/profile/profile')
         $views = ['usuarios/profile/profile'];
+
+        // definimos la pestaña activa por defecto y para cliente la pestaña de favoritos
+        $active_tab = 'usuarios';
+        if ($rol === 'cliente') {
+            $active_tab = 'favoritos';
+        }
+
+
 
         // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
         $args  = [
@@ -118,7 +126,7 @@ class Home
             'agentes' => $agentes,
             'rol' => $rol,
             'favoritos' => $favoritos,
-            'active_tab' => 'citas'
+            'active_tab' => $active_tab
         ];
 
         // Renderizamos la vista con los argumentos especificados
