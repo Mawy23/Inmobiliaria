@@ -109,6 +109,9 @@ class CitaController
 
     private function redirectToProfile($citaToEdit = null, $propiedadToEdit = null, $activeTab = 'citas')
     {
+        $session = Session::getInstance();
+        $session->set('active_tab', $activeTab);
+
         $usuarios = Usuario::all();
         $propiedades = Propiedad::all();
         $citas = Cita::all();
@@ -117,14 +120,14 @@ class CitaController
         $views = ['usuarios/profile/profile'];
         $args = [
             'title' => 'Panel de Administrador',
-            'nombre' => Session::getInstance()->get('nombre'),
+            'nombre' => $session->get('nombre'),
             'usuarios' => $usuarios,
             'propiedades' => $propiedades,
             'citas' => $citas,
             'citaToEdit' => $citaToEdit,
             'activeTab' => $activeTab,
             'agentes' => $agentes,
-            'rol' => Session::getInstance()->get('rol')
+            'rol' => $session->get('rol')
         ];
 
         View::render($views, $args);

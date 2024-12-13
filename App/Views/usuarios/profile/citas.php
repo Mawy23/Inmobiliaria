@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="citas" role="tabpanel" aria-labelledby="citas-tab">
+<div class="tab-pane show active" id="citas" role="tabpanel" aria-labelledby="citas-tab">
     <h2>Ver Todas las Citas</h2>
     <h3>Agregar Nueva Cita</h3>
     <form action="<?= $baseUrl ?>CitaController/store" method="POST">
@@ -92,14 +92,20 @@
                 <th>Fecha y Hora</th>
                 <th>Estado</th>
             </tr>
-            <?php foreach ($historialCitas as $cita): ?>
+            <?php if (isset($historialCitas) && is_array($historialCitas)): ?>
+                <?php foreach ($historialCitas as $cita): ?>
+                    <tr>
+                        <td><?= $cita->id_cita ?></td>
+                        <td><?= $cita->id_propiedad ?></td>
+                        <td><?= $cita->fecha_hora ?></td>
+                        <td><?= $cita->estado ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
                 <tr>
-                    <td><?= $cita->id_cita ?></td>
-                    <td><?= $cita->id_propiedad ?></td>
-                    <td><?= $cita->fecha_hora ?></td>
-                    <td><?= $cita->estado ?></td>
+                    <td colspan="4">No hay citas en el historial.</td>
                 </tr>
-            <?php endforeach; ?>
+            <?php endif; ?>
         </table>
     <?php endif; ?>
 </div>

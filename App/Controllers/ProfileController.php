@@ -32,10 +32,7 @@ class ProfileController
         $favoritos = $rol === 'cliente' ? Favorito::getFavoritosConDetalles($session->get('id_usuario')) : []; // Obtener los favoritos con detalles
         $historialCitas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : [];
         $misPropiedades = $rol === 'cliente' ? Propiedad::where('id_cliente', $session->get('id_usuario')) : []; // Corrección de la obtención de propiedades para clientes.
-        $activeTab = $rol === 'cliente' ? 'favoritos' : 'usuarios'; // Establecer la pestaña activa según el rol
-
-        // Depuración
-        error_log('Favoritos: ' . print_r($favoritos, true));
+        $activeTab = $session->get('active_tab') ?? ($rol === 'cliente' ? 'favoritos' : 'usuarios'); // Establecer la pestaña activa según el rol
 
         // Cargar vista del panel
         $views = ['usuarios/profile/profile'];
