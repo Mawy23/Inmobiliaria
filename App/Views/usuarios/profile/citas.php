@@ -108,5 +108,29 @@
             <?php endif; ?>
         </table>
     <?php endif; ?>
+
+    <?php if ($rol === 'admin' || $rol === 'agente'): ?>
+        <h3>Agregar Horas Disponibles para Visitas</h3>
+        <form action="<?= $baseUrl ?>CitaController/addAvailableHours" method="POST">
+            <input type="hidden" name="active_tab" value="citas">
+            <label for="id_propiedad">Propiedad</label>
+            <select id="id_propiedad" name="id_propiedad" required>
+                <option value="">Seleccionar Propiedad</option>
+                <?php foreach ($propiedades as $propiedad): ?>
+                    <option value="<?= $propiedad->id_propiedad ?>"><?= $propiedad->titulo ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label for="fecha_hora">Fecha y Hora</label>
+            <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
+            <label for="id_agente">Agente</label>
+            <select id="id_agente" name="id_agente" required>
+                <option value="">Seleccionar Agente</option>
+                <?php foreach ($agentes as $agente): ?>
+                    <option value="<?= $agente->id_usuario ?>"><?= $agente->nombre . ' ' . $agente->apellido ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit">Agregar Hora Disponible</button>
+        </form>
+    <?php endif; ?>
 </div>
 </div>

@@ -9,6 +9,7 @@ use App\Models\Cita;
 use Core\View;
 use App\Models\Propiedad;
 use App\Models\Usuario;
+use App\Models\Tasacion;
 use Core\Session;
 use App\Controllers\FavoritosController;
 
@@ -104,6 +105,7 @@ class Home
         $agentes = $rol === 'admin' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin
         $favoritosController = new FavoritosController();
         $favoritos = $rol === 'cliente' ? $favoritosController->getFavoritos() : []; // Obtener los favoritos del cliente
+        $tasaciones = Tasacion::all(); // Obtener todas las tasaciones
 
         // Definimos las vistas a cargar (en este caso, 'usuarios/profile/profile')
         $views = ['usuarios/profile/profile'];
@@ -126,6 +128,7 @@ class Home
             'agentes' => $agentes,
             'rol' => $rol,
             'favoritos' => $favoritos,
+            'tasaciones' => $tasaciones,
             'active_tab' => $active_tab
         ];
 

@@ -26,12 +26,12 @@ class Cita extends Model {
     public static function create($data) {
         try {
             $db = static::getDB();
-            $stmt = $db->prepare('INSERT INTO citas (id_cliente, id_agente, id_propiedad, fecha, hora) VALUES (:id_cliente, :id_agente, :id_propiedad, :fecha, :hora)');
-            $stmt->bindParam(':id_cliente', $data['id_cliente'], PDO::PARAM_INT);
-            $stmt->bindParam(':id_agente', $data['id_agente'], PDO::PARAM_INT);
-            $stmt->bindParam(':id_propiedad', $data['id_propiedad'], PDO::PARAM_INT);
-            $stmt->bindParam(':fecha', $data['fecha'], PDO::PARAM_STR);
-            $stmt->bindParam(':hora', $data['hora'], PDO::PARAM_STR);
+            $stmt = $db->prepare('INSERT INTO citas (id_cliente, id_agente, id_propiedad, fecha_hora, estado) VALUES (:id_cliente, :id_agente, :id_propiedad, :fecha_hora, :estado)');
+            $stmt->bindValue(':id_cliente', $data['id_cliente'] ?? null, PDO::PARAM_INT);
+            $stmt->bindValue(':id_agente', $data['id_agente'], PDO::PARAM_INT);
+            $stmt->bindValue(':id_propiedad', $data['id_propiedad'], PDO::PARAM_INT);
+            $stmt->bindValue(':fecha_hora', $data['fecha_hora'], PDO::PARAM_STR);
+            $stmt->bindValue(':estado', $data['estado'] ?? 'pendiente', PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -72,7 +72,7 @@ class Cita extends Model {
         try {
             $db = static::getDB();
             $stmt = $db->prepare('DELETE FROM citas WHERE id_cita = :id');
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
@@ -83,7 +83,7 @@ class Cita extends Model {
         try {
             $db = static::getDB();
             $stmt = $db->prepare('SELECT * FROM citas WHERE id_cita = :id');
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchObject('App\Models\Cita');
         } catch (PDOException $e) {

@@ -80,13 +80,15 @@ CREATE TABLE reseñas (
 );
 
 -- Tabla de tasaciones
-CREATE TABLE `tasacion` (
-  `id_tasacion` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `apellido` varchar(50) NOT NULL,
-  `correo` varchar(100) NOT NULL,
-  `estado_tasacion` enum('pendiente','validada') NOT NULL DEFAULT 'pendiente',
-  PRIMARY KEY (`id_tasacion`)
+CREATE TABLE tasacion (
+  id_tasacion int(11) NOT NULL AUTO_INCREMENT,
+  nombre varchar(50) NOT NULL,
+  apellido varchar(50) NOT NULL,
+  correo varchar(100) NOT NULL,
+  estado_tasacion enum('pendiente','validada') NOT NULL DEFAULT 'pendiente',
+  id_cliente INT,
+  PRIMARY KEY (id_tasacion),
+  FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
 -- Tabla de preferencias de búsqueda

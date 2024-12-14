@@ -107,6 +107,31 @@ class CitaController
         }
     }
 
+    // Método que maneja la creación de horas disponibles para visitas
+    public function addAvailableHours()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = [
+                'id_propiedad' => $_POST['id_propiedad'],
+                'id_agente' => $_POST['id_agente'],
+                'fecha_hora' => $_POST['fecha_hora']
+            ];
+
+            // Validar solapamientos de horas disponibles
+            $horasExistentes = Cita::where('id_propiedad', $data['id_propiedad']);
+            foreach ($horasExistentes as $hora) {
+                if ($hora->fecha_hora == $data['fecha_hora']) {
+                    header('Location: /profile?error=Ya existe una hora disponible para esta propiedad en el mismo horario');
+                    exit;
+                }
+            }
+
+            Cita::create($data);
+
+            $this->redirectToProfile(null, null, 'citas');
+        }
+    }
+
     private function redirectToProfile($citaToEdit = null, $propiedadToEdit = null, $activeTab = 'citas')
     {
         $session = Session::getInstance();

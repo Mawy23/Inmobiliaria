@@ -9,15 +9,23 @@ class TasacionController
 {
     public function create()
     {
+        $session = Session::getInstance();
         $views = ['propiedades/tasar'];
-        $args  = ['title' => 'Solicitar Tasación'];
+        $args  = [
+            'title' => 'Solicitar Tasación',
+            'idUsuario' => $session->get('id_usuario'),
+            'rol' => $session->get('rol')
+        ];
         View::render($views, $args);
     }
 
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            Tasacion::create($_POST);
+            $session = Session::getInstance();
+            $data = $_POST;
+            $data['id_cliente'] = $session->get('id_usuario');
+            Tasacion::create($data);
             header('Location: /Inmobiliaria/Home'); // Asegúrate de que esta ruta sea correcta
             exit;
         }
@@ -30,7 +38,7 @@ class TasacionController
         
         // Definir la vista y los argumentos a pasar
         $views = ['usuarios/profile/tasaciones'];
-        $args  = ['title' => 'Mis Tasaciones', 'tasaciones' => $tasaciones];
+        $args  = ['title' => 'Tasaciones', 'tasaciones' => $tasaciones];
         
         // Renderizar la vista con los argumentos
         View::render($views, $args);
@@ -47,9 +55,7 @@ class TasacionController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
                 'id' => $_POST['id'],
-                'nombre' => $_POST['nombre'],
-                'apellido' => $_POST['apellido'],
-                'correo' => $_POST['correo']
+                'estado_tasacion' => $_POST['estado_tasacion']
             ];
             Tasacion::update($data);
             $this->redirectToProfile(null, 'tasaciones');
@@ -71,6 +77,14 @@ class TasacionController
         $session->set('active_tab', $activeTab);
 
         $tasaciones = Tasacion::all();
+        $usuarios = []; // Obtener usuarios si es necesario
+        $propiedades = []; // Obtener propiedades si es necesario
+        $citas = []; // Obtener citas si es necesario   
+
+        if ($session->get('rol') === 'admin' || $session->get('rol') === 'agente') {
+            $usuarios = \App\Models\Usuario::all(); // Asumiendo que hay un modelo Usuario
+            $propiedades = \App\Models\Propiedad::all(); // Asumiendo que hay un modelo Propiedad
+        }
 
         $views = ['usuarios/profile/profile'];
         $args = [
@@ -79,7 +93,11 @@ class TasacionController
             'tasaciones' => $tasaciones,
             'tasacionToEdit' => $tasacionToEdit,
             'activeTab' => $activeTab,
-            'rol' => $session->get('rol')
+            'rol' => $session->get('rol'),
+            'usuarios' => $usuarios,
+            'propiedades' => $propiedades,
+            'citas' => $citas
+
         ];
 
         View::render($views, $args);

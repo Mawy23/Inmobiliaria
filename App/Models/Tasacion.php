@@ -15,7 +15,11 @@ class Tasacion extends Model {
             $db = static::getDB();
 
             // Preparamos la consulta SQL para obtener todas las tasaciones
-            $stmt = $db->query('SELECT * FROM tasacion');
+            $stmt = $db->query('
+                SELECT t.*, u.nombre AS cliente_nombre 
+                FROM tasacion t 
+                LEFT JOIN usuarios u ON t.id_cliente = u.id_usuario
+            ');
 
             // Obtenemos los resultados como un array de objetos de la clase Tasacion
             $results = $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Models\Tasacion');
@@ -31,10 +35,11 @@ class Tasacion extends Model {
     public static function create($data) {
         try {
             $db = static::getDB();
-            $stmt = $db->prepare('INSERT INTO tasacion (nombre, apellido, correo) VALUES (:nombre, :apellido, :correo)');
+            $stmt = $db->prepare('INSERT INTO tasacion (nombre, apellido, correo, id_cliente) VALUES (:nombre, :apellido, :correo, :id_cliente)');
             $stmt->bindParam(':nombre', $data['nombre'], PDO::PARAM_STR);
             $stmt->bindParam(':apellido', $data['apellido'], PDO::PARAM_STR);
             $stmt->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+            $stmt->bindParam(':id_cliente', $data['id_cliente'], PDO::PARAM_INT);
             $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
@@ -46,14 +51,10 @@ class Tasacion extends Model {
             $db = static::getDB();
             $stmt = $db->prepare('
             UPDATE tasacion 
-            SET nombre = ?, 
-                apellido = ?, 
-                correo = ?
+            SET estado_tasacion = ?
             WHERE id_tasacion = ?');
             $stmt->execute([
-                $data['nombre'],
-                $data['apellido'],
-                $data['correo'],
+                $data['estado_tasacion'],
                 $data['id']
             ]);
         } catch (PDOException $e) {
