@@ -8,6 +8,9 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active_tab === 'propiedades' ? 'active' : '' ?>" id="propiedades-tab" data-toggle="tab" href="#propiedades" role="tab" aria-controls="propiedades" aria-selected="<?= $active_tab === 'propiedades' ? 'true' : 'false' ?>">Propiedades</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active_tab === 'tasaciones' ? 'active' : '' ?>" id="tasaciones-tab" data-toggle="tab" href="#tasaciones" role="tab" aria-controls="tasaciones" aria-selected="<?= $active_tab === 'tasaciones' ? 'true' : 'false' ?>">Mis Tasaciones</a>
+            </li>
         <?php endif; ?>
         <?php if ($rol === 'cliente'): ?>
             <li class="nav-item">
@@ -32,6 +35,9 @@
             </div>
             <div class="tab-pane fade <?= $active_tab === 'propiedades' ? 'show active' : '' ?>" id="propiedades" role="tabpanel" aria-labelledby="propiedades-tab">
                 <?php include 'propiedades.php'; ?>
+            </div>
+            <div class="tab-pane fade <?= $active_tab === 'tasaciones' ? 'show active' : '' ?>" id="tasaciones" role="tabpanel" aria-labelledby="tasaciones-tab">
+                <?php include 'tasaciones.php'; ?>
             </div>
         <?php endif; ?>
         <?php if ($rol === 'cliente'): ?>

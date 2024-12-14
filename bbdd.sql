@@ -79,16 +79,14 @@ CREATE TABLE reseñas (
     FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
--- Tabla de transacciones
-CREATE TABLE transacciones (
-    id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
-    id_propiedad INT,
-    id_cliente INT,
-    tipo ENUM('compra', 'alquiler') NOT NULL,
-    monto DECIMAL(10, 2) NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,
-    FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+-- Tabla de tasaciones
+CREATE TABLE `tasacion` (
+  `id_tasacion` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `estado_tasacion` enum('pendiente','validada') NOT NULL DEFAULT 'pendiente',
+  PRIMARY KEY (`id_tasacion`)
 );
 
 -- Tabla de preferencias de búsqueda
