@@ -24,7 +24,7 @@
                     <?php if (isset($usuarios[$cita->id_cliente])): ?>
                         <?= $usuarios[$cita->id_cliente]->nombre . ' ' . $usuarios[$cita->id_cliente]->apellido ?>
                     <?php else: ?>
-                        N/A
+                        <?= $cita->id_cliente ?>
                     <?php endif; ?>
                 </td>
                 <td><?= $cita->id_agente ?></td>

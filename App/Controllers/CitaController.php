@@ -12,8 +12,9 @@ class CitaController
     // Método que muestra la lista de citas
     public function index()
     {
-        // Obtener todas las citas de la base de datos
-        $citas = Cita::all();
+        $session = Session::getInstance();
+        $id_cliente = $session->get('id_usuario');
+        $citas = Cita::where('id_cliente', $id_cliente);
         
         // Definir las vistas y los argumentos a pasar
         $views = ['citas/index'];

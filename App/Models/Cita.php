@@ -93,10 +93,16 @@ class Cita extends Model {
         }
     }
 
-    public static function where($column, $value) {
+    public static function where($column, $value, $additionalColumn = null, $additionalValue = null) {
         $sql = "SELECT * FROM citas WHERE $column = :value";
+        if ($additionalColumn && $additionalValue) {
+            $sql .= " AND $additionalColumn = :additionalValue";
+        }
         $stmt = self::getDB()->prepare($sql);
         $stmt->bindValue(':value', $value);
+        if ($additionalColumn && $additionalValue) {
+            $stmt->bindValue(':additionalValue', $additionalValue);
+        }
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
