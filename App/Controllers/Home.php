@@ -101,7 +101,7 @@ class Home
         $nombre = $session->get('nombre');
         $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios si no es cliente
         $propiedades = $rol !== 'cliente' ? Propiedad::all() : Propiedad::where('id_agente', $session->get('id')); // Obtener todas las propiedades o las del cliente
-        $citas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : []; // Obtener todas las citas del cliente
+        $citas = Cita::all(); // Obtener todas las citas
         $agentes = $rol === 'admin' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin
         $favoritosController = new FavoritosController();
         $favoritos = $rol === 'cliente' ? $favoritosController->getFavoritos() : []; // Obtener los favoritos del cliente

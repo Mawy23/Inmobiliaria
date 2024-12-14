@@ -1,32 +1,5 @@
 <div class="tab-pane show active" id="citas" role="tabpanel" aria-labelledby="citas-tab">
     <h2>Ver Todas las Citas</h2>
-    <h3>Agregar Nueva Cita</h3>
-    <form action="<?= $baseUrl ?>CitaController/store" method="POST">
-        <input type="hidden" name="active_tab" value="citas">
-        <label for="id_propiedad">Propiedad</label>
-        <select id="id_propiedad" name="id_propiedad" required>
-            <option value="">Seleccionar Propiedad</option>
-            <?php foreach ($propiedades as $propiedad): ?>
-                <option value="<?= $propiedad->id_propiedad ?>"><?= $propiedad->titulo ?></option>
-            <?php endforeach; ?>
-        </select>
-        <label for="fecha_hora">Fecha y Hora</label>
-        <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
-        <label for="estado">Estado</label>
-        <select id="estado" name="estado">
-            <option value="pendiente">Pendiente</option>
-            <option value="confirmado">Confirmado</option>
-            <option value="cancelado">Cancelado</option>
-        </select>
-        <label for="id_agente">Agente</label>
-        <select id="id_agente" name="id_agente">
-            <option value="">Seleccionar Agente</option>
-            <?php foreach ($agentes as $agente): ?>
-                <option value="<?= $agente->id_usuario ?>"><?= $agente->nombre . ' ' . $agente->apellido ?></option>
-            <?php endforeach; ?>
-        </select>
-        <button type="submit">Crear Cita</button>
-    </form>
     <!-- Calendario interactivo -->
     <h3>Calendario de Citas</h3>
     <div id="calendar"></div>
