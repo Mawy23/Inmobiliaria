@@ -89,16 +89,12 @@
         <h2>Agendar Cita</h2>
         <form action="<?= $baseUrl ?>CitaController/agendar" method="POST">
             <input type="hidden" name="id_propiedad" value="<?= $propiedad->id_propiedad ?>">
-            <label for="agente">Seleccionar Agente:</label>
-            <select name="id_agente" id="agente" required>
-                <?php foreach ($agentes as $agente): ?>
-                    <option value="<?= $agente->id_usuario ?>"><?= htmlspecialchars($agente->nombre) ?></option>
+            <label for="cita_disponible">Seleccionar Cita Disponible:</label>
+            <select name="id_cita" id="cita_disponible" required>
+                <?php foreach ($citasDisponibles as $cita): ?>
+                    <option value="<?= $cita['id_cita'] ?>"><?= htmlspecialchars($cita['fecha_hora']) ?> con <?= htmlspecialchars($cita['agente_nombre']) ?></option>
                 <?php endforeach; ?>
             </select>
-            <label for="fecha">Seleccionar Fecha:</label>
-            <input type="date" name="fecha" id="fecha" required>
-            <label for="hora">Seleccionar Hora:</label>
-            <input type="time" name="hora" id="hora" required>
             <button type="submit" class="btn">Agendar</button>
         </form>
     </div>

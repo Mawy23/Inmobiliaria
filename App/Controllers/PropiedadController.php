@@ -70,13 +70,21 @@ class PropiedadController
 
         $agentes = Usuario::where('rol', 'agente');
 
+        $citasDisponibles = Cita::where('id_propiedad', $id, 'disponible', true);
+        foreach ($citasDisponibles as &$cita) {
+            $cita['fecha_hora'] = date('d-m-Y H:i', strtotime($cita['fecha_hora']));
+            $agente = Usuario::find($cita['id_agente']);
+            $cita['agente_nombre'] = $agente ? $agente->nombre . ' ' . $agente->apellido : 'N/A';
+        }
+
         // Definir la vista y los argumentos a pasar
         $views = ['propiedades/detalle'];
         $args  = [
             'title' => 'Detalles de la Propiedad',
             'propiedad' => $propiedad,
             'imagenes' => $imagenes,
-            'agentes' => $agentes
+            'agentes' => $agentes,
+            'citasDisponibles' => $citasDisponibles
         ];
 
         // Renderizar la vista con los argumentos

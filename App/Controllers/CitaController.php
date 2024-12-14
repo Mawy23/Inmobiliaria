@@ -44,7 +44,8 @@ class CitaController
                 'id_propiedad' => $_POST['id_propiedad'],
                 'id_cliente' => !empty($_POST['id_cliente']) ? $_POST['id_cliente'] : null,
                 'fecha_hora' => $_POST['fecha_hora'],
-                'estado' => $_POST['estado'],
+                'estado' => 'pendiente',
+                'disponible' => true,
                 'id_agente' => !empty($_POST['id_agente']) ? $_POST['id_agente'] : null
             ];
 
@@ -161,16 +162,19 @@ class CitaController
     public function agendar()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = [
-                'id_cliente' => Session::getInstance()->get('id_usuario'),
-                'id_agente' => $_POST['id_agente'],
-                'id_propiedad' => $_POST['id_propiedad'],
-                'fecha' => $_POST['fecha'],
-                'hora' => $_POST['hora']
-            ];
-
-            Cita::create($data);
-
+            $id_cita = $_POST['id_cita'];
+            $cita = Cita::find($id_cita);
+            $cita->id_cliente = Session::getInstance()->get('id_usuario');
+            $cita->estado = 'confirmado';
+            $cita->disponible = false;
+            Cita::update([
+                'id' => $cita->id_cita,
+                'id_propiedad' => $cita->id_propiedad,
+                'id_cliente' => $cita->id_cliente,
+                'fecha_hora' => $cita->fecha_hora,
+                'estado' => $cita->estado,
+                'disponible' => $cita->disponible
+            ]);
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit();
         }

@@ -49,7 +49,8 @@ class Cita extends Model {
             SET id_propiedad = ?, 
                 id_cliente = ?, 
                 fecha_hora = ?, 
-                estado = ?
+                estado = ?,
+                disponible = ?
             WHERE id_cita = ?');
 
             // Ejecutar la consulta pasando un array con los valores en el orden correcto
@@ -58,6 +59,7 @@ class Cita extends Model {
                 $data['id_cliente'],
                 $data['fecha_hora'],
                 $data['estado'],
+                $data['disponible'],
                 $data['id']
             ]);
         } catch (PDOException $e) {

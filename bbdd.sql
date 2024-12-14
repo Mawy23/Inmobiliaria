@@ -61,10 +61,12 @@ CREATE TABLE citas (
     id_agente INT,
     fecha_hora DATETIME NOT NULL,
     estado ENUM('pendiente', 'confirmado', 'cancelado') NOT NULL,
+    disponible BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (id_propiedad) REFERENCES propiedades(id_propiedad) ON DELETE CASCADE,
     FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_agente) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-    INDEX (id_agente)
+    INDEX (id_agente),
+    INDEX (id_propiedad)
 );
 
 -- Tabla de reseñas

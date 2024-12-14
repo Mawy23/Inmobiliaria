@@ -9,18 +9,28 @@
         <tr>
             <th>ID</th>
             <th>ID Propiedad</th>
-            <th>ID Cliente</th>
+            <th>Cliente</th>
+            <th>ID Agente</th>
             <th>Fecha y Hora</th>
             <th>Estado</th>
+            <th>Disponible</th>
             <th>Acciones</th>
         </tr>
         <?php foreach ($citas as $cita): ?>
             <tr>
                 <td><?= $cita->id_cita ?></td>
                 <td><?= $cita->id_propiedad ?></td>
-                <td><?= $cita->id_cliente ?></td>
+                <td>
+                    <?php if (isset($usuarios[$cita->id_cliente])): ?>
+                        <?= $usuarios[$cita->id_cliente]->nombre . ' ' . $usuarios[$cita->id_cliente]->apellido ?>
+                    <?php else: ?>
+                        N/A
+                    <?php endif; ?>
+                </td>
+                <td><?= $cita->id_agente ?></td>
                 <td><?= $cita->fecha_hora ?></td>
                 <td><?= $cita->estado ?></td>
+                <td><?= $cita->disponible ? 'Sí' : 'No' ?></td>
                 <td>
                     <?php if ($rol === 'admin'): ?>
                         <form action="<?= $baseUrl ?>CitaController/edit/<?= $cita->id_cita ?>" method="POST" style="display:inline;">
@@ -52,6 +62,11 @@
                 <option value="pendiente" <?= $citaToEdit->estado == 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
                 <option value="confirmado" <?= $citaToEdit->estado == 'confirmado' ? 'selected' : '' ?>>Confirmado</option>
                 <option value="cancelado" <?= $citaToEdit->estado == 'cancelado' ? 'selected' : '' ?>>Cancelado</option>
+            </select>
+            <label for="edit_disponible">Disponible</label>
+            <select id="edit_disponible" name="disponible">
+                <option value="1" <?= $citaToEdit->disponible ? 'selected' : '' ?>>Sí</option>
+                <option value="0" <?= !$citaToEdit->disponible ? 'selected' : '' ?>>No</option>
             </select>
             <button type="submit">Actualizar Cita</button>
         </form>

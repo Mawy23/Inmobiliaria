@@ -25,7 +25,7 @@ class ProfileController
         // Obtener la sesión del usuario
         $session = Session::getInstance();
         $nombre = $session->get('nombre');
-        $usuarios = $rol !== 'cliente' ? Usuario::all() : []; // Obtener todos los usuarios solo si es admin o agente
+        $usuarios = Usuario::all(); // Obtener todos los usuarios
         $propiedades = Propiedad::all();
         $citas = Cita::all();
         $agentes = $rol !== 'cliente' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin o agente
