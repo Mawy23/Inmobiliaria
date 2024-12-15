@@ -122,6 +122,13 @@ class Home
         $citasConfirmadas = count(array_filter($citas, fn($c) => $c->estado === 'confirmado'));
         $citasCanceladas = count(array_filter($citas, fn($c) => $c->estado === 'cancelado'));
 
+        // Obtener estadísticas históricas de búsqueda
+        $searchStats = Propiedad::getSearchHistoryStats();
+        $searchStatsLabels = array_keys($searchStats['tipo']);
+        $searchStatsData = [
+            'tipo' => array_values($searchStats['tipo'])
+        ];
+
         // Definimos las vistas a cargar (en este caso, 'usuarios/profile/profile')
         $views = ['usuarios/profile/profile'];
 
@@ -154,7 +161,9 @@ class Home
             'totalCitas' => $totalCitas,
             'citasPendientes' => $citasPendientes,
             'citasConfirmadas' => $citasConfirmadas,
-            'citasCanceladas' => $citasCanceladas
+            'citasCanceladas' => $citasCanceladas,
+            'searchStatsLabels' => $searchStatsLabels,
+            'searchStatsData' => $searchStatsData
         ];
 
         // Renderizamos la vista con los argumentos especificados
