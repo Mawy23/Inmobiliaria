@@ -27,7 +27,7 @@ class ProfileController
         $nombre = $session->get('nombre');
         $usuarios = Usuario::all(); // Obtener todos los usuarios
         $propiedades = Propiedad::all();
-        $citas = Cita::all();
+        $citas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : Cita::all(); // Obtener citas según el rol
         $agentes = $rol !== 'cliente' ? Usuario::where('rol', 'agente') : []; // Obtener todos los agentes solo si es admin o agente
         $favoritos = $rol === 'cliente' ? Favorito::getFavoritosConDetalles($session->get('id_usuario')) : []; // Obtener los favoritos con detalles
         $historialCitas = $rol === 'cliente' ? Cita::where('id_cliente', $session->get('id_usuario')) : [];

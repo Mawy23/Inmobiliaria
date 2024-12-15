@@ -17,7 +17,7 @@
             <th>Acciones</th>
         </tr>
         <?php foreach ($citas as $cita): ?>
-            <?php if ($cita->id_cliente == $session->get('id_usuario')): ?>
+            <?php if ($rol === 'admin' || $rol === 'agente' || $cita->id_cliente == $session->get('id_usuario')): ?>
                 <tr>
                     <td><?= $cita->id_cita ?></td>
                     <td><?= $cita->id_propiedad ?></td>

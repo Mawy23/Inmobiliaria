@@ -14,7 +14,13 @@ class CitaController
     {
         $session = Session::getInstance();
         $id_cliente = $session->get('id_usuario');
-        $citas = Cita::where('id_cliente', $id_cliente);
+        $rol = $session->get('rol');
+
+        if ($rol === 'cliente') {
+            $citas = Cita::where('id_cliente', $id_cliente);
+        } else {
+            $citas = Cita::all();
+        }
         
         // Definir las vistas y los argumentos a pasar
         $views = ['citas/index'];
@@ -28,9 +34,10 @@ class CitaController
     public function create()
     {
         $agentes = Usuario::where('rol', 'agente');
+        $propiedades = Propiedad::all();
         // Definir la vista y los argumentos a pasar
         $views = ['citas/create'];
-        $args  = ['title' => 'Agregar Cita', 'agentes' => $agentes];
+        $args  = ['title' => 'Agregar Cita', 'agentes' => $agentes, 'propiedades' => $propiedades];
         
         // Renderizar la vista con los argumentos
         View::render($views, $args);

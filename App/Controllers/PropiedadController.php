@@ -70,7 +70,7 @@ class PropiedadController
 
         $agentes = Usuario::where('rol', 'agente');
 
-        $citasDisponibles = Cita::where('id_propiedad', $id);
+        $citasDisponibles = Cita::where('id_propiedad', $id, 'disponible', true);
         foreach ($citasDisponibles as &$cita) {
             $cita['fecha_hora'] = date('d-m-Y H:i', strtotime($cita['fecha_hora']));
             $agente = Usuario::find($cita['id_agente']);
