@@ -17,34 +17,36 @@
             <th>Acciones</th>
         </tr>
         <?php foreach ($citas as $cita): ?>
-            <tr>
-                <td><?= $cita->id_cita ?></td>
-                <td><?= $cita->id_propiedad ?></td>
-                <td>
-                    <?php if (isset($usuarios[$cita->id_cliente])): ?>
-                        <?= $usuarios[$cita->id_cliente]->nombre . ' ' . $usuarios[$cita->id_cliente]->apellido ?>
-                    <?php else: ?>
-                        <?= $cita->id_cliente ?>
-                    <?php endif; ?>
-                </td>
-                <td><?= $cita->id_agente ?></td>
-                <td><?= $cita->fecha_hora ?></td>
-                <td><?= $cita->estado ?></td>
-                <td><?= $cita->disponible ? 'Sí' : 'No' ?></td>
-                <td>
-                    <?php if ($rol === 'admin'): ?>
-                        <form action="<?= $baseUrl ?>CitaController/edit/<?= $cita->id_cita ?>" method="POST" style="display:inline;">
-                            <input type="hidden" name="active_tab" value="citas">
-                            <button type="submit">Editar</button>
-                        </form>
-                        <form action="<?= $baseUrl ?>CitaController/delete" method="POST" style="display:inline;">
-                            <input type="hidden" name="id" value="<?= $cita->id_cita ?>">
-                            <input type="hidden" name="active_tab" value="citas">
-                            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?')">Eliminar</button>
-                        </form>
-                    <?php endif; ?>
-                </td>
-            </tr>
+            <?php if ($cita->id_cliente == $session->get('id_usuario')): ?>
+                <tr>
+                    <td><?= $cita->id_cita ?></td>
+                    <td><?= $cita->id_propiedad ?></td>
+                    <td>
+                        <?php if (isset($usuarios[$cita->id_cliente])): ?>
+                            <?= $usuarios[$cita->id_cliente]->nombre . ' ' . $usuarios[$cita->id_cliente]->apellido ?>
+                        <?php else: ?>
+                            <?= $cita->id_cliente ?>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= $cita->id_agente ?></td>
+                    <td><?= $cita->fecha_hora ?></td>
+                    <td><?= $cita->estado ?></td>
+                    <td><?= $cita->disponible ? 'Sí' : 'No' ?></td>
+                    <td>
+                        <?php if ($rol === 'admin'): ?>
+                            <form action="<?= $baseUrl ?>CitaController/edit/<?= $cita->id_cita ?>" method="POST" style="display:inline;">
+                                <input type="hidden" name="active_tab" value="citas">
+                                <button type="submit">Editar</button>
+                            </form>
+                            <form action="<?= $baseUrl ?>CitaController/delete" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="<?= $cita->id_cita ?>">
+                                <input type="hidden" name="active_tab" value="citas">
+                                <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?')">Eliminar</button>
+                            </form>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endif; ?>
         <?php endforeach; ?>
     </table>
     <!-- Formulario para editar una cita existente -->
