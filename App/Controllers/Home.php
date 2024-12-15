@@ -107,6 +107,21 @@ class Home
         $favoritos = $rol === 'cliente' ? $favoritosController->getFavoritos() : []; // Obtener los favoritos del cliente
         $tasaciones = Tasacion::all(); // Obtener todas las tasaciones
 
+        $totalUsuarios = count($usuarios);
+        $totalAdmins = count(array_filter($usuarios, fn($u) => $u->rol === 'admin'));
+        $totalAgentes = count(array_filter($usuarios, fn($u) => $u->rol === 'agente'));
+        $totalClientes = count(array_filter($usuarios, fn($u) => $u->rol === 'cliente'));
+
+        $totalPropiedades = count($propiedades);
+        $propiedadesDisponibles = count(array_filter($propiedades, fn($p) => $p->estado === 'disponible'));
+        $propiedadesVendidas = count(array_filter($propiedades, fn($p) => $p->estado === 'vendido'));
+        $propiedadesAlquiladas = count(array_filter($propiedades, fn($p) => $p->estado === 'alquilado'));
+
+        $totalCitas = count($citas);
+        $citasPendientes = count(array_filter($citas, fn($c) => $c->estado === 'pendiente'));
+        $citasConfirmadas = count(array_filter($citas, fn($c) => $c->estado === 'confirmado'));
+        $citasCanceladas = count(array_filter($citas, fn($c) => $c->estado === 'cancelado'));
+
         // Definimos las vistas a cargar (en este caso, 'usuarios/profile/profile')
         $views = ['usuarios/profile/profile'];
 
@@ -115,8 +130,6 @@ class Home
         if ($rol === 'cliente') {
             $active_tab = 'favoritos';
         }
-
-
 
         // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
         $args  = [
@@ -129,7 +142,19 @@ class Home
             'rol' => $rol,
             'favoritos' => $favoritos,
             'tasaciones' => $tasaciones,
-            'active_tab' => $active_tab
+            'active_tab' => $active_tab,
+            'totalUsuarios' => $totalUsuarios,
+            'totalAdmins' => $totalAdmins,
+            'totalAgentes' => $totalAgentes,
+            'totalClientes' => $totalClientes,
+            'totalPropiedades' => $totalPropiedades,
+            'propiedadesDisponibles' => $propiedadesDisponibles,
+            'propiedadesVendidas' => $propiedadesVendidas,
+            'propiedadesAlquiladas' => $propiedadesAlquiladas,
+            'totalCitas' => $totalCitas,
+            'citasPendientes' => $citasPendientes,
+            'citasConfirmadas' => $citasConfirmadas,
+            'citasCanceladas' => $citasCanceladas
         ];
 
         // Renderizamos la vista con los argumentos especificados

@@ -11,6 +11,9 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active_tab === 'tasaciones' ? 'active' : '' ?>" id="tasaciones-tab" data-toggle="tab" href="#tasaciones" role="tab" aria-controls="tasaciones" aria-selected="<?= $active_tab === 'tasaciones' ? 'true' : 'false' ?>">Tasaciones</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active_tab === 'estadisticas' ? 'active' : '' ?>" id="estadisticas-tab" data-toggle="tab" href="#estadisticas" role="tab" aria-controls="estadisticas" aria-selected="<?= $active_tab === 'estadisticas' ? 'true' : 'false' ?>">Estadísticas</a>
+            </li>
         <?php endif; ?>
         <?php if ($rol === 'cliente'): ?>
             <li class="nav-item">
@@ -38,6 +41,9 @@
             </div>
             <div class="tab-pane fade <?= $active_tab === 'tasaciones' ? 'show active' : '' ?>" id="tasaciones" role="tabpanel" aria-labelledby="tasaciones-tab">
                 <?php include 'tasaciones.php'; ?>
+            </div>
+            <div class="tab-pane fade <?= $active_tab === 'estadisticas' ? 'show active' : '' ?>" id="estadisticas" role="tabpanel" aria-labelledby="estadisticas-tab">
+                <?php include 'estadisticas.php'; ?>
             </div>
         <?php endif; ?>
         <?php if ($rol === 'cliente'): ?>

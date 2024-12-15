@@ -34,6 +34,21 @@ class ProfileController
         $misPropiedades = $rol === 'cliente' ? Propiedad::where('id_cliente', $session->get('id_usuario')) : []; // Corrección de la obtención de propiedades para clientes.
         $activeTab = $session->get('active_tab') ?? ($rol === 'cliente' ? 'favoritos' : 'usuarios'); // Establecer la pestaña activa según el rol
 
+        $totalUsuarios = count($usuarios);
+        $totalAdmins = count(array_filter($usuarios, fn($u) => $u->rol === 'admin'));
+        $totalAgentes = count(array_filter($usuarios, fn($u) => $u->rol === 'agente'));
+        $totalClientes = count(array_filter($usuarios, fn($u) => $u->rol === 'cliente'));
+
+        $totalPropiedades = count($propiedades);
+        $propiedadesDisponibles = count(array_filter($propiedades, fn($p) => $p->estado === 'disponible'));
+        $propiedadesVendidas = count(array_filter($propiedades, fn($p) => $p->estado === 'vendido'));
+        $propiedadesAlquiladas = count(array_filter($propiedades, fn($p) => $p->estado === 'alquilado'));
+
+        $totalCitas = count($citas);
+        $citasPendientes = count(array_filter($citas, fn($c) => $c->estado === 'pendiente'));
+        $citasConfirmadas = count(array_filter($citas, fn($c) => $c->estado === 'confirmado'));
+        $citasCanceladas = count(array_filter($citas, fn($c) => $c->estado === 'cancelado'));
+
         // Cargar vista del panel
         $views = ['usuarios/profile/profile'];
         $args = [
@@ -47,7 +62,19 @@ class ProfileController
             'historialCitas' => $historialCitas,
             'misPropiedades' => $misPropiedades,
             'active_tab' => $activeTab,
-            'rol' => $rol
+            'rol' => $rol,
+            'totalUsuarios' => $totalUsuarios,
+            'totalAdmins' => $totalAdmins,
+            'totalAgentes' => $totalAgentes,
+            'totalClientes' => $totalClientes,
+            'totalPropiedades' => $totalPropiedades,
+            'propiedadesDisponibles' => $propiedadesDisponibles,
+            'propiedadesVendidas' => $propiedadesVendidas,
+            'propiedadesAlquiladas' => $propiedadesAlquiladas,
+            'totalCitas' => $totalCitas,
+            'citasPendientes' => $citasPendientes,
+            'citasConfirmadas' => $citasConfirmadas,
+            'citasCanceladas' => $citasCanceladas
         ];
         View::render($views, $args);
     }
