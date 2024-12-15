@@ -141,6 +141,29 @@ class CitaController
         }
     }
 
+    // Método que maneja la cancelación de una cita por parte del cliente
+    public function cancel()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
+            $cita = Cita::find($id);
+            if ($cita && $cita->id_cliente == Session::getInstance()->get('id_usuario')) {
+                $cita->estado = 'cancelado';
+                $cita->disponible = true;
+                Cita::update([
+                    'id' => $cita->id_cita,
+                    'id_propiedad' => $cita->id_propiedad,
+                    'id_cliente' => $cita->id_cliente,
+                    'fecha_hora' => $cita->fecha_hora,
+                    'estado' => $cita->estado,
+                    'disponible' => $cita->disponible
+                ]);
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit();
+        }
+    }
+
     private function redirectToProfile($citaToEdit = null, $propiedadToEdit = null, $activeTab = 'citas')
     {
         $session = Session::getInstance();

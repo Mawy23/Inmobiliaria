@@ -44,6 +44,13 @@
                                 <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?')">Eliminar</button>
                             </form>
                         <?php endif; ?>
+                        <?php if ($rol === 'cliente' && strtotime($cita->fecha_hora) > time()): ?>
+                            <form action="<?= $baseUrl ?>CitaController/cancel" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="<?= $cita->id_cita ?>">
+                                <input type="hidden" name="active_tab" value="citas">
+                                <button type="submit" onclick="return confirm('¿Estás seguro de que deseas cancelar esta cita?')">Cancelar</button>
+                            </form>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endif; ?>
