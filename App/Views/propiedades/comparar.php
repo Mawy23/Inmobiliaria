@@ -93,3 +93,46 @@
         </table>
     <?php endif; ?>
 </div>
+
+<style>
+
+/* Tablas */
+.table {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Elimina el espacio entre bordes */
+    margin-bottom: 20px; /* Espaciado inferior */
+    font-size: 1em; /* Tamaño de fuente */
+    background-color: #fff; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta bordes externos al redondear */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Sombra ligera */
+}
+
+/* Encabezados de tabla */
+.table thead {
+    background-color: #4CAF50; /* Verde llamativo */
+    color: white;
+}
+
+.table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Filas de tabla */
+.table tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1; /* Cambio de color al pasar el ratón */
+}
+
+.table td {
+    padding: 12px 15px;
+    color: #555; /* Texto gris */
+}
+
+</style>
