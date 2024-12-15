@@ -3,14 +3,12 @@
     <h2>Lista de Propiedades</h2>
     <?php if (!empty($propiedades)): ?>
 
-        <!-- Contenedor de propiedades -->
-
-        <div class="property-container">
+        <!-- Contenedor de propiedades con clase condicional -->
+        <div class="property-container <?php echo count($propiedades) === 1 ? 'single-property' : ''; ?>">
             <?php foreach ($propiedades as $propiedad): ?>
                 <div class="property">
                     <a href="<?= $baseUrl ?>PropiedadController/show/<?= $propiedad->id_propiedad ?>" class="property-link">
                         <?php if (!empty($propiedad->imagenes)): ?>
-                            <!-- Mostrar la URL de la imagen -->
                             <img src="data:image/jpeg;base64,<?php echo base64_encode($propiedad->imagenes[0]->imagen); ?>" alt="Imagen de la propiedad">
                         <?php else: ?>
                             <img src="https://via.placeholder.com/600x400" alt="Imagen de la propiedad">
@@ -38,7 +36,6 @@
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
-
         </div>
     <?php else: ?>
         <div class="no-propiedades">
@@ -47,6 +44,7 @@
             <p>Prueba ajustando tus filtros o ampliando tus criterios de búsqueda.</p>
         </div>
     <?php endif; ?>
+
 
     <?php if ($userRole == 'admin' || $userRole == 'agente'): ?>
         <!-- Eliminar el gráfico de estadísticas de búsqueda -->

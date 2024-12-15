@@ -17,37 +17,73 @@ $rol = $session->get('rol');
 
     <!-- Bootstrap core CSS -->
     <link href="<?= $baseUrl ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    
 
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
+        /* Estilos generales del navbar */
         .navbar {
-            justify-content: space-between;
-            /* Espacio entre los elementos del navbar */
-
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-item button {
-            font-size: 0.85rem;
-            /* Tamaño más pequeño para los botones */
-            margin-left: 10px;
-            /* Espacio entre botones */
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .navbar-brand:hover {
+            color: #f8f9fa;
+        }
+
+        /* Botón de hamburguesa más grande */
+        .navbar-toggler {
+            border: none;
+            width: 60px; /* Anchura del botón */
+            height: 60px; /* Altura del botón */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            padding: 0;
+        }
+
+        /* Ícono del botón de hamburguesa */
+        .navbar-toggler-icon {
+            width: 30px; /* Anchura de las líneas */
+            height: 3px; /* Altura de las líneas */
+            background-color: white;
+            position: relative;
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            position: absolute;
+            left: 0;
+        }
+
+        .navbar-toggler-icon::before {
+            top: -8px; /* Separación de la línea superior */
+        }
+
+        .navbar-toggler-icon::after {
+            top: 8px; /* Separación de la línea inferior */
+        }
+
+        /* Sin animaciones al expandir */
+        .navbar-toggler.collapsed .navbar-toggler-icon::before,
+        .navbar-toggler.collapsed .navbar-toggler-icon::after {
+            transform: none;
         }
     </style>
-    
+
+
     <!-- Custom styles for this template -->
     <link href="<?= $baseUrl ?>css/style.css" rel="stylesheet">
     <link href="<?= $baseUrl ?>css/btn-heart.css" rel="stylesheet">
@@ -58,6 +94,11 @@ $rol = $session->get('rol');
         <!-- Fixed navbar -->
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="<?= $baseUrl ?>">PHP MVC</a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto"> <!-- Espacio para otros elementos en la izquierda -->
                     <li class="nav-item">
@@ -90,6 +131,7 @@ $rol = $session->get('rol');
                             <a class="nav-link" href="<?= $baseUrl ?>AuthController/logout">Cerrar Sesión</a>
                         </li>
                     <?php else : ?>
+
                         <li class="nav-item">
                             <a class="btn btn-primary" href="<?= $baseUrl ?>AuthController/login">Iniciar Sesión</a>
                         </li>
@@ -101,5 +143,9 @@ $rol = $session->get('rol');
             </div>
         </nav>
     </header>
+
+    <script src="<?= $baseUrl ?>js/jquery.min.js"></script>
+    <script src="<?= $baseUrl ?>js/bootstrap.bundle.min.js"></script>
+</body>
 
 </html>
