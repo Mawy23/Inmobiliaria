@@ -18,70 +18,6 @@ $rol = $session->get('rol');
     <!-- Bootstrap core CSS -->
     <link href="<?= $baseUrl ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    
-
-    <style>
-        /* Estilos generales del navbar */
-        .navbar {
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffffff;
-        }
-
-        .navbar-brand:hover {
-            color: #f8f9fa;
-        }
-
-        /* Botón de hamburguesa más grande */
-        .navbar-toggler {
-            border: none;
-            width: 60px; /* Anchura del botón */
-            height: 60px; /* Altura del botón */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            padding: 0;
-        }
-
-        /* Ícono del botón de hamburguesa */
-        .navbar-toggler-icon {
-            width: 30px; /* Anchura de las líneas */
-            height: 3px; /* Altura de las líneas */
-            background-color: white;
-            position: relative;
-        }
-
-        .navbar-toggler-icon::before,
-        .navbar-toggler-icon::after {
-            content: '';
-            width: 30px;
-            height: 3px;
-            background-color: white;
-            position: absolute;
-            left: 0;
-        }
-
-        .navbar-toggler-icon::before {
-            top: -8px; /* Separación de la línea superior */
-        }
-
-        .navbar-toggler-icon::after {
-            top: 8px; /* Separación de la línea inferior */
-        }
-
-        /* Sin animaciones al expandir */
-        .navbar-toggler.collapsed .navbar-toggler-icon::before,
-        .navbar-toggler.collapsed .navbar-toggler-icon::after {
-            transform: none;
-        }
-    </style>
 
 
     <!-- Custom styles for this template -->
@@ -133,10 +69,10 @@ $rol = $session->get('rol');
                     <?php else : ?>
 
                         <li class="nav-item">
-                            <a class="btn btn-primary" href="<?= $baseUrl ?>AuthController/login">Iniciar Sesión</a>
+                            <a class="btn-header" href="<?= $baseUrl ?>AuthController/login">Iniciar Sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-secondary" href="<?= $baseUrl ?>AuthController/register">Registrarse</a>
+                            <a class="btn-header" href="<?= $baseUrl ?>AuthController/register">Registrarse</a>
                         </li>
                     <?php endif; ?>
                 </ul>

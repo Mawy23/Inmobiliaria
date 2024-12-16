@@ -9,6 +9,7 @@ use App\Models\Cita;
 use Core\View;
 use App\Models\Propiedad;
 use App\Models\Usuario;
+use App\Models\Imagen;
 use App\Models\Tasacion;
 use Core\Session;
 use App\Controllers\FavoritosController;
@@ -19,14 +20,33 @@ class Home
     // Método que maneja la vista principal del "Home"
     public function index()
     {
-        // Definimos las vistas a cargar (en este caso, 'home/index')
-        $views = ['home/index'];
+        // Obtener todas las propiedades de la base de datos
+        $propiedades = Propiedad::all();
 
-        // Definimos los argumentos a pasar a la vista (en este caso, el título de la página)
-        $args  = ['title' => 'Home'];
+        // Crear un arreglo para almacenar las propiedades con sus imágenes
+        $propiedadesConDatos = [];
 
-        // Renderizamos la vista con los argumentos especificados
-        View::render($views, $args);
+        // Iterar sobre las propiedades para asociar imágenes
+        foreach ($propiedades as $propiedad) {
+            $imagenes = Imagen::search($propiedad->id_propiedad); // Buscar imágenes por id_propiedad
+            
+            // Asociar la propiedad con sus imágenes
+            $propiedadesConDatos[] = [
+                'propiedad' => $propiedad,
+                'imagenes' => $imagenes
+            ];
+        }
+
+        // Ordenar propiedades por precio descendente
+        usort($propiedadesConDatos, function ($a, $b) {
+            return $b['propiedad']->precio <=> $a['propiedad']->precio;
+        });
+
+        // Tomar las tres primeras propiedades con mayor precio
+        $propiedadesConDatos = array_slice($propiedadesConDatos, 0, 3);
+
+        // Pasar los datos limitados a la vista
+        View::render(['home/index'], ['propiedadesConDatos' => $propiedadesConDatos]);
     }
 
     // Método que maneja una vista de ejemplo

@@ -34,7 +34,7 @@
     </form>
     <form method="post" action="<?= $baseUrl ?>PropiedadController/comparar?<?= http_build_query($_GET) ?>">
         <?php if (!empty($propiedades)): ?>
-            <table class="table">
+            <table class="comparar-table">
                 <thead>
                     <tr>
                         <th>Título</th>
@@ -49,7 +49,7 @@
                 <tbody>
                     <?php foreach ($propiedades as $propiedad): ?>
                         <tr>
-                            <td><?= htmlspecialchars($propiedad->titulo) ?></td>
+                            <td class="titulo"><?= htmlspecialchars($propiedad->titulo) ?></td>
                             <td><?= htmlspecialchars($propiedad->precio) ?> €</td>
                             <td><?= htmlspecialchars($propiedad->tipo) ?></td>
                             <td><?= htmlspecialchars($propiedad->ciudad) ?></td>
@@ -67,7 +67,7 @@
     </form>
     <?php if (!empty($propiedadesComparar)): ?>
         <h3>Propiedades Seleccionadas</h3>
-        <table class="table">
+        <table class="comparar-table">
             <thead>
                 <tr>
                     <th>Título</th>
@@ -81,7 +81,7 @@
             <tbody>
                 <?php foreach ($propiedadesComparar as $propiedad): ?>
                     <tr>
-                        <td><?= htmlspecialchars($propiedad->titulo) ?></td>
+                        <td class="titulo"><?= htmlspecialchars($propiedad->titulo) ?></td>
                         <td><?= htmlspecialchars($propiedad->precio) ?> €</td>
                         <td><?= htmlspecialchars($propiedad->tipo) ?></td>
                         <td><?= htmlspecialchars($propiedad->ciudad) ?></td>
@@ -95,9 +95,8 @@
 </div>
 
 <style>
-
-/* Tablas */
-.table {
+/* Estilos para la tabla de comparación */
+.comparar-table {
     width: 100%; /* Ocupa todo el ancho del contenedor */
     border-collapse: collapse; /* Elimina el espacio entre bordes */
     margin-bottom: 20px; /* Espaciado inferior */
@@ -109,30 +108,64 @@
 }
 
 /* Encabezados de tabla */
-.table thead {
+.comparar-table thead {
     background-color: #4CAF50; /* Verde llamativo */
     color: white;
 }
 
-.table th {
+.comparar-table th {
     padding: 12px 15px;
     text-align: left;
     font-weight: bold;
 }
 
 /* Filas de tabla */
-.table tbody tr {
+.comparar-table tbody tr {
     border-bottom: 1px solid #ddd;
     transition: background-color 0.3s ease;
 }
 
-.table tbody tr:hover {
+.comparar-table tbody tr:hover {
     background-color: #f1f1f1; /* Cambio de color al pasar el ratón */
 }
 
-.table td {
+.comparar-table td {
     padding: 12px 15px;
     color: #555; /* Texto gris */
 }
 
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .comparar-table thead {
+        display: none; /* Ocultar encabezados en móviles */
+    }
+    
+    .comparar-table tbody tr {
+        display: block; /* Convertir las filas en bloques */
+        margin-bottom: 20px; /* Espaciado entre filas */
+    }
+
+    .titulo {
+        font-weight: bold;
+        background-color: #4CAF50; /* Verde llamativo */
+        color: white;
+    }
+
+    .comparar-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        padding: 10px 15px;
+    }
+
+    .comparar-table td:before {
+        content: attr(data-label); /* Etiquetas para cada celda */
+        font-weight: bold;
+        color: #333; /* Texto oscuro */
+        text-align: left;
+        padding-right: 10px; /* Espaciado entre la etiqueta y el valor */
+    }
+}
 </style>

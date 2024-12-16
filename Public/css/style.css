@@ -35,26 +35,75 @@ main > .container {
   margin: 30px auto;
 }
 
+.container-index {
+  width: 100%;
+  max-width: 100%; /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
+  margin: 0 auto;
+  padding: 0;
+}
+
 /* ------------------------------------------
    Navigation
 ------------------------------------------ */
-nav {
-  background-color: #6dc066; /* Verde brillante Sims */
-  padding: 10px 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Estilos generales del navbar */
+.navbar {
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 15px 20px;
-  display: inline-block;
-  font-size: 1.1rem;
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
 }
 
-nav a:hover {
-  background-color: #57a853;
-  border-radius: 5px;
+.navbar-brand:hover {
+  color: #f8f9fa;
+}
+
+/* Botón de hamburguesa más grande */
+.navbar-toggler {
+  border: none;
+  width: 60px; /* Anchura del botón */
+  height: 60px; /* Altura del botón */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  padding: 0;
+}
+
+/* Ícono del botón de hamburguesa */
+.navbar-toggler-icon {
+  width: 30px; /* Anchura de las líneas */
+  height: 3px; /* Altura de las líneas */
+  background-color: white;
+  position: relative;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: '';
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  position: absolute;
+  left: 0;
+}
+
+.navbar-toggler-icon::before {
+  top: -8px; /* Separación de la línea superior */
+}
+
+.navbar-toggler-icon::after {
+  top: 8px; /* Separación de la línea inferior */
+}
+
+/* Sin animaciones al expandir */
+.navbar-toggler.collapsed .navbar-toggler-icon::before,
+.navbar-toggler.collapsed .navbar-toggler-icon::after {
+  transform: none;
 }
 
 /* ------------------------------------------
@@ -74,12 +123,343 @@ header h1 {
 }
 
 /* ------------------------------------------
+   Home Carrusel y servicios
+------------------------------------------ */
+
+.second-container {
+  padding: 60px 15px 0;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+/* Carrusel */
+.banner-carousel {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  width: 100%;
+  height: calc(100vh - 80px); /* Hacer que el carrusel ocupe toda la altura de la pantalla */
+}
+
+.carousel-slide img {
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+  height: 100vh; /* Asegura que la imagen ocupe toda la altura del viewport */
+  object-fit: cover; /* Hace que la imagen cubra completamente el área sin distorsionarse */
+  display: block;
+}
+
+.carousel-slide {
+  display: none; /* Ocultar todas las diapositivas por defecto */
+}
+
+.carousel-slide:first-child {
+  display: block; /* Mostrar la primera diapositiva al cargar */
+}
+
+/* Estilo para el texto fijo del carrusel */
+.carousel-text {
+  position: absolute;
+  top: 50%; /* Centrado verticalmente */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translate(-50%, -50%); /* Asegura el verdadero centrado */
+  color: white;
+  text-align: center;
+  z-index: 10; /* Asegura que el texto esté por encima de las imágenes */
+  width: 100%;
+}
+
+/* Fondo borroso y transparente */
+.carousel-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6); /* Fondo más oscuro para mejor contraste */
+  filter: blur(8px); /* Aumentar el desenfoque */
+  z-index: -1; /* Asegura que el fondo quede detrás del texto */
+}
+
+.carousel-text h2 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: white; /* Blanco para el h2 */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Sombras más intensas */
+}
+
+.carousel-text p {
+  font-size: 1.5rem;
+  color: #f1f1f1; /* Gris claro para el p */
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7); /* Sombras más suaves */
+}
+
+/* Estilos para los servicios destacados */
+.services {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.services-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.service {
+  text-align: center;
+  margin: 15px;
+  flex: 1 1 30%; /* Para asegurarse de que haya espacio para tres en una fila */
+}
+
+.service .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.service img {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.service-info h3 {
+  margin-top: 15px;
+}
+
+.service-info p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.service .btn {
+  background-color: #6dc066;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+}
+
+.service .btn:hover {
+  background-color: #57a853;
+}
+
+/* Propiedades destacadas */
+.featured-properties {
+  margin: 40px 0;
+}
+
+.featured-properties h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+/* Llamado a la acción */
+.cta {
+  text-align: center;
+  background-color: #4bc7a1;
+  color: white;
+  padding: 40px 20px;
+  border-radius: 15px;
+}
+
+.cta h2 {
+  margin-bottom: 20px;
+}
+
+.cta .btn {
+  background-color: #6dc066;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  border-radius: 25px;
+}
+
+.cta .btn:hover {
+  background-color: #57a853;
+}
+
+/* ------------------------------------------
+   Login
+------------------------------------------ */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Título */
+.login-title {
+font-size: 2em;
+margin-bottom: 20px;
+text-align: center;
+color: #333;
+font-weight: 600;
+}
+
+/* Estilo del formulario */
+.login-form {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+/* Estilo de los labels y inputs */
+.login-label {
+font-size: 1.1em;
+color: #555;
+}
+
+.login-input {
+padding: 12px;
+font-size: 1em;
+border: 1px solid #ddd;
+border-radius: 8px;
+background-color: #fafafa;
+outline: none;
+transition: border 0.3s ease;
+}
+
+.login-input:focus {
+border: 1px solid #6dc066;
+}
+
+/* Botón de inicio de sesión */
+.login-button {
+padding: 14px;
+font-size: 1.1em;
+background-color: #6dc066;
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+background-color: #57a853;
+}
+
+/* Enlace de registro */
+.login-register-link {
+display: block;
+margin-top: 15px;
+text-align: center;
+color: #007BFF;
+font-size: 1em;
+text-decoration: none;
+}
+
+.login-register-link:hover {
+text-decoration: underline;
+}
+
+/* ------------------------------------------
+   Registro
+------------------------------------------ */
+
+/* Contenedor principal del formulario de registro */
+.register-form {
+  margin: 30px auto; /* Centrado horizontal y margen superior */
+  padding: 20px; /* Espaciado interno */
+  width: 30%; /* Ancho completo */
+  
+}
+
+/* Título del formulario */
+.register-form h2 {
+  font-size: 2em; /* Tamaño más grande para destacar el título */
+  color: #333;
+  margin-bottom: 25px; /* Espaciado inferior mayor */
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Estilo de las etiquetas (labels) */
+.register-form label {
+  font-size: 1.2em; /* Tamaño de fuente ligeramente mayor */
+  color: #555;
+  display: block;
+  margin-bottom: 8px; /* Espaciado más consistente */
+}
+
+/* Estilo de los campos de entrada (inputs) */
+.register-form input {
+  width: 100%; /* Ocupa el 100% del ancho del contenedor */
+  padding: 15px; /* Aumenta el padding interno */
+  margin-bottom: 20px; /* Espaciado inferior más amplio */
+  border: 1px solid #ccc; /* Borde gris claro */
+  border-radius: 6px; /* Bordes redondeados */
+  font-size: 1.1em; /* Fuente más grande */
+  box-sizing: border-box; /* Incluye el padding en el cálculo de ancho */
+  background-color: #fff; /* Fondo blanco */
+  transition: border-color 0.3s ease; /* Efecto suave al enfocar */
+}
+
+/* Estilo al enfocar un campo */
+.register-form input:focus {
+  border-color: #4CAF50; /* Resalta el borde en verde */
+  outline: none;
+}
+
+/* Estilo para el botón de envío */
+.register-form .submit-btn {
+  width: 100%; /* Botón del mismo ancho que los campos */
+  padding: 15px; /* Espaciado interno consistente */
+  background-color: #4CAF50; /* Verde llamativo */
+  color: white;
+  font-size: 1.3em; /* Fuente más grande */
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Animación de color y escala */
+}
+
+/* Efecto al pasar el mouse sobre el botón */
+.register-form .submit-btn:hover {
+  background-color: #45a049; /* Verde más oscuro */
+  transform: scale(1.02); /* Ligero aumento de tamaño */
+}
+
+/* Estilo para el texto de enlace debajo del formulario */
+.register-form .register-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1em;
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Efecto hover en el enlace */
+.register-form .register-link:hover {
+  text-decoration: underline;
+}
+
+/* Estilo de los saltos de línea */
+.register-form br {
+  margin-bottom: 15px;
+}
+
+/* ------------------------------------------
    Buttons
 ------------------------------------------ */
 button, .btn {
   background-color: #6dc066; /* Verde brillante Sims */
   border: none;
-  padding: 12px 24px;
+  padding: 10px 20px;
   font-size: 1rem;
   color: white;
   border-radius: 12px;
@@ -87,9 +467,31 @@ button, .btn {
   transition: background-color 0.3s ease;
 }
 
+/* Estilos generales para los botones */
+.btn-header {
+  background-color: #6dc066; /* Verde brillante Sims */
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none; /* Elimina subrayado en los enlaces */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+  text-align: center;
+  margin-right: 15px;
+}
+
+.btn-header:hover {
+  background-color: #57a853; /* Verde más oscuro al pasar */
+  text-decoration: none; /* Sin subrayado al pasar */
+  color: white; /* Mantén el color del texto */
+ 
+}
 button:hover, .btn:hover {
   background-color: #57a853; /* Más oscuro al pasar */
 }
+
+
 
 /* ------------------------------------------
    Footer
@@ -164,6 +566,32 @@ button:hover, .btn:hover {
   border-top: 1px solid #495057; /* Línea divisoria */
   padding-top: 1rem;
 }
+
+/* ------------------------------------------
+   Tasar condiciones
+------------------------------------------ */
+
+/* Estilo para los párrafos generales */
+.else {
+  font-size: 1.2em; /* Tamaño de fuente ligeramente mayor para mayor legibilidad */
+  color: #e74c3c; /* Color de texto en rojo para resaltar los mensajes */
+  text-align: center; /* Centrar el texto */
+  margin-top: 20px; /* Espaciado superior para separarlos del contenido anterior */
+  font-weight: bold; /* Resaltar el texto */
+}
+
+/* Estilo para el enlace dentro del párrafo */
+.else a {
+  color: #3498db; /* Color azul para el enlace */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: normal; /* No tan grueso como el texto principal */
+}
+
+/* Efecto hover en el enlace */
+.else a:hover {
+  text-decoration: underline; /* Subrayado cuando el usuario pase el ratón por encima */
+}
+
 
 
 /* ------------------------------------------
@@ -437,3 +865,161 @@ button:hover, .btn:hover {
   background-color: #ddd;
 }
 
+
+/* ------------------------------------------
+   Favorites
+------------------------------------------ */
+
+/* Contenedor principal */
+.tab-pane-favorite {
+  padding: 20px;
+}
+
+/* Título de la sección */
+.tab-pane-favorite h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de la tarjeta de favoritos */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid #ddd; /* Recuadro blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #fff; /* Fondo blanco */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  padding: 16px;
+  height: 400px; /* Altura aumentada para más espacio */
+  width: 280px; /* Ancho fijo */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden; /* Para que el contenido que sobrepase el límite no sea visible */
+}
+
+/* Efecto hover en la tarjeta */
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Título de la tarjeta */
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Estilo del texto de la tarjeta */
+.card-text {
+  margin: 5px 0;
+  color: #555;
+  flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
+  overflow: hidden; /* Evita que el texto se desborde */
+  white-space: normal; /* Permite el salto de línea */
+}
+
+/* Alineación del contenido dentro de la tarjeta */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  height: 100%; /* Asegura que el contenido ocupe toda la tarjeta */
+}
+
+/* Estilo del precio */
+.card .price {
+  font-weight: bold;
+  color: #2a9d8f;
+}
+
+/* Alineación de los botones */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón "Ver" */
+.card .btn-primary {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  padding: 10px 15px;
+  font-weight: bold;
+}
+
+.card .btn-primary:hover {
+  background-color: #45a049;
+  border-color: #45a049;
+}
+
+/* Botón de corazón */
+.btn-heart {
+  margin-top: 10px;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .card {
+      max-width: 600px;
+      margin: 0 auto;
+  }
+
+  .property-container {
+      grid-template-columns: 1fr;
+      gap: 10px;
+  }
+
+  .property img {
+      height: auto;
+      max-height: none;
+  }
+
+  .card {
+      padding: 10px;
+  }
+}
+
+
+/* ------------------------------------------
+   Modal
+------------------------------------------ */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

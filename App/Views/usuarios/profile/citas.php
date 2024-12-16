@@ -131,3 +131,197 @@
     <?php endif; ?>
 </div>
 </div>
+
+
+<style>
+/* Contenedor principal */
+.tab-pane {
+    padding: 25px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Títulos */
+.tab-pane h2, .tab-pane h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Calendario */
+#calendar {
+    margin-bottom: 40px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+table td {
+    color: #7f8c8d;
+}
+
+table td button {
+    padding: 6px 14px;
+    background-color: #3498db;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+table td button:hover {
+    background-color: #2980b9;
+}
+
+table td button:focus {
+    outline: none;
+}
+
+/* Estilo para los formularios */
+form {
+    margin-bottom: 40px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+form input, form select, form button, form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+form input:focus, form select:focus, form button:focus, form textarea:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Botones en formularios */
+form button {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+/* Deshabilitar botón */
+form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Estilo de las filas de la tabla */
+table tr:hover {
+    background-color: #e9f0f7;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Alineación de botones dentro de las tablas */
+button[type="submit"] {
+    margin-right: 10px;
+}
+
+/* Estilo para las opciones de estado */
+select {
+    width: 50%;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+/* Estilo para los mensajes cuando no hay datos */
+td[colspan="4"] {
+    text-align: center;
+    font-weight: bold;
+    color: #7f8c8d;
+}
+
+/* Estilo del formulario de agregar horas disponibles */
+form input[type="datetime-local"] {
+    width: auto;
+    display: inline-block;
+}
+
+form select {
+    width: auto;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+form input, form select, form button {
+    width: 100%;
+}
+
+/* Estilo para dispositivos móviles */
+@media (max-width: 768px) {
+    table {
+        font-size: 0.9rem;
+        overflow-x: auto;
+        display: block;
+    }
+
+    table th, table td {
+        white-space: nowrap;
+    }
+
+    table th {
+        font-size: 0.9rem;
+    }
+
+    table td {
+        font-size: 0.9rem;
+    }
+
+    /* Agregar barra de desplazamiento horizontal a la tabla */
+    table-wrapper {
+        overflow-x: auto;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    form input, form select, form button {
+        width: 100%;
+    }
+}
+</style>

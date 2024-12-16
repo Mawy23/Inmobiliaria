@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="favoritos" role="tabpanel" aria-labelledby="favoritos-tab">
+<div class="tab-pane-favorite fade show active" id="favoritos" role="tabpanel" aria-labelledby="favoritos-tab">
     <h3>Mis Propiedades Favoritas</h3>
     <div class="row">
         <?php if (isset($favoritos) && is_array($favoritos) && count($favoritos) > 0): ?>
@@ -30,3 +30,8 @@
         <?php endif; ?>
     </div>
 </div>
+
+
+
+
+
