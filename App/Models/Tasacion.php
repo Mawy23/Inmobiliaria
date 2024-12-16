@@ -35,10 +35,12 @@ class Tasacion extends Model {
     public static function create($data) {
         try {
             $db = static::getDB();
-            $stmt = $db->prepare('INSERT INTO tasacion (nombre, apellido, correo, id_cliente) VALUES (:nombre, :apellido, :correo, :id_cliente)');
+            $stmt = $db->prepare('INSERT INTO tasacion (nombre, apellido, correo, telefono, direccion, id_cliente) VALUES (:nombre, :apellido, :correo, :telefono, :direccion, :id_cliente)');
             $stmt->bindParam(':nombre', $data['nombre'], PDO::PARAM_STR);
             $stmt->bindParam(':apellido', $data['apellido'], PDO::PARAM_STR);
             $stmt->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+            $stmt->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
+            $stmt->bindParam(':direccion', $data['direccion'], PDO::PARAM_STR);
             $stmt->bindParam(':id_cliente', $data['id_cliente'], PDO::PARAM_INT);
             $stmt->execute();
         } catch (PDOException $e) {

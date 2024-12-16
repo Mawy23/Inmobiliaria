@@ -51,12 +51,6 @@ $rol = $session->get('rol');
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $baseUrl ?>TasacionController/create">Solicitar Tasación</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= $baseUrl ?>UsuariosController">Usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= $baseUrl ?>test">Page Not Found</a>
-                    </li>
                 </ul>
                 <ul class="navbar-nav"> <!-- Botones a la derecha -->
                     <?php if ($idUsuario) : ?>

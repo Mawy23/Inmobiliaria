@@ -8,6 +8,8 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
                     <th>Cliente</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -20,6 +22,8 @@
                         <td><?= htmlspecialchars($tasacion->nombre) ?></td>
                         <td><?= htmlspecialchars($tasacion->apellido) ?></td>
                         <td><?= htmlspecialchars($tasacion->correo) ?></td>
+                        <td><?= htmlspecialchars($tasacion->telefono) ?></td>
+                        <td><?= htmlspecialchars($tasacion->direccion) ?></td>
                         <td><?= htmlspecialchars($tasacion->cliente_nombre) ?></td>
                         <td><?= htmlspecialchars($tasacion->estado_tasacion) ?></td>
                         <td>
