@@ -293,14 +293,22 @@ form input, form select, form button {
 
 /* Estilo para dispositivos móviles */
 @media (max-width: 768px) {
+    .table-wrapper {
+        overflow-x: auto; /* Habilitar el desplazamiento horizontal */
+        -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en dispositivos táctiles */
+        margin-bottom: 15px; /* Agregar algo de espacio debajo del contenedor */
+    }
+
     table {
+        width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
         font-size: 0.9rem;
-        overflow-x: auto;
-        display: block;
+        overflow-x: auto; /* Asegura que el contenido de la tabla se pueda desplazar horizontalmente */
+        display: block; /* Para permitir el desplazamiento */
     }
 
     table th, table td {
-        white-space: nowrap;
+        white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+        padding: 8px; /* Espaciado en celdas */
     }
 
     table th {
@@ -309,19 +317,28 @@ form input, form select, form button {
 
     table td {
         font-size: 0.9rem;
+        word-wrap: break-word; /* Romper palabras largas */
+        white-space: normal; /* Permitir que el texto se ajuste al ancho de la celda */
     }
 
-    /* Agregar barra de desplazamiento horizontal a la tabla */
-    table-wrapper {
-        overflow-x: auto;
+    /* Estilo para los formularios de acciones (botones) */
+    table form {
+        display: inline-block; /* Asegura que los formularios se alineen en línea */
+        width: auto; /* No forzar el ancho */
+        margin: 5px 0; /* Espacio entre los formularios */
     }
 
-    form {
-        padding: 20px;
+    /* Ajustar el tamaño de los botones */
+    table button {
+        font-size: 0.8rem; /* Reducir el tamaño de los botones en dispositivos pequeños */
+        padding: 8px 12px; /* Espaciado más pequeño */
+        margin: 2px; /* Reducir el margen entre botones */
+        width: 100%; /* Hacer que los botones se ajusten al ancho disponible */
+        box-sizing: border-box; /* Asegurarse de que el padding y los márgenes no desborden */
     }
 
     form input, form select, form button {
-        width: 100%;
+        width: 100%; /* Asegura que los formularios sean más amigables en pantallas pequeñas */
     }
 }
 </style>

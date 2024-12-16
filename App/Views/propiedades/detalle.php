@@ -91,9 +91,13 @@
             <input type="hidden" name="id_propiedad" value="<?= $propiedad->id_propiedad ?>">
             <label for="cita_disponible">Seleccionar Cita Disponible:</label>
             <select name="id_cita" id="cita_disponible" required>
-                <?php foreach ($citasDisponibles as $cita): ?>
-                    <option value="<?= $cita['id_cita'] ?>"><?= htmlspecialchars($cita['fecha_hora']) ?> con <?= htmlspecialchars($cita['agente_nombre']) ?></option>
-                <?php endforeach; ?>
+               <?php if (empty($citasDisponibles)): ?>
+                    <option value="">No hay citas disponibles</option>
+                <?php else: ?>
+                    <?php foreach ($citasDisponibles as $cita): ?>
+                        <option value="<?= $cita['id_cita'] ?>"><?= htmlspecialchars($cita['fecha_hora']) ?> con <?= htmlspecialchars($cita['agente_nombre']) ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?> 
             </select>
             <button type="submit" class="btn">Agendar</button>
         </form>

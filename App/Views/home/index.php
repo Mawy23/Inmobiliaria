@@ -36,7 +36,15 @@
                     <div class="service-info">
                         <h3>Comparar Inmuebles</h3>
                         <p>Compara las mejores opciones de propiedades de acuerdo a tus necesidades.</p>
-                        <a href="#" class="btn">Saber más</a>
+
+                        <?php if ($session->get('id_usuario') && $session->get('rol') === 'cliente'): ?>
+                            <a href="PropiedadController/comparar" class="btn">Saber más</a>
+                        <?php elseif (!$session->get('id_usuario')): ?>
+                            <a class="btn btn-heart" onclick="document.getElementById('loginModal').style.display='block'">
+                                Saber más
+                            </a>
+                        </button>
+                    <?php endif; ?>
                     </div>
                 </div>
                 <div class="service">
@@ -44,19 +52,19 @@
                         <img src="https://st4.depositphotos.com/1010613/27377/i/450/depositphotos_273772384-stock-photo-businesswoman-hand-checking-schedule-diary.jpg" alt="Citas">
                     </div>
                     <div class="service-info">
-                        <h3>Visita Virtual</h3>
-                        <p>Pide una cita para ver las propiedades sin necesidad de desplazarte.</p>
-                        <a href="#" class="btn">Saber más</a>
+                        <h3>Agendar Visita a la Casa</h3>
+                        <p>Pide una cita para visitar las propiedades de nuestro listado.</p>
+                        <a href="PropiedadController" class="btn">Saber más</a>
                     </div>
                 </div>
                 <div class="service">
                     <div class="image-container">
-                        <img src="https://www.lr21.com.uy/wp-content/uploads/2017/04/Buying-House-from-Bank-in-Installments.jpg" alt="Compras">
+                        <img src="https://media.istockphoto.com/id/1146963915/es/foto/empresario-c%C3%A1lculo-del-impuesto-sobre-la-propiedad.jpg?s=612x612&w=0&k=20&c=39IZnUh45hTJFb7KfRbprXNOHi0s-mGkkCVzFC8Hx1Q=" alt="Compras">
                     </div>
                     <div class="service-info">
-                        <h3>Comprar Casas</h3>
-                        <p>Encuentra la casa perfecta para ti y tu familia con nuestra ayuda.</p>
-                        <a href="#" class="btn">Saber más</a>
+                        <h3>Solicitar Tasación</h3>
+                        <p>Elige la casa que te interesa y solicita una tasación para conocer su valor de mercado.</p>
+                        <a href="TasacionController/create" class="btn">Saber más</a>
                     </div>
                 </div>
             </div>
@@ -90,6 +98,17 @@
             <h2>¿Listo para encontrar tu hogar ideal?</h2>
             <a class="btn"href="<?= $baseUrl ?>PropiedadController">buscar ahora</a>
         </section>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
+        <h2>Inicia sesión o regístrate</h2>
+        <p>Por favor, inicia sesión o regístrate para poder acceder a comparar casas</p>
+        <a href="<?= $baseUrl ?>AuthController/login" class="btn">Iniciar sesión</a>
+        <a href="<?= $baseUrl ?>AuthController/register" class="btn">Registrarse</a>
     </div>
 </div>
 

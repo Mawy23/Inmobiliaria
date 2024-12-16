@@ -670,6 +670,12 @@ button:hover, .btn:hover {
   color: inherit; /* Mantén el color sin cambios */
 }
 
+@media (max-width: 768px) {
+  .property .price {
+    margin-bottom: 17px;
+  }
+}
+
 /* ------------------------------------------
    Search Form
 ------------------------------------------ */
@@ -877,7 +883,7 @@ button:hover, .btn:hover {
 
 
 /* ------------------------------------------
-   Favorites
+   Favoritos
 ------------------------------------------ */
 
 /* Contenedor principal */
@@ -974,14 +980,25 @@ button:hover, .btn:hover {
 
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {
+
+  .card .btn-primary {
+    margin-bottom: 17px;
+  }
   .card {
       max-width: 600px;
       margin: 0 auto;
   }
 
+  .btn .btn-primary {
+      margin: 10px 0;
+  }
+
   .property-container {
       grid-template-columns: 1fr;
       gap: 10px;
+  }
+  .btn-heart {
+      margin-top: -10px;
   }
 
   .property img {
@@ -999,37 +1016,115 @@ button:hover, .btn:hover {
    Modal
 ------------------------------------------ */
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-}
+   /* Estilo para el modal */
+   .modal {
+    display: none; /* Ocultarlo por defecto */
+    position: fixed; /* Fijar en la pantalla */
+    z-index: 1000; /* Asegurar que esté al frente */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilitar scroll si es necesario */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  }
+  
+  /* Contenido del modal */
+  .modal-content {
+    background-color: #fff; /* Fondo blanco */
+    margin: 10% auto; /* Centrado vertical y horizontal */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde ligero */
+    border-radius: 12px; /* Bordes redondeados */
+    width: 90%; /* Ancho en dispositivos pequeños */
+    max-width: 500px; /* Máximo ancho en dispositivos grandes */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    text-align: center; /* Centrar texto */
+  }
+  
+  /* Botón de cerrar */
+  .close {
+    position: absolute; /* Posicionarlo en relación al modal */
+    top: 15px; /* Espaciado desde el borde superior */
+    right: 15px; /* Espaciado desde el borde derecho */
+    color: #aaa;
+    font-size: 1.5rem; /* Tamaño grande */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease; /* Animación suave */
+  }
+  
+  .close:hover {
+    color: #333; /* Color más oscuro al pasar */
+    transform: scale(1.2); /* Aumentar tamaño ligeramente */
+  }
+  
+  /* Encabezado */
+  .modal-content h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Etiquetas y campos del formulario */
+  .modal-content label {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .modal-content select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Botón de agendar */
+  .modal-content .btn {
+    background-color: #6dc066; /* Verde Sims */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-content .btn:hover {
+    background-color: #57a853; /* Verde más oscuro */
+  }
+  
+  /* Responsividad para dispositivos pequeños */
+@media (max-width: 768px) {
+  .modal {
+    display: none; /* Ocultarlo por defecto */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+    height: 100vh; /* Asegura que ocupa toda la altura de la pantalla */
+    padding: 0 15px; /* Espaciado lateral */
+  }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
+  .modal-content {
+    margin-top: 230px;
+    padding: 15px;
+    max-width: 90%; /* Limitar el ancho máximo del modal */
+    box-sizing: border-box; /* Asegurar que el padding no desborde */
+  }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
+  .modal-content h2 {
+    font-size: 1.5rem; /* Tamaño de fuente más pequeño */
+  }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+  .modal-content select,
+  .modal-content .btn {
+    font-size: 0.9rem; /* Ajustar tamaño de fuente */
+  }
 }
