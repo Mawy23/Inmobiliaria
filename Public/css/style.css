@@ -467,6 +467,10 @@ button, .btn {
   transition: background-color 0.3s ease;
 }
 
+button:hover, .btn:hover {
+  background-color: #57a853; /* Más oscuro al pasar */
+}
+
 /* Estilos generales para los botones */
 .btn-header {
   background-color: #6dc066; /* Verde brillante Sims */
@@ -479,16 +483,22 @@ button, .btn {
   transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
   text-align: center;
   margin-right: 15px;
+  display: inline-block; /* Asegura que se comporte como un botón */
 }
 
 .btn-header:hover {
   background-color: #57a853; /* Verde más oscuro al pasar */
   text-decoration: none; /* Sin subrayado al pasar */
   color: white; /* Mantén el color del texto */
- 
 }
-button:hover, .btn:hover {
-  background-color: #57a853; /* Más oscuro al pasar */
+
+/* Ajustes específicos para dispositivos móviles */
+@media (max-width: 768px) {
+  .btn-header {
+    margin: 10px 0; /* Espaciado entre botones */
+    text-align: center; /* Centra el texto */
+  }
+
 }
 
 
