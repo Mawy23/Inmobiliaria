@@ -1,33 +1,17 @@
 <div class="container-index">
     <!-- Banner principal con carrusel -->
-    <div class="banner-carousel">
-
-        <!-- Texto fijo sobre todas las imágenes -->
-        <div class="carousel-text">
-            <h2>Bienvenido a nuestra página</h2>
-            <p>Encuentra tu hogar ideal aquí</p>
+    <div class="banner">
+        <div class="banner-inicio">
+            <img src="<?= $baseUrl ?>img/banner.png" alt="Banner de inicio">
         </div>
 
-        <div class="carousel-slide">
-       <!-- https://images.unsplash.com/photo-1604771870038-6b1d99e7bae8?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGx1eHVyeSUyMGhvdXNlfGVufDB8fDB8fHww-->
-            <img src="https://i.pinimg.com/originals/02/17/e8/0217e8ba2cda0577e7a490566a47f49e.jpg" alt="Propiedades destacadas 1">
-        </div>
-        <div class="carousel-slide">
-            <img src="https://s1.1zoom.me/b5353/208/Houses_Villa_Design_Pools_537090_1920x1080.jpg" alt="Propiedades destacadas 2">
-        </div>
-        <div class="carousel-slide">
-            <img src="https://s1.1zoom.me/b5350/670/Houses_Mansion_Design_514345_1920x1080.jpg" alt="Propiedades destacadas 3">
-        </div>
-        <div class="carousel-slide">
-            <img src="https://wallpapers.com/images/hd/luxury-house-with-terracotta-roof-d68qn5xn2qgpmuk0.jpg" alt="Propiedades destacadas 4">
-        </div>
     </div>
 
     <div class="second-container">
 
         <!-- Sección de categorías destacadas -->
         <section class="services">
-            <h2>Servicios destacados</h2>
+            <h1>Servicios destacados</h1>
             <div class="services-list">
                 <div class="service">
                     <div class="image-container">
@@ -43,8 +27,8 @@
                             <a class="btn btn-heart" onclick="document.getElementById('loginModal').style.display='block'">
                                 Saber más
                             </a>
-                        </button>
-                    <?php endif; ?>
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="service">
@@ -72,7 +56,7 @@
 
         <!-- Propiedades destacadas -->
         <section class="featured-properties">
-            <h2>Propiedades destacadas</h2>
+            <h1>Propiedades destacadas</h1>
             <div class="property-container">
                 <?php foreach ($propiedadesConDatos as $propiedad): ?>
                     <div class="property">
@@ -91,12 +75,12 @@
                 <?php endforeach; ?>
             </div>
         </section>
-        
+
 
         <!-- Llamado a la acción -->
         <section class="cta">
-            <h2>¿Listo para encontrar tu hogar ideal?</h2>
-            <a class="btn"href="<?= $baseUrl ?>PropiedadController">buscar ahora</a>
+            <h1>¿Te animas a encontrar el hogar de tus sueños?</h1>
+            <a class="btn" href="<?= $baseUrl ?>PropiedadController">Buscar ahora</a>
         </section>
     </div>
 </div>
@@ -105,34 +89,9 @@
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
-        <h2>Inicia sesión o regístrate</h2>
+        <h1>Inicia sesión o regístrate</h1>
         <p>Por favor, inicia sesión o regístrate para poder acceder a comparar casas</p>
         <a href="<?= $baseUrl ?>AuthController/login" class="btn">Iniciar sesión</a>
         <a href="<?= $baseUrl ?>AuthController/register" class="btn">Registrarse</a>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const slides = document.querySelectorAll(".carousel-slide");
-        let currentIndex = 0;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.style.display = i === index ? "block" : "none";
-            });
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % slides.length;
-            showSlide(currentIndex);
-        }
-
-        // Inicializar carrusel
-        showSlide(currentIndex);
-
-        // Cambiar de diapositiva cada 5 segundos
-        setInterval(nextSlide, 5000);
-    });
-</script>
-

@@ -9,6 +9,16 @@ body {
   padding: 0;
 }
 
+h1 {
+  text-align: center; 
+  font-family: Comic Sans MS; 
+  font-weight:bold; 
+  font-size: 40px; 
+  color: #aaa; 
+  text-shadow: -1px 0 #414D68, 0 1px #414D68, 1px 0 #414D68, 0 -1px #414D68, -2px 2px 0 #414D68, 2px 2px 0 #414D68, 1px 1px #414D68, 2px 2px #414D68, 3px 3px #414D68, 4px 4px #414D68, 5px 5px #414D68, 6px 6px #414D68, 7px 7px #414D68, 8px 8px #414D68, 9px 9px #414D68;
+  
+}
+
 h2 {
   color: #2c3e50;
   font-size: 2.2rem;
@@ -22,6 +32,20 @@ code {
   padding: 2px 4px;
   border-radius: 5px;
 }
+
+.header {
+  background-color: #c7c2d7;
+  color: #ffffff;
+  padding: 10px 0;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #555;
+}
+
 
 /* ------------------------------------------
    Layout Containers
@@ -39,12 +63,13 @@ main > .container {
   width: 100%;
   max-width: 100%; /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
   margin: 0 auto;
-  padding: 0;
+  padding: 0px;
 }
 
 /* ------------------------------------------
-   Navigation
+   Navbar
 ------------------------------------------ */
+
 /* Estilos generales del navbar */
 .navbar {
   background: rgba(0, 0, 0, 0.8);
@@ -100,27 +125,22 @@ main > .container {
   top: 8px; /* Separación de la línea inferior */
 }
 
-/* Sin animaciones al expandir */
-.navbar-toggler.collapsed .navbar-toggler-icon::before,
-.navbar-toggler.collapsed .navbar-toggler-icon::after {
-  transform: none;
+.bg-dark {
+  background-color: #2a2749 !important;
 }
 
-/* ------------------------------------------
-   Header
------------------------------------------- */
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 255);
+}
+
 header {
-  background-color: #4bc7a1; /* Verde Sims más claro */
+  background-color: #2a2749; /* Verde Sims más claro */
   padding: 40px 0;
   text-align: center;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-header h1 {
-  font-size: 2.5rem;
-  margin: 0;
-}
 
 /* ------------------------------------------
    Home Carrusel y servicios
@@ -133,65 +153,19 @@ header h1 {
 }
 
 /* Carrusel */
-.banner-carousel {
+.banner {
   position: relative;
   overflow: hidden;
   margin-bottom: 20px;
   width: 100%;
-  height: calc(100vh - 80px); /* Hacer que el carrusel ocupe toda la altura de la pantalla */
+  height: calc(100vh - 80px); 
 }
 
-.carousel-slide img {
+.banner-inicio img {
   width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
   height: 100vh; /* Asegura que la imagen ocupe toda la altura del viewport */
   object-fit: cover; /* Hace que la imagen cubra completamente el área sin distorsionarse */
   display: block;
-}
-
-.carousel-slide {
-  display: none; /* Ocultar todas las diapositivas por defecto */
-}
-
-.carousel-slide:first-child {
-  display: block; /* Mostrar la primera diapositiva al cargar */
-}
-
-/* Estilo para el texto fijo del carrusel */
-.carousel-text {
-  position: absolute;
-  top: 50%; /* Centrado verticalmente */
-  left: 50%; /* Centrado horizontalmente */
-  transform: translate(-50%, -50%); /* Asegura el verdadero centrado */
-  color: white;
-  text-align: center;
-  z-index: 10; /* Asegura que el texto esté por encima de las imágenes */
-  width: 100%;
-}
-
-/* Fondo borroso y transparente */
-.carousel-text::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6); /* Fondo más oscuro para mejor contraste */
-  filter: blur(8px); /* Aumentar el desenfoque */
-  z-index: -1; /* Asegura que el fondo quede detrás del texto */
-}
-
-.carousel-text h2 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  color: white; /* Blanco para el h2 */
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Sombras más intensas */
-}
-
-.carousel-text p {
-  font-size: 1.5rem;
-  color: #f1f1f1; /* Gris claro para el p */
-  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7); /* Sombras más suaves */
 }
 
 /* Estilos para los servicios destacados */
@@ -238,7 +212,7 @@ header h1 {
 }
 
 .service .btn {
-  background-color: #6dc066;
+  background-color: #767091;
   color: white;
   padding: 10px 20px;
   border-radius: 25px;
@@ -246,7 +220,7 @@ header h1 {
 }
 
 .service .btn:hover {
-  background-color: #57a853;
+  background-color: #2a2749;
 }
 
 /* Propiedades destacadas */
@@ -263,7 +237,6 @@ header h1 {
 /* Llamado a la acción */
 .cta {
   text-align: center;
-  background-color: #4bc7a1;
   color: white;
   padding: 40px 20px;
   border-radius: 15px;
@@ -274,7 +247,7 @@ header h1 {
 }
 
 .cta .btn {
-  background-color: #6dc066;
+  background-color: #767091;
   color: white;
   padding: 15px 30px;
   text-decoration: none;
@@ -283,7 +256,7 @@ header h1 {
 }
 
 .cta .btn:hover {
-  background-color: #57a853;
+  background-color: #2a2749;
 }
 
 /* ------------------------------------------
@@ -332,14 +305,14 @@ transition: border 0.3s ease;
 }
 
 .login-input:focus {
-border: 1px solid #6dc066;
+border: 1px solid #767091;
 }
 
 /* Botón de inicio de sesión */
 .login-button {
 padding: 14px;
 font-size: 1.1em;
-background-color: #6dc066;
+background-color: #767091;
 color: white;
 border: none;
 border-radius: 8px;
@@ -348,7 +321,7 @@ transition: background-color 0.3s ease;
 }
 
 .login-button:hover {
-background-color: #57a853;
+background-color: #2a2749;
 }
 
 /* Enlace de registro */
@@ -409,7 +382,7 @@ text-decoration: underline;
 
 /* Estilo al enfocar un campo */
 .register-form input:focus {
-  border-color: #4CAF50; /* Resalta el borde en verde */
+  border-color: #767091; /* Resalta el borde en verde */
   outline: none;
 }
 
@@ -417,7 +390,7 @@ text-decoration: underline;
 .register-form .submit-btn {
   width: 100%; /* Botón del mismo ancho que los campos */
   padding: 15px; /* Espaciado interno consistente */
-  background-color: #4CAF50; /* Verde llamativo */
+  background-color: #767091; /* Verde llamativo */
   color: white;
   font-size: 1.3em; /* Fuente más grande */
   font-weight: bold;
@@ -429,7 +402,7 @@ text-decoration: underline;
 
 /* Efecto al pasar el mouse sobre el botón */
 .register-form .submit-btn:hover {
-  background-color: #45a049; /* Verde más oscuro */
+  background-color: #2a2749; /* Verde más oscuro */
   transform: scale(1.02); /* Ligero aumento de tamaño */
 }
 
@@ -457,7 +430,7 @@ text-decoration: underline;
    Buttons
 ------------------------------------------ */
 button, .btn {
-  background-color: #6dc066; /* Verde brillante Sims */
+  background-color: #767091; /* Verde brillante Sims */
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
@@ -473,21 +446,27 @@ button:hover, .btn:hover {
 
 /* Estilos generales para los botones */
 .btn-header {
-  background-color: #6dc066; /* Verde brillante Sims */
-  padding: 10px 20px;
-  font-size: 1rem;
+  background-color: #767091;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
   color: white;
-  border-radius: 12px;
+  border-radius: 0.5em;
   cursor: pointer;
   text-decoration: none; /* Elimina subrayado en los enlaces */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+  transition: all 0.3s; /* Transiciones suaves */
   text-align: center;
   margin-right: 15px;
+  box-shadow: 6px 6px 12px #2a2749, -6px -6px 12px #2a2749;
   display: inline-block; /* Asegura que se comporte como un botón */
 }
 
+.btn-header:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #2a2749, inset -4px -4px 12px #2a2749;
+}
+
 .btn-header:hover {
-  background-color: #57a853; /* Verde más oscuro al pasar */
+  background-color: #767091; /* Verde más oscuro al pasar */
   text-decoration: none; /* Sin subrayado al pasar */
   color: white; /* Mantén el color del texto */
 }
@@ -636,7 +615,7 @@ button:hover, .btn:hover {
 
 /* Estilo para imágenes */
 .property img {
-  border-bottom: 5px solid #6dc066;
+  border-bottom: 5px solid #767091;
   width: 100%;
   height: 200px; /* Fija la altura */
   max-height: 200px; /* Asegura que no se estiren demasiado */
@@ -657,7 +636,7 @@ button:hover, .btn:hover {
 
 .property .price {
   font-weight: bold;
-  color: #2a9d8f;
+  color: #2a2749;
 }
 
 .property-link {
@@ -702,7 +681,7 @@ button:hover, .btn:hover {
 
 .search-form select:focus,
 .search-form input:focus {
-  border-color: #6dc066;
+  border-color: #767091;
   outline: none;
   box-shadow: 0 0 5px rgba(109, 192, 102, 0.5);
 }
@@ -710,7 +689,7 @@ button:hover, .btn:hover {
 /* Botón de filtrar */
 .search-form button {
   padding: 0.6rem 1.5rem;
-  background-color: #6dc066;
+  background-color: #767091;
   color: #ffffff;
   border: none;
   border-radius: 25px;
@@ -722,7 +701,7 @@ button:hover, .btn:hover {
 }
 
 .search-form button:hover {
-  background-color: #57a853;
+  background-color: #2a2749;
   transform: scale(1.05);
 }
 
@@ -828,7 +807,7 @@ button:hover, .btn:hover {
 
 .property-info .price {
   font-size: 1.8em;
-  color: #4CAF50;
+  color: #767091;
   font-weight: 700;
   margin-bottom: 20px;
 }
@@ -848,7 +827,7 @@ button:hover, .btn:hover {
 .property-buttons .btn-heart,
 .property-buttons .btn-agendar {
   padding: 12px 25px;
-  background-color: #007BFF;
+  background-color: #767091;
   color: white;
   border-radius: 8px;
   text-align: center;
@@ -857,12 +836,12 @@ button:hover, .btn:hover {
 }
 
 .property-buttons .btn-heart {
-  background-color: #FF4081;
+  background-color: #ffc107;
 }
 
 .property-buttons .btn-heart:hover,
 .property-buttons .btn-agendar:hover {
-  background-color: #0056b3;
+  background-color: #2a2749;
 }
 
 .volver-button {
@@ -962,15 +941,15 @@ button:hover, .btn:hover {
 
 /* Botón "Ver" */
 .card .btn-primary {
-  background-color: #4CAF50;
-  border-color: #4CAF50;
+  background-color: #767091;
+  border-color: #767091;
   padding: 10px 15px;
   font-weight: bold;
 }
 
 .card .btn-primary:hover {
-  background-color: #45a049;
-  border-color: #45a049;
+  background-color: #2a2749;
+  border-color: #2a2749;
 }
 
 /* Botón de corazón */
@@ -1087,7 +1066,7 @@ button:hover, .btn:hover {
   
   /* Botón de agendar */
   .modal-content .btn {
-    background-color: #6dc066; /* Verde Sims */
+    background-color: #767091; /* Verde Sims */
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
@@ -1099,7 +1078,7 @@ button:hover, .btn:hover {
   }
   
   .modal-content .btn:hover {
-    background-color: #57a853; /* Verde más oscuro */
+    background-color: #2a2749; /* Verde más oscuro */
   }
   
   /* Responsividad para dispositivos pequeños */
@@ -1126,5 +1105,82 @@ button:hover, .btn:hover {
   .modal-content select,
   .modal-content .btn {
     font-size: 0.9rem; /* Ajustar tamaño de fuente */
+  }
+}
+
+/* ------------------------------------------
+  Tablas
+------------------------------------------ */
+
+.comparar-table {
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  border-collapse: collapse; /* Elimina el espacio entre bordes */
+  margin-bottom: 20px; /* Espaciado inferior */
+  font-size: 1em; /* Tamaño de fuente */
+  background-color: #fff; /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden; /* Oculta bordes externos al redondear */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Sombra ligera */
+}
+
+/* Encabezados de tabla */
+.comparar-table thead {
+  background-color: #767091; /* Verde llamativo */
+  color: white;
+}
+
+.comparar-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Filas de tabla */
+.comparar-table tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.comparar-table tbody tr:hover {
+  background-color: #f1f1f1; /* Cambio de color al pasar el ratón */
+}
+
+.comparar-table td {
+  padding: 12px 15px;
+  color: #555; /* Texto gris */
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .comparar-table thead {
+      display: none; /* Ocultar encabezados en móviles */
+  }
+  
+  .comparar-table tbody tr {
+      display: block; /* Convertir las filas en bloques */
+      margin-bottom: 20px; /* Espaciado entre filas */
+  }
+
+  .titulo {
+      font-weight: bold;
+      background-color: #2a2749; /* Verde llamativo */
+      color: white;
+  }
+
+  .comparar-table td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      padding: 10px 15px;
+  }
+
+  .comparar-table td:before {
+      content: attr(data-label); /* Etiquetas para cada celda */
+      font-weight: bold;
+      color: #333; /* Texto oscuro */
+      text-align: left;
+      padding-right: 10px; /* Espaciado entre la etiqueta y el valor */
   }
 }
