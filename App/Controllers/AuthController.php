@@ -153,13 +153,30 @@ class AuthController
                 $session->set('nombre', $usuario->nombre);
                 $session->set('rol', $usuario->rol);
 
-                // Obtener las propiedades
+                // Obtener todas las propiedades de la base de datos
                 $propiedades = Propiedad::all();
+
+                // Crear un arreglo para almacenar las propiedades con sus imágenes
                 $propiedadesConDatos = [];
+
+                // Iterar sobre las propiedades para asociar imágenes
                 foreach ($propiedades as $propiedad) {
-                    $imagenes = Imagen::search($propiedad->id_propiedad);
-                    $propiedadesConDatos[] = ['propiedad' => $propiedad, 'imagenes' => $imagenes];
+                    $imagenes = Imagen::search($propiedad->id_propiedad); // Buscar imágenes por id_propiedad
+
+                    // Asociar la propiedad con sus imágenes
+                    $propiedadesConDatos[] = [
+                        'propiedad' => $propiedad,
+                        'imagenes' => $imagenes
+                    ];
                 }
+
+                // Ordenar propiedades por precio descendente
+                usort($propiedadesConDatos, function ($a, $b) {
+                    return $b['propiedad']->precio <=> $a['propiedad']->precio;
+                });
+
+                // Tomar las tres primeras propiedades con mayor precio
+                $propiedadesConDatos = array_slice($propiedadesConDatos, 0, 3);
 
                 // Redirigir al inicio de sesión después del registro exitoso 
                 // Definir la vista y los argumentos a pasar
