@@ -74,19 +74,6 @@ CREATE TABLE
         INDEX (id_propiedad)
     );
 
--- Tabla de reseñas
-CREATE TABLE
-    reseñas (
-        id_reseña INT AUTO_INCREMENT PRIMARY KEY,
-        id_propiedad INT,
-        id_cliente INT,
-        calificacion INT NOT NULL CHECK (calificacion BETWEEN 1 AND 5),
-        comentario TEXT,
-        fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (id_propiedad) REFERENCES propiedades (id_propiedad) ON DELETE CASCADE,
-        FOREIGN KEY (id_cliente) REFERENCES usuarios (id_usuario) ON DELETE CASCADE
-    );
-
 -- Tabla de tasaciones
 CREATE TABLE
     tasacion (

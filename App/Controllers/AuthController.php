@@ -5,6 +5,8 @@ namespace App\Controllers;
 use Core\View;
 use Core\Session;
 use App\Models\Usuario;
+use App\Models\Propiedad;
+use App\Models\Imagen;
 
 
 class AuthController
@@ -151,16 +153,25 @@ class AuthController
                 $session->set('nombre', $usuario->nombre);
                 $session->set('rol', $usuario->rol);
 
+                // Obtener las propiedades
+                $propiedades = Propiedad::all();
+                $propiedadesConDatos = [];
+                foreach ($propiedades as $propiedad) {
+                    $imagenes = Imagen::search($propiedad->id_propiedad);
+                    $propiedadesConDatos[] = ['propiedad' => $propiedad, 'imagenes' => $imagenes];
+                }
+
                 // Redirigir al inicio de sesión después del registro exitoso 
                 // Definir la vista y los argumentos a pasar
                 $views = ['home/index'];
-                $args  = ['title' => 'home'];
+                $args  = ['title' => 'home', 'propiedadesConDatos' => $propiedadesConDatos];
 
                 // Renderizar la vista con los argumentos
                 View::render($views, $args);
             } else {
                 // Redireccionar con un mensaje de error si las credenciales son incorrectas
-                header('Location: /login?error=Credenciales incorrectas');
+                $error_message = $usuario ? 'Credenciales incorrectas' : 'Usuario no encontrado. Por favor, inténtelo de nuevo.';
+                header('Location: /login?error=' . urlencode($error_message));
                 exit;
             }
         }
