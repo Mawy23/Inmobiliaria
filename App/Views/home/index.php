@@ -4,7 +4,6 @@
         <div class="banner-inicio">
             <img src="<?= $baseUrl ?>img/banner.png" alt="Banner de inicio">
         </div>
-
     </div>
 
     <div class="second-container">
