@@ -3,7 +3,7 @@
 ------------------------------------------ */
 body {
   font-family: 'Verdana', sans-serif;
-  background-color: #e6f7f5; /* Color de fondo suave */
+  background-color: #e6f7f5; 
   color: #333;
   margin: 0;
   padding: 0;
@@ -52,7 +52,7 @@ p {
 ------------------------------------------ */
 main > .container {
   padding: 60px 15px 0;
-  background-color: #fff; /* Fondo blanco para contraste */
+  background-color: #fff; 
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
@@ -61,7 +61,7 @@ main > .container {
 
 .container-index {
   width: 100%;
-  max-width: 100%; /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
+  max-width: 100%; 
   margin: 0 auto;
   padding: 0px;
 }
@@ -89,8 +89,8 @@ main > .container {
 /* Botón de hamburguesa más grande */
 .navbar-toggler {
   border: none;
-  width: 60px; /* Anchura del botón */
-  height: 60px; /* Altura del botón */
+  width: 60px; 
+  height: 60px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,8 +101,8 @@ main > .container {
 
 /* Ícono del botón de hamburguesa */
 .navbar-toggler-icon {
-  width: 30px; /* Anchura de las líneas */
-  height: 3px; /* Altura de las líneas */
+  width: 30px; 
+  height: 3px; 
   background-color: white;
   position: relative;
 }
@@ -118,11 +118,11 @@ main > .container {
 }
 
 .navbar-toggler-icon::before {
-  top: -8px; /* Separación de la línea superior */
+  top: -8px; 
 }
 
 .navbar-toggler-icon::after {
-  top: 8px; /* Separación de la línea inferior */
+  top: 8px; 
 }
 
 .bg-dark {
@@ -134,7 +134,7 @@ main > .container {
 }
 
 header {
-  background-color: #2a2749; /* Verde Sims más claro */
+  background-color: #2a2749; 
   padding: 40px 0;
   text-align: center;
   color: white;
@@ -162,9 +162,9 @@ header {
 }
 
 .banner-inicio img {
-  width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
-  height: 100vh; /* Asegura que la imagen ocupe toda la altura del viewport */
-  object-fit: cover; /* Hace que la imagen cubra completamente el área sin distorsionarse */
+  width: 100%; 
+  height: 100vh; 
+  object-fit: cover; 
   display: block;
 }
 
@@ -183,7 +183,7 @@ header {
 .service {
   text-align: center;
   margin: 15px;
-  flex: 1 1 30%; /* Para asegurarse de que haya espacio para tres en una fila */
+  flex: 1 1 30%; 
 }
 
 .service .image-container {
@@ -344,66 +344,66 @@ text-decoration: underline;
 
 /* Contenedor principal del formulario de registro */
 .register-form {
-  margin: 30px auto; /* Centrado horizontal y margen superior */
-  padding: 20px; /* Espaciado interno */
-  width: 30%; /* Ancho completo */
+  margin: 30px auto; 
+  padding: 20px; 
+  width: 30%; 
   
 }
 
 /* Título del formulario */
 .register-form h2 {
-  font-size: 2em; /* Tamaño más grande para destacar el título */
+  font-size: 2em; 
   color: #333;
-  margin-bottom: 25px; /* Espaciado inferior mayor */
+  margin-bottom: 25px; 
   text-align: center;
   font-weight: bold;
 }
 
 /* Estilo de las etiquetas (labels) */
 .register-form label {
-  font-size: 1.2em; /* Tamaño de fuente ligeramente mayor */
+  font-size: 1.2em; 
   color: #555;
   display: block;
-  margin-bottom: 8px; /* Espaciado más consistente */
+  margin-bottom: 8px; 
 }
 
 /* Estilo de los campos de entrada (inputs) */
 .register-form input {
-  width: 100%; /* Ocupa el 100% del ancho del contenedor */
-  padding: 15px; /* Aumenta el padding interno */
-  margin-bottom: 20px; /* Espaciado inferior más amplio */
-  border: 1px solid #ccc; /* Borde gris claro */
-  border-radius: 6px; /* Bordes redondeados */
-  font-size: 1.1em; /* Fuente más grande */
-  box-sizing: border-box; /* Incluye el padding en el cálculo de ancho */
-  background-color: #fff; /* Fondo blanco */
-  transition: border-color 0.3s ease; /* Efecto suave al enfocar */
+  width: 100%; 
+  padding: 15px; 
+  margin-bottom: 20px; 
+  border: 1px solid #ccc; 
+  border-radius: 6px; 
+  font-size: 1.1em; 
+  box-sizing: border-box; 
+  background-color: #fff; 
+  transition: border-color 0.3s ease; 
 }
 
 /* Estilo al enfocar un campo */
 .register-form input:focus {
-  border-color: #767091; /* Resalta el borde en verde */
+  border-color: #767091; 
   outline: none;
 }
 
 /* Estilo para el botón de envío */
 .register-form .submit-btn {
-  width: 100%; /* Botón del mismo ancho que los campos */
-  padding: 15px; /* Espaciado interno consistente */
-  background-color: #767091; /* Verde llamativo */
+  width: 100%; 
+  padding: 15px; 
+  background-color: #767091; 
   color: white;
-  font-size: 1.3em; /* Fuente más grande */
+  font-size: 1.3em; 
   font-weight: bold;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Animación de color y escala */
+  transition: background-color 0.3s ease, transform 0.2s ease; 
 }
 
 /* Efecto al pasar el mouse sobre el botón */
 .register-form .submit-btn:hover {
-  background-color: #2a2749; /* Verde más oscuro */
-  transform: scale(1.02); /* Ligero aumento de tamaño */
+  background-color: #2a2749; 
+  transform: scale(1.02); 
 }
 
 /* Estilo para el texto de enlace debajo del formulario */
@@ -428,7 +428,7 @@ text-decoration: underline;
 
 @media (max-width: 768px) {
   .register-form {
-    width: 90%; /* Ancho del formulario en dispositivos pequeños */
+    width: 90%; 
   }
 }
 
@@ -436,7 +436,7 @@ text-decoration: underline;
    Buttons
 ------------------------------------------ */
 button, .btn {
-  background-color: #767091; /* Verde brillante Sims */
+  background-color: #767091; 
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
@@ -447,7 +447,7 @@ button, .btn {
 }
 
 button:hover, .btn:hover {
-  background-color: #57a853; /* Más oscuro al pasar */
+  background-color: #57a853; 
 }
 
 /* Estilos generales para los botones */
@@ -458,12 +458,12 @@ button:hover, .btn:hover {
   color: white;
   border-radius: 0.5em;
   cursor: pointer;
-  text-decoration: none; /* Elimina subrayado en los enlaces */
-  transition: all 0.3s; /* Transiciones suaves */
+  text-decoration: none; 
+  transition: all 0.3s; 
   text-align: center;
   margin-right: 15px;
   box-shadow: 6px 6px 12px #2a2749, -6px -6px 12px #2a2749;
-  display: inline-block; /* Asegura que se comporte como un botón */
+  display: inline-block; 
 }
 
 .btn-header:active {
@@ -472,16 +472,16 @@ button:hover, .btn:hover {
 }
 
 .btn-header:hover {
-  background-color: #767091; /* Verde más oscuro al pasar */
-  text-decoration: none; /* Sin subrayado al pasar */
-  color: white; /* Mantén el color del texto */
+  background-color: #767091; 
+  text-decoration: none; 
+  color: white; 
 }
 
 /* Ajustes específicos para dispositivos móviles */
 @media (max-width: 768px) {
   .btn-header {
-    margin: 10px 0; /* Espaciado entre botones */
-    text-align: center; /* Centra el texto */
+    margin: 10px 0; 
+    text-align: center; 
   }
 
 }
@@ -493,9 +493,9 @@ button:hover, .btn:hover {
 ------------------------------------------ */
 /* Estilos para el footer */
 .footer {
-  background-color: #343a40; /* Fondo oscuro */
-  color: #ffffff; /* Texto blanco */
-  padding: 2rem 0; /* Espaciado vertical */
+  background-color: #343a40; 
+  color: #ffffff; 
+  padding: 2rem 0; 
   font-size: 0.9rem;
 }
 
@@ -516,7 +516,7 @@ button:hover, .btn:hover {
 }
 
 .footer .footer-content > div {
-  flex: 1 1 300px; /* Espaciado flexible con mínimo de 300px */
+  flex: 1 1 300px; 
   margin: 1rem;
 }
 
@@ -541,7 +541,7 @@ button:hover, .btn:hover {
 
 .footer ul li i {
   margin-right: 0.5rem;
-  color: #ffc107; /* Color dorado para los iconos */
+  color: #ffc107; 
 }
 
 .footer ul li a {
@@ -551,15 +551,15 @@ button:hover, .btn:hover {
 }
 
 .footer ul li a:hover {
-  color: #ffc107; /* Cambiar a dorado al pasar el ratón */
+  color: #ffc107; 
 }
 
 .footer .text-center {
   margin-top: 2rem;
   font-size: 0.8rem;
-  color: #ced4da; /* Texto gris claro */
+  color: #ced4da; 
   text-align: center;
-  border-top: 1px solid #495057; /* Línea divisoria */
+  border-top: 1px solid #495057; 
   padding-top: 1rem;
 }
 
@@ -569,23 +569,23 @@ button:hover, .btn:hover {
 
 /* Estilo para los párrafos generales */
 .else {
-  font-size: 1.2em; /* Tamaño de fuente ligeramente mayor para mayor legibilidad */
-  color: #e74c3c; /* Color de texto en rojo para resaltar los mensajes */
-  text-align: center; /* Centrar el texto */
-  margin-top: 20px; /* Espaciado superior para separarlos del contenido anterior */
-  font-weight: bold; /* Resaltar el texto */
+  font-size: 1.2em; 
+  color: #e74c3c; 
+  text-align: center; 
+  margin-top: 20px; 
+  font-weight: bold; 
 }
 
 /* Estilo para el enlace dentro del párrafo */
 .else a {
-  color: #3498db; /* Color azul para el enlace */
-  text-decoration: none; /* Sin subrayado */
-  font-weight: normal; /* No tan grueso como el texto principal */
+  color: #3498db; 
+  text-decoration: none; 
+  font-weight: normal; 
 }
 
 /* Efecto hover en el enlace */
 .else a:hover {
-  text-decoration: underline; /* Subrayado cuando el usuario pase el ratón por encima */
+  text-decoration: underline; 
 }
 
 
@@ -601,8 +601,8 @@ button:hover, .btn:hover {
 }
 
 .property-container.single-property .property {
-  max-width: 600px; /* Limitar el tamaño máximo de la propiedad */
-  margin: 0 auto;   /* Centrar la propiedad */
+  max-width: 600px; 
+  margin: 0 auto;   
 }
 
 /* El resto de tus estilos permanecen igual */
@@ -624,8 +624,8 @@ button:hover, .btn:hover {
 .property img {
   border-bottom: 5px solid #767091;
   width: 100%;
-  height: 200px; /* Fija la altura */
-  max-height: 200px; /* Asegura que no se estiren demasiado */
+  height: 200px; 
+  max-height: 200px; 
   object-fit: cover;
   border-radius: 8px 8px 0 0;
 }
@@ -647,13 +647,13 @@ button:hover, .btn:hover {
 }
 
 .property-link {
-  text-decoration: none; /* Elimina el subrayado */
-  color: inherit; /* Mantén el color original */
+  text-decoration: none; 
+  color: inherit; 
 }
 
 .property-link:hover {
-  text-decoration: none; /* Asegúrate de que no aparezca subrayado al pasar el ratón */
-  color: inherit; /* Mantén el color sin cambios */
+  text-decoration: none; 
+  color: inherit; 
 }
 
 @media (max-width: 768px) {
@@ -676,8 +676,8 @@ button:hover, .btn:hover {
 /* Inputs y select */
 .search-form select,
 .search-form input {
-  flex: 1; /* Los campos ocupan el espacio disponible */
-  min-width: 180px; /* Ancho mínimo para pantallas pequeñas */
+  flex: 1; 
+  min-width: 180px; 
   padding: 0.5rem 1rem;
   border: 1px solid #ced4da;
   border-radius: 4px;
@@ -704,7 +704,7 @@ button:hover, .btn:hover {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-left: auto; /* Empuja el botón hacia la derecha */
+  margin-left: auto; 
 }
 
 .search-form button:hover {
@@ -715,16 +715,16 @@ button:hover, .btn:hover {
 /* Ajuste de responsividad */
 @media (max-width: 768px) {
   .search-form {
-    flex-wrap: wrap; /* Apila los elementos en pantallas pequeñas */
+    flex-wrap: wrap; 
   }
   .search-form select,
   .search-form input {
-    flex: 1 1 100%; /* Ocupan toda la fila */
-    margin-bottom: 1rem; /* Espaciado entre los campos */
+    flex: 1 1 100%; 
+    margin-bottom: 1rem; 
   }
   .search-form button {
-    flex: 1 1 100%; /* Botón ocupa toda la fila */
-    margin-left: 0; /* Sin margen en pantallas pequeñas */
+    flex: 1 1 100%; 
+    margin-left: 0; 
   }
 }
 
@@ -741,7 +741,7 @@ button:hover, .btn:hover {
 }
 
 .no-propiedades h3 {
-  color: #dc3545; /* Color rojo para el mensaje de error */
+  color: #dc3545; 
   margin-bottom: 10px;
 }
 
@@ -890,15 +890,15 @@ button:hover, .btn:hover {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  border: 1px solid #ddd; /* Recuadro blanco */
-  border-radius: 8px; /* Bordes redondeados */
-  background-color: #fff; /* Fondo blanco */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  background-color: #fff; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   padding: 16px;
-  height: 400px; /* Altura aumentada para más espacio */
-  width: 280px; /* Ancho fijo */
+  height: 400px; 
+  width: 280px; 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden; /* Para que el contenido que sobrepase el límite no sea visible */
+  overflow: hidden; 
 }
 
 /* Efecto hover en la tarjeta */
@@ -919,9 +919,9 @@ button:hover, .btn:hover {
 .card-text {
   margin: 5px 0;
   color: #555;
-  flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
-  overflow: hidden; /* Evita que el texto se desborde */
-  white-space: normal; /* Permite el salto de línea */
+  flex-grow: 1; 
+  overflow: hidden; 
+  white-space: normal;
 }
 
 /* Alineación del contenido dentro de la tarjeta */
@@ -930,7 +930,7 @@ button:hover, .btn:hover {
   flex-direction: column;
   justify-content: space-between;
   padding: 10px;
-  height: 100%; /* Asegura que el contenido ocupe toda la tarjeta */
+  height: 100%; 
 }
 
 /* Estilo del precio */
@@ -1004,45 +1004,45 @@ button:hover, .btn:hover {
 
    /* Estilo para el modal */
    .modal {
-    display: none; /* Ocultarlo por defecto */
-    position: fixed; /* Fijar en la pantalla */
-    z-index: 1000; /* Asegurar que esté al frente */
+    display: none; 
+    position: fixed;
+    z-index: 1000; 
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Habilitar scroll si es necesario */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); 
   }
   
   /* Contenido del modal */
   .modal-content {
-    background-color: #fff; /* Fondo blanco */
-    margin: 10% auto; /* Centrado vertical y horizontal */
-    padding: 20px; /* Espaciado interno */
-    border: 1px solid #ddd; /* Borde ligero */
-    border-radius: 12px; /* Bordes redondeados */
-    width: 90%; /* Ancho en dispositivos pequeños */
-    max-width: 500px; /* Máximo ancho en dispositivos grandes */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
-    text-align: center; /* Centrar texto */
+    background-color: #fff; 
+    margin: 10% auto; 
+    padding: 20px; 
+    border: 1px solid #ddd; 
+    border-radius: 12px; 
+    width: 90%; 
+    max-width: 500px; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    text-align: center; 
   }
   
   /* Botón de cerrar */
   .close {
-    position: absolute; /* Posicionarlo en relación al modal */
-    top: 15px; /* Espaciado desde el borde superior */
-    right: 15px; /* Espaciado desde el borde derecho */
+    position: absolute; 
+    top: 15px; 
+    right: 15px; 
     color: #aaa;
-    font-size: 1.5rem; /* Tamaño grande */
+    font-size: 1.5rem; 
     font-weight: bold;
     cursor: pointer;
-    transition: color 0.3s ease, transform 0.3s ease; /* Animación suave */
+    transition: color 0.3s ease, transform 0.3s ease; 
   }
   
   .close:hover {
-    color: #333; /* Color más oscuro al pasar */
-    transform: scale(1.2); /* Aumentar tamaño ligeramente */
+    color: #333; 
+    transform: scale(1.2); 
   }
   
   /* Encabezado */
@@ -1091,27 +1091,27 @@ button:hover, .btn:hover {
   /* Responsividad para dispositivos pequeños */
 @media (max-width: 768px) {
   .modal {
-    display: none; /* Ocultarlo por defecto */
-    align-items: center; /* Centrar verticalmente */
-    justify-content: center; /* Centrar horizontalmente */
-    height: 100vh; /* Asegura que ocupa toda la altura de la pantalla */
-    padding: 0 15px; /* Espaciado lateral */
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+    padding: 0 15px; 
   }
 
   .modal-content {
     margin-top: 230px;
     padding: 15px;
-    max-width: 90%; /* Limitar el ancho máximo del modal */
-    box-sizing: border-box; /* Asegurar que el padding no desborde */
+    max-width: 90%; 
+    box-sizing: border-box; 
   }
 
   .modal-content h2 {
-    font-size: 1.5rem; /* Tamaño de fuente más pequeño */
+    font-size: 1.5rem; 
   }
 
   .modal-content select,
   .modal-content .btn {
-    font-size: 0.9rem; /* Ajustar tamaño de fuente */
+    font-size: 0.9rem; 
   }
 }
 
@@ -1120,19 +1120,19 @@ button:hover, .btn:hover {
 ------------------------------------------ */
 
 .comparar-table {
-  width: 100%; /* Ocupa todo el ancho del contenedor */
-  border-collapse: collapse; /* Elimina el espacio entre bordes */
-  margin-bottom: 20px; /* Espaciado inferior */
-  font-size: 1em; /* Tamaño de fuente */
-  background-color: #fff; /* Fondo blanco */
-  border-radius: 8px; /* Bordes redondeados */
-  overflow: hidden; /* Oculta bordes externos al redondear */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Sombra ligera */
+  width: 100%; 
+  border-collapse: collapse; 
+  margin-bottom: 20px; 
+  font-size: 1em; 
+  background-color: #fff; 
+  border-radius: 8px; 
+  overflow: hidden; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* Encabezados de tabla */
 .comparar-table thead {
-  background-color: #767091; /* Verde llamativo */
+  background-color: #767091; 
   color: white;
 }
 
@@ -1149,28 +1149,28 @@ button:hover, .btn:hover {
 }
 
 .comparar-table tbody tr:hover {
-  background-color: #f1f1f1; /* Cambio de color al pasar el ratón */
+  background-color: #f1f1f1; 
 }
 
 .comparar-table td {
   padding: 12px 15px;
-  color: #555; /* Texto gris */
+  color: #555; 
 }
 
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {
   .comparar-table thead {
-      display: none; /* Ocultar encabezados en móviles */
+      display: none; 
   }
   
   .comparar-table tbody tr {
-      display: block; /* Convertir las filas en bloques */
-      margin-bottom: 20px; /* Espaciado entre filas */
+      display: block; 
+      margin-bottom: 20px; 
   }
 
   .titulo {
       font-weight: bold;
-      background-color: #2a2749; /* Verde llamativo */
+      background-color: #2a2749; 
       color: white;
   }
 
@@ -1184,10 +1184,10 @@ button:hover, .btn:hover {
   }
 
   .comparar-table td:before {
-      content: attr(data-label); /* Etiquetas para cada celda */
+      content: attr(data-label); 
       font-weight: bold;
-      color: #333; /* Texto oscuro */
+      color: #333; 
       text-align: left;
-      padding-right: 10px; /* Espaciado entre la etiqueta y el valor */
+      padding-right: 10px; 
   }
 }
