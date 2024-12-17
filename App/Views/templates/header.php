@@ -11,7 +11,7 @@ $rol = $session->get('rol');
     <!-- Bootstrap core CSS -->
     <link href="<?= $baseUrl ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Custom styles for this template -->
     <link href="<?= $baseUrl ?>css/style.css" rel="stylesheet">
